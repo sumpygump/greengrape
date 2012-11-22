@@ -57,6 +57,10 @@ class View
     {
         $layoutFile = $this->getTheme()->getPath('layout.html');
 
+        if (!file_exists($layoutFile)) {
+            throw new \Exception("Layout file not found: '$layoutFile'");
+        }
+
         $layout = new Layout($layoutFile, $this->getTheme());
 
         return $layout;

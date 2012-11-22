@@ -116,6 +116,10 @@ class Content
 
         $templateFile = $this->getTheme()->getPath('templates/' . $metadata['template']);
 
+        if (!file_exists($templateFile)) {
+            throw new \Exception("Template file not found: '$templateFile'");
+        }
+
         $this->setTemplate(new Template($templateFile, $this->getTheme()));
 
         $this->setContent($fileContents);

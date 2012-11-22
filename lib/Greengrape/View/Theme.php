@@ -15,6 +15,11 @@ class Theme
      */
     protected $_name = 'fulcrum';
 
+    /**
+     * Path to theme files
+     *
+     * @var string
+     */
     protected $_path = '';
 
     /**
@@ -24,12 +29,22 @@ class Theme
      */
     protected $_assetManager;
 
+    /**
+     * Constructor
+     *
+     * @param string $name Theme name
+     * @return void
+     */
     public function __construct($name)
     {
         $this->setThemeName($name);
 
         $themesDir = APP_PATH . DIRECTORY_SEPARATOR . 'themes';
-        $themePath = realpath($themesDir . DIRECTORY_SEPARATOR . $this->getThemeName());
+        $themePath = $themesDir . DIRECTORY_SEPARATOR . $this->getThemeName();
+
+        if (!file_exists($themePath)) {
+            throw new \Exception("Theme '" . $this->getThemeName() . "' not found. (Looking in path '" . $themePath . "')");
+        }
 
         $this->setPath($themePath);
 
