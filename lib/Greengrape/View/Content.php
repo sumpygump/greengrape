@@ -22,6 +22,11 @@ use dflydev\markdown\MarkdownParser;
  */
 class Content
 {
+    /**
+     * File to load
+     *
+     * @var string
+     */
     protected $_file = '';
 
     /**
@@ -52,34 +57,67 @@ class Content
         $this->readFile();
     }
 
+    /**
+     * Set the content file
+     *
+     * @param string $file Filename
+     * @return \Greengrape\View\Content
+     */
     public function setFile($file)
     {
         $this->_file = $file;
         return $this;
     }
 
+    /**
+     * Get the content file
+     *
+     * @return string
+     */
     public function getFile()
     {
         return $this->_file;
     }
 
+    /**
+     * Set the theme object
+     *
+     * @param \Greengrape\View\Theme $theme Theme object
+     * @return \Greengrape\View\Content
+     */
     public function setTheme($theme)
     {
         $this->_theme = $theme;
         return $this;
     }
 
+    /**
+     * Get the theme object
+     *
+     * @return \Greengrape\View\Theme
+     */
     public function getTheme()
     {
         return $this->_theme;
     }
 
+    /**
+     * Set the template object
+     *
+     * @param \Greengrape\View\Template $template Template for this content
+     * @return \Greengrape\View\Content
+     */
     public function setTemplate($template)
     {
         $this->_template = $template;
         return $this;
     }
 
+    /**
+     * Get the template object
+     *
+     * @return \Greengrape\View\Template
+     */
     public function getTemplate()
     {
         return $this->_template;
@@ -106,6 +144,15 @@ class Content
         return $this->_content;
     }
 
+    /**
+     * Read the content file
+     *
+     * This will retrieve the content from the file
+     *
+     * In the future this will extract metadata from the file as well
+     *
+     * @return void
+     */
     public function readFile()
     {
         $fileContents = file_get_contents($this->getFile());
@@ -130,8 +177,8 @@ class Content
      *
      * This parses the content via markdown
      *
-     * @param string $content Optional content
-     * @return string
+     * @param string $content Optional content to render instead
+     * @return string Rendered HTML (via markdown)
      */
     public function render($content = null)
     {

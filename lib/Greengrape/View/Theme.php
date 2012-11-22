@@ -37,37 +37,59 @@ class Theme
      */
     public function __construct($name)
     {
-        $this->setThemeName($name);
+        $this->setName($name);
 
         $themesDir = APP_PATH . DIRECTORY_SEPARATOR . 'themes';
-        $themePath = $themesDir . DIRECTORY_SEPARATOR . $this->getThemeName();
+        $themePath = $themesDir . DIRECTORY_SEPARATOR . $this->getName();
 
         if (!file_exists($themePath)) {
-            throw new \Exception("Theme '" . $this->getThemeName() . "' not found. (Looking in path '" . $themePath . "')");
+            throw new \Exception("Theme '" . $this->getName() . "' not found. (Looking in path '" . $themePath . "')");
         }
 
         $this->setPath($themePath);
 
-        $this->setAssetManager(new AssetManager($this->getThemeName()));
+        $this->setAssetManager(new AssetManager($this->getName()));
     }
 
-    public function setThemeName($name)
+    /**
+     * Set theme name
+     *
+     * @param string $name Theme name
+     * @return \Greengrape\View\Theme
+     */
+    public function setName($name)
     {
         $this->_name = $name;
         return $this;
     }
 
-    public function getThemeName()
+    /**
+     * Get theme name
+     *
+     * @return string
+     */
+    public function getName()
     {
         return $this->_name;
     }
 
+    /**
+     * Set asset manager
+     *
+     * @param \Greengrape\View\AssetManager $manager Asset manager
+     * @return \Greengrape\View\Theme
+     */
     public function setAssetManager($manager)
     {
         $this->_assetManager = $manager;
         return $this;
     }
 
+    /**
+     * Get asset manager
+     *
+     * @return \Greengrape\View\AssetManager
+     */
     public function getAssetManager()
     {
         return $this->_assetManager;
@@ -101,5 +123,31 @@ class Theme
         }
 
         return $this->_path . DIRECTORY_SEPARATOR . $file;
+    }
+
+    /**
+     * Set the default title
+     *
+     * @param string $title Title
+     * @return \Greengrape\View\Theme
+     */
+    public function setDefaultTitle($title)
+    {
+        $this->_title = $title;
+        return $this;
+    }
+
+    /**
+     * Get the defalt title
+     *
+     * @return string Default title
+     */
+    public function getDefaultTitle()
+    {
+        if ($this->_title == '') {
+            return '[Greengrape]';
+        }
+
+        return $this->_title;
     }
 }
