@@ -22,6 +22,8 @@ use dflydev\markdown\MarkdownParser;
  */
 class Content
 {
+    protected $_file = '';
+
     /**
      * The content (in markdown format)
      *
@@ -30,14 +32,57 @@ class Content
     protected $_content = '';
 
     /**
+     * Theme object
+     *
+     * @var \Greengrape\View\Theme
+     */
+    protected $_theme;
+
+    /**
      * Constructor
      *
-     * @param string $content The content
+     * @param string $file The file with the content to load
      * @return void
      */
-    public function __construct($content)
+    public function __construct($file, $theme = null)
     {
-        $this->setContent($content);
+        $this->setFile($file);
+        $this->setTheme($theme);
+
+        $this->readFile();
+    }
+
+    public function setFile($file)
+    {
+        $this->_file = $file;
+        return $this;
+    }
+
+    public function getFile()
+    {
+        return $this->_file;
+    }
+
+    public function setTheme($theme)
+    {
+        $this->_theme = $theme;
+        return $this;
+    }
+
+    public function getTheme()
+    {
+        return $this->_theme;
+    }
+
+    public function setTemplate($template)
+    {
+        $this->_template = $template;
+        return $this;
+    }
+
+    public function getTemplate()
+    {
+        return $this->_template;
     }
 
     /**
@@ -61,6 +106,21 @@ class Content
         return $this->_content;
     }
 
+    public function readFile()
+    {
+        $fileContents = file_get_contents($this->getFile());
+
+        $metadata = array(
+            'template' => 'default.html',
+        );
+
+        $templateFile = $this->getTheme()->getPath('templates/' . $metadata['template']);
+
+        $this->setTemplate(new Template($templateFile, $this->getTheme()));
+
+        $this->setContent($fileContents);
+    }
+
     /**
      * Render the content
      *
@@ -77,6 +137,7 @@ class Content
 
         $markdownParser = new MarkdownParser();
 
-        return $markdownParser->transformMarkdown($content);
+        $htmlContent = $markdownParser->transformMarkdown($content);
+        return $this->getTemplate()->render($htmlContent);
     }
 }

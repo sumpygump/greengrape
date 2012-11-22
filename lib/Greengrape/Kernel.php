@@ -1,18 +1,46 @@
 <?php
+/**
+ *
+ */
 
 namespace Greengrape;
 
 use Greengrape\View;
+use Greengrape\View\Theme;
 
+/**
+ * Kernel
+ *
+ * @package Greengrape
+ * @author Jansen Price <jansen.price@gmail.com>
+ * @version $Id$
+ */
 class Kernel
 {
+    /**
+     * Configuration
+     *
+     * @var array
+     */
     protected $_config = array();
 
+    /**
+     * Constructor
+     *
+     * @param mixed $config
+     * @return void
+     */
     public function __construct($config)
     {
         $this->setConfig($config);
     }
 
+    /**
+     * Set the config
+     *
+     * @param mixed $config
+     * @return void
+     */
     public function setConfig($config)
     {
         if (!isset($config['theme'])) {
@@ -22,6 +50,12 @@ class Kernel
         $this->_config = $config;
     }
 
+    /**
+     * Get config
+     *
+     * @param mixed $param
+     * @return void
+     */
     public function getConfig($param = null)
     {
         if (null === $param) {
@@ -35,14 +69,18 @@ class Kernel
         return $this->_config[$param];
     }
 
+    /**
+     * Execute
+     *
+     * @return void
+     */
     public function execute()
     {
-        $themesDir = APP_PATH . DIRECTORY_SEPARATOR . 'themes';
-        $themePath = realpath($themesDir . DIRECTORY_SEPARATOR . $this->getConfig('theme'));
+        $theme = new Theme($this->getConfig('theme'));
 
-        $view = new View($themePath);
+        $view = new View($theme);
 
         $contentDir = APP_PATH . DIRECTORY_SEPARATOR . 'content';
-        echo $view->renderFile($contentDir . DIRECTORY_SEPARATOR . 'index.md');
+        echo $view->render($contentDir . DIRECTORY_SEPARATOR . 'index.md');
     }
 }

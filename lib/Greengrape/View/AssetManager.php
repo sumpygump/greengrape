@@ -1,21 +1,62 @@
 <?php
+/**
+ * Asset Manager class file
+ *
+ * @package Greengrape
+ */
 
 namespace Greengrape\View;
 
+/**
+ * AssetManager
+ *
+ * @package Greengrape
+ * @author Jansen Price <jansen.price@gmail.com>
+ * @version $Id$
+ */
 class AssetManager
 {
+    /**
+     * The web base url for this theme
+     *
+     * @var string
+     */
     protected $_themeWebBase = '';
 
+    /**
+     * List of supported asset dirs in the themes
+     *
+     * @var array
+     */
+    protected static $_supportedAssetDirs = array('js', 'css', 'img');
+
+    /**
+     * Constructor
+     *
+     * @param string $themeName Name of theme
+     * @return void
+     */
     public function __construct($themeName)
     {
         $this->setThemeWebBase($themeName);
     }
 
+    /**
+     * Set the web base url
+     *
+     * @param string $themeName Theme name
+     * @return \Greengrape\View\AssetManager
+     */
     public function setThemeWebBase($themeName)
     {
         $this->_themeWebBase = "themes/$themeName/";
     }
 
+    /**
+     * Get the web base url for set theme
+     *
+     * @return string
+     */
     public function getThemeWebBase()
     {
         return $this->_themeWebBase;
@@ -40,8 +81,52 @@ class AssetManager
      */
     public function getFilePath($file)
     {
+        $assetDir  = self::detectAssetDir($file);
+        $extension = self::getExtension($file);
+
+        if ($assetDir != '' && $extension == '') {
+            // Append the extension for an asset that doesn't have an 
+            // extension based on the asset dir (js, css).
+            $file .= '.' . $assetDir;
+        }
+
         $filename = $this->getThemeWebBase() . $file;
 
         return $filename;
+    }
+
+    /**
+     * Get the extension for a given filename
+     *
+     * @param string $filename Filename
+     * @return string
+     */
+    public static function getExtension($filename)
+    {
+        return strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+    }
+
+    /**
+     * Detect asset type (css, js) based on folder requested
+     *
+     * This is expecting that all '.js' files will be in 'js/', etc.
+     *
+     * @param string $filepath Path to a file
+     * @return string
+     */
+    public static function detectAssetDir($filepath)
+    {
+        if (strpos($filepath, '/') === false) {
+            return '';
+        }
+
+        $pathParts = explode('/', $filepath);
+        $assetDir = strtolower($pathParts[0]);
+
+        if (!in_array($assetDir, self::$_supportedAssetDirs)) {
+            return '';
+        }
+
+        return $assetDir;
     }
 }

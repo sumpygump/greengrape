@@ -1,13 +1,26 @@
 <!doctype html>
-<html>
-<head>
-  <title>{{ layout.title() }}</title>
-  <link rel="stylesheet" href="{{ asset.file('css/styles') }}" />
-</head>
-<body>
- 
-{{ layout.content()|raw }}
- 
-<script type="text/javascript" src="{{ asset.file('js/global') }}"></script>
-</body>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{{ layout.title() }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="{{ layout.description() }}">
+        <meta name="author" content="{{ layout.author() }}">
+        <link rel="stylesheet" href="{{ asset.file('css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset.file('css/style') }}" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="masthead">
+                <img src="{{ asset.file('img/greengrape.jpg') }}" title="Painting by Abbey Ryan (ryanstudio.blogspot.com)" /> 
+            </div>
+            <hr />
+
+            {{ layout.content()|raw }}
+
+            <footer>
+            </footer>
+        </div>
+        <script type="text/javascript" src="{{ asset.file('js/global') }}"></script>
+    </body>
 </html>

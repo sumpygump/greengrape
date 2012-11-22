@@ -15,6 +15,8 @@ require_once 'vendor/autoload.php';
 // Greengrape class
 include_once 'lib/Greengrape/Kernel.php';
 include_once 'lib/Greengrape/View.php';
+include_once 'lib/Greengrape/View/Theme.php';
+include_once 'lib/Greengrape/View/Template.php';
 include_once 'lib/Greengrape/View/Layout.php';
 include_once 'lib/Greengrape/View/Content.php';
 include_once 'lib/Greengrape/View/AssetManager.php';

@@ -20,11 +20,11 @@ use Greengrape\View\Layout;
 class View
 {
     /**
-     * Theme base path
+     * Theme object
      *
-     * @var string
+     * @var \Greengrape\View\Theme
      */
-    protected $_themePath = '';
+    protected $_theme;
 
     /**
      * Constructor
@@ -32,39 +32,20 @@ class View
      * @param string $themePath Base of theme path
      * @return void
      */
-    public function __construct($themePath = '')
+    public function __construct($theme)
     {
-        $this->setThemePath($themePath);
+        $this->setTheme($theme);
     }
 
-    /**
-     * Set the theme path
-     *
-     * @param string $path Full path to theme base directory
-     * @return \Greengrape\View
-     */
-    public function setThemePath($path)
+    public function setTheme($theme)
     {
-        $this->_themePath = $path;
+        $this->_theme = $theme;
         return $this;
     }
 
-    /**
-     * Get theme path
-     *
-     * Get the base theme path, or if an argument is passed in, get the full 
-     * path to that asset within the theme
-     *
-     * @param string $file Filepath to retrieve
-     * @return string
-     */
-    public function getThemePath($file = null)
+    public function getTheme()
     {
-        if (null === $file) {
-            return $this->_themePath;
-        }
-
-        return $this->_themePath . DIRECTORY_SEPARATOR . $file;
+        return $this->_theme;
     }
 
     /**
@@ -74,9 +55,9 @@ class View
      */
     public function getLayout()
     {
-        $layoutFile = $this->getThemePath('layout.html');
+        $layoutFile = $this->getTheme()->getPath('layout.html');
 
-        $layout = new Layout($layoutFile);
+        $layout = new Layout($layoutFile, $this->getTheme());
 
         return $layout;
     }
@@ -87,23 +68,11 @@ class View
      * @param string $content Content string
      * @return string
      */
-    public function render($content)
+    public function render($file)
     {
-        $content = new Content($content);
+        $content = new Content($file, $this->getTheme());
+
         $layout = $this->getLayout();
         return $layout->render($content->render());
-    }
-
-    /**
-     * Render a file
-     *
-     * @param string $file Filename
-     * @return string
-     */
-    public function renderFile($file)
-    {
-        $fileContents = file_get_contents($file);
-
-        return $this->render($fileContents);
     }
 }
