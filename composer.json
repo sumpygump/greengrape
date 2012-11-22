@@ -1,0 +1,7 @@
+{
+    "name": "sumpygump/greengrape",
+    "require": {
+        "twig/twig": "1.*",
+        "dflydev/markdown": "1.*"
+    }
+}
