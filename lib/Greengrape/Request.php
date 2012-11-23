@@ -82,7 +82,12 @@ class Request
         $uriParts = parse_url($this->getRequestUri());
         $path     = $uriParts['path'];
 
-        return str_replace($this->getBaseUrl(), '', $path);
+        $file = str_replace($this->getBaseUrl('/'), '', $path);
+        if ($file == '') {
+            $file = '/';
+        }
+
+        return $file;
     }
 
     /**
@@ -100,9 +105,13 @@ class Request
      *
      * @return string
      */
-    public function getBaseUrl()
+    public function getBaseUrl($file = '')
     {
-        return $this->_baseUrl;
+        if ($file == '') {
+            return $this->_baseUrl;
+        }
+
+        return $this->_baseUrl . $file;
     }
 
     /**

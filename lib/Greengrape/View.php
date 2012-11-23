@@ -27,6 +27,13 @@ class View
     protected $_theme;
 
     /**
+     * Navigation items
+     *
+     * @var array
+     */
+    protected $_navigationItems = array();
+
+    /**
      * Constructor
      *
      * @param string $themePath Base of theme path
@@ -37,12 +44,23 @@ class View
         $this->setTheme($theme);
     }
 
+    /**
+     * Set theme object
+     *
+     * @param \Greengrape\View\Theme $theme Theme
+     * @return \Greengrape\View
+     */
     public function setTheme($theme)
     {
         $this->_theme = $theme;
         return $this;
     }
 
+    /**
+     * Get theme object
+     *
+     * @return \Greengrape\View\Theme
+     */
     public function getTheme()
     {
         return $this->_theme;
@@ -62,8 +80,26 @@ class View
         }
 
         $layout = new Layout($layoutFile, $this->getTheme());
+        $layout->setNavigationItems($this->getNavigationItems());
 
         return $layout;
+    }
+
+    /**
+     * Set Navigation items
+     *
+     * @param mixed $navigationItems
+     * @return void
+     */
+    public function setNavigationItems($navigationItems)
+    {
+        $this->_navigationItems = $navigationItems;
+        return $this;
+    }
+
+    public function getNavigationItems()
+    {
+        return $this->_navigationItems;
     }
 
     /**
@@ -80,6 +116,12 @@ class View
         return $layout->render($content->render());
     }
 
+    /**
+     * Render content inside layout
+     *
+     * @param Content $content Content object
+     * @return string
+     */
     public function render(Content $content)
     {
         $layout = $this->getLayout();

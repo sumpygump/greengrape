@@ -1,0 +1,9 @@
+<ul class="main-navigation nav nav-pills">
+    {% for item in navigation %}
+        {% if item.isActive %}
+    <li class="active"><a href="{{ asset.baseUrl }}/{{ item.href }}">{{ item.text }}</a></li>
+        {% else %}
+    <li><a href="{{ asset.baseUrl }}/{{ item.href }}">{{ item.text }}</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>

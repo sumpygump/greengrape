@@ -7,6 +7,8 @@
 
 namespace Greengrape;
 
+use Greengrape\NavigationItem;
+
 /**
  * Sitemap
  *
@@ -33,6 +35,13 @@ class Sitemap
     protected $_map = array();
 
     /**
+     * Main navigation
+     *
+     * @var array
+     */
+    protected $_mainNavigation = array();
+
+    /**
      * Constructor
      *
      * @param string $contentDir Content directory path
@@ -42,6 +51,7 @@ class Sitemap
     {
         $this->setContentDir($contentDir);
         $this->_map = $this->createMap();
+        $this->_mainNavigation = $this->createMainNavigation();
     }
 
     /**
@@ -84,6 +94,16 @@ class Sitemap
     }
 
     /**
+     * Get main navigation items
+     *
+     * @return void
+     */
+    public function getMainNavigation()
+    {
+        return $this->_mainNavigation;
+    }
+
+    /**
      * Create map of available folders and files in the content directory
      *
      * @return array
@@ -93,15 +113,20 @@ class Sitemap
         $files = self::rglob($this->getContentDir() . DIRECTORY_SEPARATOR . '*');
 
         $map = array();
+        
         foreach ($files as $file) {
             if (is_dir($file)) {
                 continue;
             }
 
-            $file = str_replace($this->getContentDir(), '', $file);
-            $url = str_replace('.md', '', $file);
+            $file = str_replace($this->getContentDir() . '/', '', $file);
 
+            $url = str_replace('.md', '', $file);
             $url = strtolower($url);
+
+            if ($url == 'index') {
+                $url = '/';
+            }
 
             // If the last segment is 'index', add an entry for the
             // file without the word 'index'
@@ -118,6 +143,25 @@ class Sitemap
         }
 
         return $map;
+    }
+
+    public function createMainNavigation()
+    {
+        $path = $this->getContentDir() . DIRECTORY_SEPARATOR . '*';
+        $items = glob($path, GLOB_ONLYDIR);
+
+        $mainNavigation = array();
+        foreach ($items as $item) {
+            $item = str_replace($this->getContentDir() . '/', '', $item);
+            $mainNavigation[] = new NavigationItem(ucfirst($item), $item . '/');
+        }
+
+        if (!empty($mainNavigation)) {
+            $home = new NavigationItem('Home', '/');
+            array_unshift($mainNavigation, $home);
+        }
+
+        return $mainNavigation;
     }
 
     /**

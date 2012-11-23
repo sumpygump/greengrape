@@ -8,6 +8,7 @@
 namespace Greengrape\View;
 
 use Greengrape\View\Template;
+use Greengrape\View\Content;
 use \Twig_Environment;
 use \Twig_Loader_String;
 
@@ -33,6 +34,13 @@ class Layout extends Template
      * @var string
      */
     protected $_title = '';
+
+    /**
+     * Navigation items
+     *
+     * @var array
+     */
+    protected $_navigationItems = array();
 
     /**
      * Constructor
@@ -125,5 +133,37 @@ class Layout extends Template
         $layoutContent = file_get_contents($this->getFile());
 
         return $twig->render($layoutContent, $vars);
+    }
+
+    public function setNavigationItems($navigationItems)
+    {
+        $this->_navigationItems = $navigationItems;
+        return $this;
+    }
+
+    public function getNavigationItems()
+    {
+        return $this->_navigationItems;
+    }
+
+    /**
+     * Get Navigation for rendering
+     *
+     * @return void
+     */
+    public function getNavigation()
+    {
+        if (0 == count($this->getNavigationItems())) {
+            return '';
+        }
+
+        $templateFile = $this->getTheme()->getPath('templates/_navigation.html');
+        $template = new Template($templateFile, $this->getTheme());
+
+        $vars = array(
+            'navigation' => $this->getNavigationItems(),
+        );
+
+        return $template->render('', $vars);
     }
 }

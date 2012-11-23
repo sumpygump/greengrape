@@ -17,6 +17,13 @@ namespace Greengrape\View;
 class AssetManager
 {
     /**
+     * Base URL
+     *
+     * @var string
+     */
+    protected $_baseUrl = '';
+
+    /**
      * The web base url for this theme
      *
      * @var string
@@ -40,7 +47,34 @@ class AssetManager
     {
         $baseUrl = rtrim($baseUrl, '/');
 
-        $this->setThemeBaseUrl($baseUrl . '/themes/' . $themeName);
+        $this->setBaseUrl($baseUrl);
+        $this->setThemeBaseUrl($this->getBaseUrl() . '/themes/' . $themeName);
+    }
+
+    /**
+     * Set base url
+     *
+     * @param string $url Base (web root) URL
+     * @return \Greengrape\View\AssetManager
+     */
+    public function setBaseUrl($url)
+    {
+        $this->_baseUrl = $url;
+        return $this;
+    }
+
+    /**
+     * Get the base URL
+     *
+     * @return string
+     */
+    public function getBaseUrl($file = '')
+    {
+        if ($file == '') {
+            return $this->_baseUrl;
+        }
+
+        return $this->_baseUrl . $file;
     }
 
     /**

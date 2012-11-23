@@ -95,13 +95,21 @@ class Kernel
 
         // If canonical is set, we should redirect thither instead.
         if ($location->getCanonical()) {
-            $redirectUrl = $request->getBaseUrl() . $location->getCanonical();
+            $redirectUrl = $request->getBaseUrl('/') . $location->getCanonical();
             header("Location: " . $redirectUrl);
             exit(1);
         }
 
         $theme = new Theme($this->getConfig('theme'), $request->getBaseUrl());
         $view  = new View($theme);
+
+        $navigationItems = $sitemap->getMainNavigation();
+        foreach ($navigationItems as &$item) {
+            if ($uri == $item->getHref()) {
+                $item->setIsActive(true);
+            }
+        }
+        $view->setNavigationItems($navigationItems);
 
         echo $view->renderFile($this->getContentDir() . DIRECTORY_SEPARATOR . $location);
     }
