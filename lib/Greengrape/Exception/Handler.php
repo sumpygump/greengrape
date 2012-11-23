@@ -123,6 +123,7 @@ class Handler
             $content->setTemplateFile('error.html');
             $content->setContent($exception->getMessage());
 
+            header('HTTP/1.1 404 Not Found');
             echo $view->render($content);
         } catch (\Exception $newException) {
             print 'Exception found while handling exception: ' . $newException->getMessage() . "\n";
