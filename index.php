@@ -9,5 +9,7 @@ $config = array(
     'theme' => 'fulcrum',
 );
 
-$app = new Greengrape\Kernel($config);
-$app->execute();
+$kernel = new Greengrape\Kernel($config);
+Greengrape\Exception\Handler::initHandlers($kernel);
+
+$kernel->execute();

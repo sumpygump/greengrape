@@ -8,6 +8,7 @@
 namespace Greengrape\View;
 
 use Greengrape\View\AssetManager;
+use Greengrape\Exception\NotFoundException;
 use \Twig_Environment;
 use \Twig_Loader_String;
 
@@ -57,6 +58,10 @@ class Template
      */
     public function setFile($filename)
     {
+        if (!file_exists($filename)) {
+            throw new NotFoundException("Template file not found: '$filename'");
+        }
+
         $this->_templateFile = $filename;
         return $this;
     }

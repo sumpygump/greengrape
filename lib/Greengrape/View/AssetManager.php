@@ -21,7 +21,7 @@ class AssetManager
      *
      * @var string
      */
-    protected $_themeWebBase = '';
+    protected $_themeBaseUrl = '';
 
     /**
      * List of supported asset dirs in the themes
@@ -36,9 +36,11 @@ class AssetManager
      * @param string $themeName Name of theme
      * @return void
      */
-    public function __construct($themeName)
+    public function __construct($themeName, $baseUrl = '/')
     {
-        $this->setThemeWebBase($themeName);
+        $baseUrl = rtrim($baseUrl, '/');
+
+        $this->setThemeBaseUrl($baseUrl . '/themes/' . $themeName);
     }
 
     /**
@@ -47,9 +49,9 @@ class AssetManager
      * @param string $themeName Theme name
      * @return \Greengrape\View\AssetManager
      */
-    public function setThemeWebBase($themeName)
+    public function setThemeBaseUrl($themeName)
     {
-        $this->_themeWebBase = "themes/$themeName/";
+        $this->_themeBaseUrl = "$themeName/";
     }
 
     /**
@@ -57,9 +59,9 @@ class AssetManager
      *
      * @return string
      */
-    public function getThemeWebBase()
+    public function getThemeBaseUrl()
     {
-        return $this->_themeWebBase;
+        return $this->_themeBaseUrl;
     }
 
     /**
@@ -90,7 +92,7 @@ class AssetManager
             $file .= '.' . $assetDir;
         }
 
-        $filename = $this->getThemeWebBase() . $file;
+        $filename = $this->getThemeBaseUrl() . $file;
 
         return $filename;
     }

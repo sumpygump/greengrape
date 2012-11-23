@@ -8,6 +8,7 @@
 namespace Greengrape\View;
 
 use dflydev\markdown\MarkdownParser;
+use Greengrape\Exception\NotFoundException;
 
 /**
  * Content
@@ -49,12 +50,14 @@ class Content
      * @param string $file The file with the content to load
      * @return void
      */
-    public function __construct($file, $theme = null)
+    public function __construct($file = '', $theme = null)
     {
-        $this->setFile($file);
         $this->setTheme($theme);
 
-        $this->readFile();
+        if ($file != '') {
+            $this->setFile($file);
+            $this->readFile();
+        }
     }
 
     /**
@@ -120,7 +123,27 @@ class Content
      */
     public function getTemplate()
     {
+        if (null == $this->_template) {
+            $this->setTemplateFile('default.html');
+        }
+
         return $this->_template;
+    }
+
+    /**
+     * Set template file
+     *
+     * This will set a new template object with the given template file
+     *
+     * @param string $file Filename
+     * @return \Greengrape\View\Content
+     */
+    public function setTemplateFile($file)
+    {
+        $templateFile = $this->getTheme()->getPath('templates/' . $file);
+        $this->setTemplate(new Template($templateFile, $this->getTheme()));
+
+        return $this;
     }
 
     /**
@@ -155,20 +178,17 @@ class Content
      */
     public function readFile()
     {
+        if (!file_exists($this->getFile())) {
+            throw new NotFoundException("Content file not found: '" . $this->getFile() . "'");
+        }
+
         $fileContents = file_get_contents($this->getFile());
 
         $metadata = array(
             'template' => 'default.html',
         );
 
-        $templateFile = $this->getTheme()->getPath('templates/' . $metadata['template']);
-
-        if (!file_exists($templateFile)) {
-            throw new \Exception("Template file not found: '$templateFile'");
-        }
-
-        $this->setTemplate(new Template($templateFile, $this->getTheme()));
-
+        $this->setTemplateFile($metadata['template']);
         $this->setContent($fileContents);
     }
 

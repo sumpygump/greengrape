@@ -1,15 +1,19 @@
 <?php
 /**
+ * Greengrape kernel class file
  *
+ * @package Greengrape
  */
 
 namespace Greengrape;
 
+use Greengrape\Request;
+use Greengrape\Sitemap;
 use Greengrape\View;
 use Greengrape\View\Theme;
 
 /**
- * Kernel
+ * Kernel class
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
@@ -27,7 +31,7 @@ class Kernel
     /**
      * Constructor
      *
-     * @param mixed $config
+     * @param array $config Configuration settings
      * @return void
      */
     public function __construct($config)
@@ -38,8 +42,8 @@ class Kernel
     /**
      * Set the config
      *
-     * @param mixed $config
-     * @return void
+     * @param array $config Configuration settings
+     * @return \Greengrape\Kernel
      */
     public function setConfig($config)
     {
@@ -48,13 +52,18 @@ class Kernel
         }
 
         $this->_config = $config;
+
+        return $this;
     }
 
     /**
      * Get config
      *
-     * @param mixed $param
-     * @return void
+     * If no arguments it will return the entire configuration array, otherwise 
+     * it will return the setting for the given option parameter
+     *
+     * @param string $param Param name
+     * @return mixed
      */
     public function getConfig($param = null)
     {
@@ -70,17 +79,51 @@ class Kernel
     }
 
     /**
-     * Execute
+     * Execute the request
      *
      * @return void
      */
     public function execute()
     {
-        $theme = new Theme($this->getConfig('theme'));
+        $request = new Request();
 
-        $view = new View($theme);
+        $uri = $request->getRequestedFile();
 
-        $contentDir = APP_PATH . DIRECTORY_SEPARATOR . 'content';
-        echo $view->render($contentDir . DIRECTORY_SEPARATOR . 'index.md');
+        $sitemap = new Sitemap($this->getContentDir());
+
+        $location = $sitemap->getLocationForUrl($uri);
+
+        // If canonical is set, we should redirect thither instead.
+        if ($location->getCanonical()) {
+            $redirectUrl = $request->getBaseUrl() . $location->getCanonical();
+            header("Location: " . $redirectUrl);
+            exit(1);
+        }
+
+        $theme = new Theme($this->getConfig('theme'), $request->getBaseUrl());
+        $view  = new View($theme);
+
+        echo $view->renderFile($this->getContentDir() . DIRECTORY_SEPARATOR . $location);
+    }
+
+    /**
+     * Get content dir
+     *
+     * @return string
+     */
+    public function getContentDir()
+    {
+        return APP_PATH . DIRECTORY_SEPARATOR . 'content';
+    }
+
+    /**
+     * Get the default grape content dir
+     *
+     * @return void
+     */
+    public function getGrapeContentDir()
+    {
+        return APP_PATH . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR
+            . 'Greengrape' . DIRECTORY_SEPARATOR . 'content';
     }
 }

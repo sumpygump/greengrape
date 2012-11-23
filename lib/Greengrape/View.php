@@ -72,10 +72,16 @@ class View
      * @param string $content Content string
      * @return string
      */
-    public function render($file)
+    public function renderFile($file)
     {
         $content = new Content($file, $this->getTheme());
 
+        $layout = $this->getLayout();
+        return $layout->render($content->render());
+    }
+
+    public function render(Content $content)
+    {
         $layout = $this->getLayout();
         return $layout->render($content->render());
     }

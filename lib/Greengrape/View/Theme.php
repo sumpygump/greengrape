@@ -1,9 +1,21 @@
 <?php
+/**
+ * Theme class file
+ *
+ * @package Greengrape
+ */
 
 namespace Greengrape\View;
 
 use Greengrape\View\AssetManager;
 
+/**
+ * Theme class
+ *
+ * @package Greengrape
+ * @author Jansen Price <jansen.price@gmail.com>
+ * @version $Id$
+ */
 class Theme
 {
     /**
@@ -30,12 +42,19 @@ class Theme
     protected $_assetManager;
 
     /**
+     * Default site title
+     *
+     * @var string
+     */
+    protected $_title = '';
+
+    /**
      * Constructor
      *
      * @param string $name Theme name
      * @return void
      */
-    public function __construct($name)
+    public function __construct($name, $baseUrl = '/')
     {
         $this->setName($name);
 
@@ -48,7 +67,7 @@ class Theme
 
         $this->setPath($themePath);
 
-        $this->setAssetManager(new AssetManager($this->getName()));
+        $this->setAssetManager(new AssetManager($this->getName(), $baseUrl));
     }
 
     /**
