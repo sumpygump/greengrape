@@ -55,3 +55,18 @@ code {
     color:#fff;
     background-color:#847f00;
 }
+
+.sub-navigation {
+    margin-top:-20px;
+}
+.sub-navigation.nav-pills > li > a,
+.sub-navigation.nav-pills > li > a:hover {
+    color:#340659;
+}
+
+.sub-navigation.nav-pills > .active > a,
+.sub-navigation.nav-pills > .active > a:hover {
+    color:#fff;
+    background-color:#340659;
+}
+

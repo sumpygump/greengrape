@@ -43,6 +43,13 @@ class Layout extends Template
     protected $_navigationItems = array();
 
     /**
+     * Sub navigation items
+     *
+     * @var array
+     */
+    protected $_subNavigationItems = array();
+
+    /**
      * Constructor
      *
      * @param string $file Layout file
@@ -166,6 +173,28 @@ class Layout extends Template
     }
 
     /**
+     * Set sub navigation items
+     *
+     * @param array $navigationItems Array of navigation items
+     * @return \Greengrape\View\Layout
+     */
+    public function setSubNavigationItems($navigationItems)
+    {
+        $this->_subNavigationItems = $navigationItems;
+        return $this;
+    }
+
+    /**
+     * Get sub navigation items
+     *
+     * @return array
+     */
+    public function getSubNavigationItems()
+    {
+        return $this->_subNavigationItems;
+    }
+
+    /**
      * Get Navigation for rendering
      *
      * @return string
@@ -181,6 +210,27 @@ class Layout extends Template
 
         $vars = array(
             'navigation' => $this->getNavigationItems(),
+        );
+
+        return $template->render('', $vars);
+    }
+
+    /**
+     * Get subnavigation for rendering
+     *
+     * @return string
+     */
+    public function subnavigation()
+    {
+        if (0 == count($this->getSubNavigationItems())) {
+            return '';
+        }
+
+        $templateFile = $this->getTheme()->getPath('templates/_subnavigation.html');
+        $template = new Template($templateFile, $this->getTheme());
+
+        $vars = array(
+            'navigation' => $this->getSubNavigationItems(),
         );
 
         return $template->render('', $vars);

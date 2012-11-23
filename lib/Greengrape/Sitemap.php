@@ -204,6 +204,33 @@ class Sitemap
     }
 
     /**
+     * Create sub navigation items for a main item
+     *
+     * @param \Greengrape\NavigationItem $item Main navigation item
+     * @return array
+     */
+    public function createSubNavigationItems($item)
+    {
+        if (!$item || $item->getHref() == '/') {
+            // If no item available or if it is the home page, ignore the sub 
+            // navigation
+            return array();
+        }
+
+        $basePath = $this->getContentDir() . DIRECTORY_SEPARATOR . $item->getHref();
+        $items = glob($basePath . '*', GLOB_ONLYDIR);
+
+        $navigationItems = array();
+        foreach ($items as $subItem) {
+            $subItem = str_replace($basePath, '', $subItem);
+            $baseUrl = $item->getHref();
+            $navigationItems[] = new NavigationItem($subItem, $baseUrl . $subItem . '/', $this->getBaseUrl());
+        }
+
+        return $navigationItems;
+    }
+
+    /**
      * Recursive Glob
      * 
      * @param string $pattern Pattern

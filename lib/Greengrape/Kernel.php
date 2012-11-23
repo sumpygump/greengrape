@@ -103,16 +103,42 @@ class Kernel
         $theme = new Theme($this->getConfig('theme'), $request->getBaseUrl());
         $view  = new View($theme);
 
+        $this->setupNavigationItems($sitemap, $uri, $view);
+
+        echo $view->renderFile($this->getContentDir() . DIRECTORY_SEPARATOR . $location);
+    }
+
+    /**
+     * Set up the navigation items and assign them to the view
+     *
+     * @param \Greengrape\Sitemap $sitemap Sitemap object
+     * @param string $uri Current URI
+     * @param \Greengrape\View $view View object
+     * @return void
+     */
+    public function setupNavigationItems($sitemap, $uri, $view)
+    {
         $navigationItems = $sitemap->getMainNavigation();
         foreach ($navigationItems as &$item) {
-            if ($uri == $item->getHref()) {
+            // If the first part of the URI matches this item's href then this 
+            // should be the active navigation item
+            if (strpos($uri, $item->getHref()) === 0) {
                 $item->setIsActive(true);
                 $view->setActiveNavigationItem($item);
             }
         }
         $view->setNavigationItems($navigationItems);
 
-        echo $view->renderFile($this->getContentDir() . DIRECTORY_SEPARATOR . $location);
+        $subNavigationItems = $sitemap->createSubNavigationItems($view->getActiveNavigationItem());
+        foreach ($subNavigationItems as &$subItem) {
+            // If the first part of the URI matches this items' href then this 
+            // should be the active navigation item
+            if (strpos($uri, $subItem->getHref()) === 0) {
+                $subItem->setIsActive(true);
+                $view->setActiveSubNavigationItem($subItem);
+            }
+        }
+        $view->setSubNavigationItems($subNavigationItems);
     }
 
     /**

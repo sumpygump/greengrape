@@ -34,11 +34,25 @@ class View
     protected $_navigationItems = array();
 
     /**
+     * Sub navigation items
+     *
+     * @var array
+     */
+    protected $_subNavigationItems = array();
+
+    /**
      * Active navigation item
      *
      * @var \Greengrape\NavigationItem
      */
     protected $_activeNavigationItem;
+
+    /**
+     * Active sub navigation item
+     *
+     * @var mixed
+     */
+    protected $_activeSubNavigationItem;
 
     /**
      * Constructor
@@ -88,6 +102,7 @@ class View
 
         $layout = new Layout($layoutFile, $this->getTheme());
         $layout->setNavigationItems($this->getNavigationItems());
+        $layout->setSubNavigationItems($this->getSubNavigationItems());
 
         return $layout;
     }
@@ -134,6 +149,28 @@ class View
         return $this->_activeNavigationItem;
     }
 
+    public function setActiveSubNavigationItem($item)
+    {
+        $this->_activeSubNavigationItem = $item;
+        return $this;
+    }
+
+    public function getActiveSubNavigationItem()
+    {
+        return $this->_activeSubNavigationItem;
+    }
+
+    public function setSubNavigationItems($items)
+    {
+        $this->_subNavigationItems = $items;
+        return $this;
+    }
+
+    public function getSubNavigationItems()
+    {
+        return $this->_subNavigationItems;
+    }
+
     /**
      * Render content inside the layout
      *
@@ -159,6 +196,10 @@ class View
 
         if ($item = $this->getActiveNavigationItem()) {
             $layout->setTitle($item->getText());
+        }
+
+        if ($subItem = $this->getActiveSubNavigationItem()) {
+            $layout->setTitle($subItem->getText());
         }
 
         $layout->setTitle($content->getTitle());
