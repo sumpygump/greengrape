@@ -1,6 +1,5 @@
 body {
     padding-top:20px;
-    padding-bottom:40px;
     font-family:serif;
 }
 
@@ -8,5 +7,37 @@ body {
     text-align:center;
 }
 
+.masthead img {
+    border-radius:12px;
+}
+
 h1 {
+    color:#847f00;
+    font-size:35px;
+}
+
+h2 {
+    color:#5b4e08;
+    font-size:28px;
+}
+
+h3 {
+    color:#555;
+    font-size:20px;
+}
+
+.footer {
+    border-top:1px solid #ddd;
+    margin-top:40px;
+    padding:20px;
+    font-size:12px;
+    text-align:center;
+    color:#5b4e08;
+}
+
+pre {
+    background-color:#f0e9a0;
+}
+code {
+    color:#5b4e08;
 }

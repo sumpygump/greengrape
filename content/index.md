@@ -7,7 +7,7 @@ customized the home page.
 If you haven't already, take a moment to read a little below about how Greengrape
 works and what files you should edit to add content to your site.
 
-## Directory Structure
+## 1.0 Directory Structure
 
 If you take a look at the folder structure of your Greengrape site you will
 see the following:
@@ -18,7 +18,7 @@ see the following:
  - `themes` - This is where theme files and assets are located.
  - `vendor` - This is for external libraries used by Greengrape.
 
-## Content Files
+## 2.0 Content Files
 
 The *content* folder stores all of the content of your site. All the content
 files are saved as *markdown* files (files should end in the .md extension).
@@ -29,7 +29,7 @@ files are saved as *markdown* files (files should end in the .md extension).
 The file for the home page is called `index.md` and is located in the root of
 the `content` folder.
 
-### Add New Page
+### 2.1 Add New Page
 
 You can add more pages to your site by adding additional
 .md files in the content folder.
@@ -44,7 +44,7 @@ navigate to yoursite.com/hello (replacing yoursite.com with the actual domain
 and path where you installed Greengrape). You should see the contents of that
 page.
 
-## Themes
+## 3.0 Themes
 
 Theme files are located in the *themes* folder.
 
