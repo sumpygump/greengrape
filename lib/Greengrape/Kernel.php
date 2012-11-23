@@ -89,7 +89,7 @@ class Kernel
 
         $uri = $request->getRequestedFile();
 
-        $sitemap = new Sitemap($this->getContentDir());
+        $sitemap = new Sitemap($this->getContentDir(), $request->getBaseUrl());
 
         $location = $sitemap->getLocationForUrl($uri);
 
@@ -122,16 +122,5 @@ class Kernel
     public function getContentDir()
     {
         return APP_PATH . DIRECTORY_SEPARATOR . 'content';
-    }
-
-    /**
-     * Get the default grape content dir
-     *
-     * @return void
-     */
-    public function getGrapeContentDir()
-    {
-        return APP_PATH . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR
-            . 'Greengrape' . DIRECTORY_SEPARATOR . 'content';
     }
 }

@@ -1,49 +1,162 @@
 <?php
+/**
+ * Navigation item class file
+ *
+ * @package Greengrape
+ */
 
 namespace Greengrape;
 
+/**
+ * NavigationItem
+ *
+ * Represents an item in main or sub navigation
+ *
+ * @package Greengrape
+ * @author Jansen Price <jansen.price@gmail.com>
+ * @version $Id$
+ */
 class NavigationItem
 {
+    /**
+     * The text of the navigation link
+     *
+     * @var string
+     */
     protected $_text = '';
+    
+    /**
+     * The href of the navigation link
+     *
+     * @var string
+     */
     protected $_href = '';
+
+    /**
+     * Whether the link is currently active
+     *
+     * @var bool
+     */
     protected $_isActive = false;
 
-    public function __construct($text, $href)
+    /**
+     * Base URL
+     *
+     * @var string
+     */
+    protected $_baseUrl = '';
+
+    /**
+     * Constructor
+     *
+     * @param string $text Text of the link
+     * @param string $href Href of the link
+     * @return void
+     */
+    public function __construct($text, $href, $baseUrl = '/')
     {
         $this->setText($text);
         $this->setHref($href);
+        $this->setBaseUrl($baseUrl);
     }
 
+    /**
+     * Set the text
+     *
+     * @param string $text Link text
+     * @return \Greengrape\NavigationItem
+     */
     public function setText($text)
     {
         $this->_text = $text;
         return $this;
     }
 
+    /**
+     * Get the link text
+     *
+     * @return string
+     */
     public function getText()
     {
         return $this->_text;
     }
 
+    /**
+     * Set the href of the link
+     *
+     * @param string $href Href
+     * @return \Greengrape\NavigationItem
+     */
     public function setHref($href)
     {
         $this->_href = $href;
         return $this;
     }
 
-    public function getHref()
+    /**
+     * Get the link href
+     *
+     * @return string
+     */
+    public function getHref($includeBase = false)
     {
+        if ($includeBase) {
+            if ($this->_href == '/') {
+                // This prevents from doubling up the '/'
+                return $this->getBaseUrl('/');
+            }
+            return $this->getBaseUrl('/' . $this->_href);
+        }
+
         return $this->_href;
     }
 
+    /**
+     * Set whether this navigation is active
+     *
+     * @param bool $value active state
+     * @return \Greengrape\NavigationItem
+     */
     public function setIsActive($value)
     {
         $this->_isActive = (bool) $value;
         return $this;
     }
 
+    /**
+     * Get whether link is active
+     *
+     * @return bool
+     */
     public function getIsActive()
     {
         return $this->_isActive;
+    }
+
+    /**
+     * Set Base URL
+     *
+     * @param string $url URL
+     * @return \Greengrape\Sitemap
+     */
+    public function setBaseUrl($url)
+    {
+        $this->_baseUrl = $url;
+        return $this;
+    }
+
+    /**
+     * Get the base URL
+     *
+     * @return string
+     */
+    public function getBaseUrl($file = '')
+    {
+        if ($file == '') {
+            return $this->_baseUrl;
+        }
+
+        return $this->_baseUrl . $file;
     }
 }

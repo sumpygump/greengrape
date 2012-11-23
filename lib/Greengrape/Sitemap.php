@@ -42,14 +42,23 @@ class Sitemap
     protected $_mainNavigation = array();
 
     /**
+     * Base URL
+     *
+     * @var string
+     */
+    protected $_baseUrl = '/';
+
+    /**
      * Constructor
      *
      * @param string $contentDir Content directory path
      * @return void
      */
-    public function __construct($contentDir)
+    public function __construct($contentDir, $baseUrl = '/')
     {
         $this->setContentDir($contentDir);
+        $this->setBaseUrl($baseUrl);
+
         $this->_map = $this->createMap();
         $this->_mainNavigation = $this->createMainNavigation();
     }
@@ -74,6 +83,32 @@ class Sitemap
     public function getContentDir()
     {
         return $this->_contentDir;
+    }
+
+    /**
+     * Set Base URL
+     *
+     * @param string $url URL
+     * @return \Greengrape\Sitemap
+     */
+    public function setBaseUrl($url)
+    {
+        $this->_baseUrl = $url;
+        return $this;
+    }
+
+    /**
+     * Get the base URL
+     *
+     * @return string
+     */
+    public function getBaseUrl($file = '')
+    {
+        if ($file == '') {
+            return $this->_baseUrl;
+        }
+
+        return $this->_baseUrl . $file;
     }
 
     /**
@@ -145,6 +180,11 @@ class Sitemap
         return $map;
     }
 
+    /**
+     * Create main navigation
+     *
+     * @return array
+     */
     public function createMainNavigation()
     {
         $path = $this->getContentDir() . DIRECTORY_SEPARATOR . '*';
@@ -153,11 +193,11 @@ class Sitemap
         $mainNavigation = array();
         foreach ($items as $item) {
             $item = str_replace($this->getContentDir() . '/', '', $item);
-            $mainNavigation[] = new NavigationItem(ucfirst($item), $item . '/');
+            $mainNavigation[] = new NavigationItem(ucfirst($item), $item . '/', $this->getBaseUrl());
         }
 
         if (!empty($mainNavigation)) {
-            $home = new NavigationItem('Home', '/');
+            $home = new NavigationItem('Home', '/', $this->getBaseUrl());
             array_unshift($mainNavigation, $home);
         }
 
@@ -170,7 +210,7 @@ class Sitemap
      * @param string $pattern Pattern
      * @param int $flags Flags to pass to glob
      * @param string $path Path to glob in
-     * @return void
+     * @return array
      */
     public static function rglob($pattern, $flags = 0, $path = '')
     {

@@ -135,12 +135,23 @@ class Layout extends Template
         return $twig->render($layoutContent, $vars);
     }
 
+    /**
+     * Set navigation items
+     *
+     * @param array $navigationItems Array of navigation items
+     * @return \Greengrape\View\Layout
+     */
     public function setNavigationItems($navigationItems)
     {
         $this->_navigationItems = $navigationItems;
         return $this;
     }
 
+    /**
+     * Get navigation items
+     *
+     * @return array
+     */
     public function getNavigationItems()
     {
         return $this->_navigationItems;
@@ -149,7 +160,7 @@ class Layout extends Template
     /**
      * Get Navigation for rendering
      *
-     * @return void
+     * @return string
      */
     public function getNavigation()
     {

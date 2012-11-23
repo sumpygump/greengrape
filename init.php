@@ -5,14 +5,14 @@
  * @package Greengrape
  */
 
-error_reporting(E_ALL || E_STRICT);
+error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', '1');
 
 define('APP_PATH', realpath(__DIR__));
 
 require_once 'vendor/autoload.php';
 
-// Greengrape class
+// Greengrape classes
 include_once 'lib/Greengrape/Kernel.php';
 include_once 'lib/Greengrape/Request.php';
 include_once 'lib/Greengrape/Sitemap.php';
