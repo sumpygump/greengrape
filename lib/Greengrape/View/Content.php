@@ -23,6 +23,13 @@ use dflydev\markdown\MarkdownParser;
 class Content
 {
     /**
+     * File to load
+     *
+     * @var string
+     */
+    protected $_file = '';
+
+    /**
      * The content (in markdown format)
      *
      * @var string
@@ -30,14 +37,90 @@ class Content
     protected $_content = '';
 
     /**
+     * Theme object
+     *
+     * @var \Greengrape\View\Theme
+     */
+    protected $_theme;
+
+    /**
      * Constructor
      *
-     * @param string $content The content
+     * @param string $file The file with the content to load
      * @return void
      */
-    public function __construct($content)
+    public function __construct($file, $theme = null)
     {
-        $this->setContent($content);
+        $this->setFile($file);
+        $this->setTheme($theme);
+
+        $this->readFile();
+    }
+
+    /**
+     * Set the content file
+     *
+     * @param string $file Filename
+     * @return \Greengrape\View\Content
+     */
+    public function setFile($file)
+    {
+        $this->_file = $file;
+        return $this;
+    }
+
+    /**
+     * Get the content file
+     *
+     * @return string
+     */
+    public function getFile()
+    {
+        return $this->_file;
+    }
+
+    /**
+     * Set the theme object
+     *
+     * @param \Greengrape\View\Theme $theme Theme object
+     * @return \Greengrape\View\Content
+     */
+    public function setTheme($theme)
+    {
+        $this->_theme = $theme;
+        return $this;
+    }
+
+    /**
+     * Get the theme object
+     *
+     * @return \Greengrape\View\Theme
+     */
+    public function getTheme()
+    {
+        return $this->_theme;
+    }
+
+    /**
+     * Set the template object
+     *
+     * @param \Greengrape\View\Template $template Template for this content
+     * @return \Greengrape\View\Content
+     */
+    public function setTemplate($template)
+    {
+        $this->_template = $template;
+        return $this;
+    }
+
+    /**
+     * Get the template object
+     *
+     * @return \Greengrape\View\Template
+     */
+    public function getTemplate()
+    {
+        return $this->_template;
     }
 
     /**
@@ -62,12 +145,40 @@ class Content
     }
 
     /**
+     * Read the content file
+     *
+     * This will retrieve the content from the file
+     *
+     * In the future this will extract metadata from the file as well
+     *
+     * @return void
+     */
+    public function readFile()
+    {
+        $fileContents = file_get_contents($this->getFile());
+
+        $metadata = array(
+            'template' => 'default.html',
+        );
+
+        $templateFile = $this->getTheme()->getPath('templates/' . $metadata['template']);
+
+        if (!file_exists($templateFile)) {
+            throw new \Exception("Template file not found: '$templateFile'");
+        }
+
+        $this->setTemplate(new Template($templateFile, $this->getTheme()));
+
+        $this->setContent($fileContents);
+    }
+
+    /**
      * Render the content
      *
      * This parses the content via markdown
      *
-     * @param string $content Optional content
-     * @return string
+     * @param string $content Optional content to render instead
+     * @return string Rendered HTML (via markdown)
      */
     public function render($content = null)
     {
@@ -77,6 +188,7 @@ class Content
 
         $markdownParser = new MarkdownParser();
 
-        return $markdownParser->transformMarkdown($content);
+        $htmlContent = $markdownParser->transformMarkdown($content);
+        return $this->getTemplate()->render($htmlContent);
     }
 }

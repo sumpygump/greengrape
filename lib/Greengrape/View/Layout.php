@@ -7,7 +7,7 @@
 
 namespace Greengrape\View;
 
-use Greengrape\View\AssetManager;
+use Greengrape\View\Template;
 use \Twig_Environment;
 use \Twig_Loader_String;
 
@@ -18,90 +18,112 @@ use \Twig_Loader_String;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class Layout
+class Layout extends Template
 {
     /**
-     * Layout filename
+     * The content of the page
+     *
+     * @var mixed
+     */
+    protected $_content;
+
+    /**
+     * Title of page
      *
      * @var string
      */
-    protected $_layoutFile = '';
-
-    protected $_title;
-    protected $_content;
+    protected $_title = '';
 
     /**
      * Constructor
      *
-     * @param string $filename Filename to layout file
+     * @param string $file Layout file
+     * @param \Greengrape\View\Theme $theme Theme object
      * @return void
      */
-    public function __construct($filename)
+    public function __construct($file, $theme)
     {
-        $this->setLayoutFile($filename);
+        parent::__construct($file, $theme);
+
+        $this->setTitle($this->getTheme()->getDefaultTitle());
     }
 
     /**
-     * Set the layout file name
+     * Get title
      *
-     * @param string $filename Filename
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->_title;
+    }
+
+    /**
+     * Set title
+     *
+     * @param mixed $title New title (prepends)
+     * @param bool $reset Whether to reset the title
      * @return \Greengrape\View\Layout
      */
-    public function setLayoutFile($filename)
+    public function setTitle($title, $reset = false)
     {
-        $this->_layoutFile = $filename;
+        $title = trim($title);
+
+        if ($reset) {
+            $this->_title = $title;
+            return $this;
+        }
+
+        if (trim($this->_title) == '') {
+            $this->_title = $title;
+        } else {
+            $this->_title = $title . ' | ' . $this->_title;
+        }
+
         return $this;
     }
 
     /**
-     * Get the layout file name
+     * Set main content
+     *
+     * @param string $content Content
+     * @return \Greengrape\View\Layout
+     */
+    public function setContent($content)
+    {
+        $this->_content = $content;
+        return $this;
+    }
+
+    /**
+     * Get the main content
      *
      * @return string
      */
-    public function getLayoutFile()
+    public function getContent()
     {
-        return $this->_layoutFile;
-    }
-
-    public function getAssetManager()
-    {
-        return new AssetManager('fulcrum');
+        return $this->_content;
     }
 
     /**
      * Render the content in layout
      *
-     * @param mixed $content
-     * @return void
+     * @param string $content The main content area to be rendered
+     * @param array $vars Variables to pass to be rendered by the layout
+     * @return string Rendered HTML
      */
-    public function render($content)
+    public function render($content, $vars = array())
     {
+        $this->setContent($content);
+
         $loader = new Twig_Loader_String();
         $twig   = new Twig_Environment($loader);
 
         $twig->addGlobal('asset', $this->getAssetManager());
         $twig->addGlobal('layout', $this);
 
-        $this->_title = 'Greengrape';
-        $this->_content = $content;
+        $layoutContent = file_get_contents($this->getFile());
 
-        $layoutContent = file_get_contents($this->getLayoutFile());
-
-        return $twig->render($layoutContent,
-            array(
-                'title' => 'Greengrape',
-                'content' => $content,
-            )
-        );
-    }
-
-    public function title()
-    {
-        return $this->_title;
-    }
-
-    public function content()
-    {
-        return $this->_content;
+        return $twig->render($layoutContent, $vars);
     }
 }

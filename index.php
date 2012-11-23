@@ -9,5 +9,5 @@ $config = array(
     'theme' => 'fulcrum',
 );
 
-$app = new Greengrape\Kernel();
+$app = new Greengrape\Kernel($config);
 $app->execute();
