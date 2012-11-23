@@ -86,8 +86,10 @@ class Kernel
     public function execute()
     {
         $request = new Request();
+        $cache = new Cache(APP_PATH . '/cache/content');
 
         $uri = $request->getRequestedFile();
+        $cache->start($uri);
 
         $sitemap = new Sitemap($this->getContentDir(), $request->getBaseUrl());
 
@@ -106,6 +108,7 @@ class Kernel
         $this->setupNavigationItems($sitemap, $uri, $view);
 
         echo $view->renderFile($this->getContentDir() . DIRECTORY_SEPARATOR . $location);
+        $cache->end();
     }
 
     /**

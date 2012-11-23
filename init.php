@@ -18,6 +18,7 @@ include_once 'lib/Greengrape/Request.php';
 include_once 'lib/Greengrape/Sitemap.php';
 include_once 'lib/Greengrape/Location.php';
 include_once 'lib/Greengrape/NavigationItem.php';
+include_once 'lib/Greengrape/Cache.php';
 include_once 'lib/Greengrape/View.php';
 include_once 'lib/Greengrape/View/Theme.php';
 include_once 'lib/Greengrape/View/Template.php';
