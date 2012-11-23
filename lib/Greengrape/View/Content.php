@@ -45,6 +45,13 @@ class Content
     protected $_theme;
 
     /**
+     * Title
+     *
+     * @var string
+     */
+    protected $_title = '';
+
+    /**
      * Constructor
      *
      * @param string $file The file with the content to load
@@ -190,6 +197,16 @@ class Content
 
         $this->setTemplateFile($metadata['template']);
         $this->setContent($fileContents);
+    }
+
+    /**
+     * Get the title (if any was set)
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->_title;
     }
 
     /**

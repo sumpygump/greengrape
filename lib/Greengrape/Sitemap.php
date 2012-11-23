@@ -119,7 +119,6 @@ class Sitemap
      */
     public function getLocationForUrl($url)
     {
-        $url = strtolower($url);
         if (array_key_exists($url, $this->_map)) {
             $location = new Location($this->_map[$url]);
             return $location;
@@ -193,7 +192,7 @@ class Sitemap
         $mainNavigation = array();
         foreach ($items as $item) {
             $item = str_replace($this->getContentDir() . '/', '', $item);
-            $mainNavigation[] = new NavigationItem(ucfirst($item), $item . '/', $this->getBaseUrl());
+            $mainNavigation[] = new NavigationItem($item, $item . '/', $this->getBaseUrl());
         }
 
         if (!empty($mainNavigation)) {

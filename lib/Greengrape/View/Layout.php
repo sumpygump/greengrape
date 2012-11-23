@@ -77,14 +77,22 @@ class Layout extends Template
     {
         $title = trim($title);
 
+        // Allow to completely reset the title
         if ($reset) {
             $this->_title = $title;
             return $this;
         }
 
+        // Don't add to the title if it was blank
+        if ($title == '') {
+            return $this;
+        }
+
         if (trim($this->_title) == '') {
+            // If the current title is blank, we're replacing
             $this->_title = $title;
         } else {
+            // Otherwise prepend with separator
             $this->_title = $title . ' | ' . $this->_title;
         }
 

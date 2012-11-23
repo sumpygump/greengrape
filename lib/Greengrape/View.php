@@ -34,6 +34,13 @@ class View
     protected $_navigationItems = array();
 
     /**
+     * Active navigation item
+     *
+     * @var \Greengrape\NavigationItem
+     */
+    protected $_activeNavigationItem;
+
+    /**
      * Constructor
      *
      * @param string $themePath Base of theme path
@@ -103,6 +110,31 @@ class View
     }
 
     /**
+     * Set active navigation item
+     *
+     * From here we'll be able to pull information about the current main level 
+     * navigation
+     *
+     * @param \Greengrape\NavigationItem $item Item
+     * @return \Greengrape\View
+     */
+    public function setActiveNavigationItem($item)
+    {
+        $this->_activeNavigationItem = $item;
+        return $this;
+    }
+
+    /**
+     * Get active navigation item (if any was set)
+     *
+     * @return void
+     */
+    public function getActiveNavigationItem()
+    {
+        return $this->_activeNavigationItem;
+    }
+
+    /**
      * Render content inside the layout
      *
      * @param string $content Content string
@@ -112,8 +144,7 @@ class View
     {
         $content = new Content($file, $this->getTheme());
 
-        $layout = $this->getLayout();
-        return $layout->render($content->render());
+        return $this->render($content);
     }
 
     /**
@@ -125,6 +156,13 @@ class View
     public function render(Content $content)
     {
         $layout = $this->getLayout();
+
+        if ($item = $this->getActiveNavigationItem()) {
+            $layout->setTitle($item->getText());
+        }
+
+        $layout->setTitle($content->getTitle());
+
         return $layout->render($content->render());
     }
 }

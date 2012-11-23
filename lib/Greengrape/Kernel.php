@@ -107,6 +107,7 @@ class Kernel
         foreach ($navigationItems as &$item) {
             if ($uri == $item->getHref()) {
                 $item->setIsActive(true);
+                $view->setActiveNavigationItem($item);
             }
         }
         $view->setNavigationItems($navigationItems);

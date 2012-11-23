@@ -68,6 +68,12 @@ class NavigationItem
      */
     public function setText($text)
     {
+        // Replace any '-{lowercase letter}', so 'rss-feed' becomes 'rss feed'
+        $text = preg_replace('/\-([a-z])/', ' $1', $text);
+
+        // Uppercase first letters of each word, so 'rss feed' becomes 'Rss Feed'
+        $text = ucwords($text);
+
         $this->_text = $text;
         return $this;
     }
