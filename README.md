@@ -141,7 +141,7 @@ If you don't want a folder to appear in the navigation list, prepend the folder
 name with an underscore (`_`).
 
 You can add all kinds of content using the easily readable Markdown syntax by
-just editing folders and files on you computer with the text editor of your
+just editing folders and files on your computer with the text editor of your
 choice. That is the beauty of Greengrape.
 
 For a complete reference of the syntax of Markdown please see [the
