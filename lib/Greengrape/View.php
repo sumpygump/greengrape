@@ -55,6 +55,13 @@ class View
     protected $_activeSubNavigationItem;
 
     /**
+     * View params that should be passed to the layout
+     *
+     * @var array
+     */
+    protected $_params = array();
+
+    /**
      * Constructor
      *
      * @param string $themePath Base of theme path
@@ -103,15 +110,38 @@ class View
         $layout = new Layout($layoutFile, $this->getTheme());
         $layout->setNavigationItems($this->getNavigationItems());
         $layout->setSubNavigationItems($this->getSubNavigationItems());
+        $layout->setParams($this->getParams());
 
         return $layout;
     }
 
     /**
-     * Set Navigation items
+     * Get params
      *
-     * @param mixed $navigationItems
-     * @return void
+     * @param array $params Params
+     * @return \Greengrape\View
+     */
+    public function setParams($params)
+    {
+        $this->_params = $params;
+        return $this;
+    }
+
+    /**
+     * Get params
+     *
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->_params;
+    }
+
+    /**
+     * Set main navigation items
+     *
+     * @param array $navigationItems Navigation items
+     * @return \Greengrape\View
      */
     public function setNavigationItems($navigationItems)
     {
@@ -119,6 +149,11 @@ class View
         return $this;
     }
 
+    /**
+     * Get Main navigation items
+     *
+     * @return array
+     */
     public function getNavigationItems()
     {
         return $this->_navigationItems;
@@ -142,30 +177,52 @@ class View
     /**
      * Get active navigation item (if any was set)
      *
-     * @return void
+     * @return \Greengrape\NavigationItem
      */
     public function getActiveNavigationItem()
     {
         return $this->_activeNavigationItem;
     }
 
+    /**
+     * Set the active subnavigation item
+     *
+     * @param \Greengrape\NavigationItem $item Navigation item
+     * @return \Greengrape\View
+     */
     public function setActiveSubNavigationItem($item)
     {
         $this->_activeSubNavigationItem = $item;
         return $this;
     }
 
+    /**
+     * Get active subnavigation item
+     *
+     * @return \Greengrape\NavigationItem
+     */
     public function getActiveSubNavigationItem()
     {
         return $this->_activeSubNavigationItem;
     }
 
+    /**
+     * Set sub navigation items
+     *
+     * @param array $items Items
+     * @return \Greengrape\View
+     */
     public function setSubNavigationItems($items)
     {
         $this->_subNavigationItems = $items;
         return $this;
     }
 
+    /**
+     * Get subnavigation items
+     *
+     * @return array
+     */
     public function getSubNavigationItems()
     {
         return $this->_subNavigationItems;

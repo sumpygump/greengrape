@@ -11,8 +11,10 @@
     </head>
     <body>
         <div class="container">
-            <div class="masthead">
-                <img src="{{ asset.file('img/greengrape.jpg') }}" title="Painting by Abbey Ryan (ryanstudio.blogspot.com)" /> 
+            <div class="masthead row">
+                <img class="pull-left" src="{{ asset.file('img/greengrape.jpg') }}"
+                title="Painting by Abbey Ryan (ryanstudio.blogspot.com)" />
+                <div class="site-name">{{ layout.sitename }}</div>
             </div>
             <hr />
 

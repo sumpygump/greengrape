@@ -29,11 +29,20 @@ code {
 }
 
 .masthead {
-    text-align:center;
+    margin-left:0;
 }
 
 .masthead img {
     border-radius:12px;
+}
+
+.masthead .site-name {
+    font-size: 52px;
+    line-height: 52px;
+    margin-top: 33px;
+    margin-left: 124px;
+    font-weight: bold;
+    color: #5b4e08;
 }
 
 .footer {

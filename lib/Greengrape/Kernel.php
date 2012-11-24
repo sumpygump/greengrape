@@ -146,6 +146,7 @@ class Kernel
         $theme->setDefaultTitle($this->getConfig('sitename'));
 
         $view = new View($theme);
+        $view->setParams($this->getConfig());
 
         $this->setupNavigationItems($sitemap, $uri, $view);
 

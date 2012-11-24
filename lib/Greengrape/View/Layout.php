@@ -50,6 +50,13 @@ class Layout extends Template
     protected $_subNavigationItems = array();
 
     /**
+     * Params
+     *
+     * @var array
+     */
+    protected $_params = array();
+
+    /**
      * Constructor
      *
      * @param string $file Layout file
@@ -126,6 +133,46 @@ class Layout extends Template
     public function getContent()
     {
         return $this->_content;
+    }
+
+    /**
+     * Set Params
+     *
+     * @param array $params Params
+     * @return \Greengrape\View\Layout
+     */
+    public function setParams($params)
+    {
+        $this->_params = $params;
+        return $this;
+    }
+
+    /**
+     * Get a param by key name
+     *
+     * @param string $key Key name
+     * @return mixed
+     */
+    public function getParam($key)
+    {
+        if (!isset($this->_params[$key])) {
+            return null;
+        }
+
+        return $this->_params[$key];
+    }
+
+    /**
+     * Magic call method to handle fetching from params
+     *
+     * @param string $method Name of method called
+     * @param array $args Arguments with invocation
+     * @return void
+     */
+    public function __call($method, $args)
+    {
+        $key = $method;
+        return $this->getParam($key);
     }
 
     /**
