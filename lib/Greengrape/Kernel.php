@@ -9,6 +9,7 @@ namespace Greengrape;
 
 use Greengrape\Request;
 use Greengrape\Sitemap;
+use Greengrape\Cache;
 use Greengrape\View;
 use Greengrape\View\Theme;
 
@@ -29,6 +30,13 @@ class Kernel
     protected $_config = array();
 
     /**
+     * Cache object
+     *
+     * @var \Greengrape\Cache
+     */
+    protected $_cache;
+
+    /**
      * Constructor
      *
      * @param array $config Configuration settings
@@ -37,6 +45,8 @@ class Kernel
     public function __construct($config)
     {
         $this->setConfig($config);
+
+        $this->setCache(new Cache(APP_PATH . '/cache/content'));
     }
 
     /**
@@ -79,6 +89,28 @@ class Kernel
     }
 
     /**
+     * Set cache
+     *
+     * @param \Greengrape\Cache $cache Cache object
+     * @return \Greengrame\Kernel
+     */
+    public function setCache($cache)
+    {
+        $this->_cache = $cache;
+        return $this;
+    }
+
+    /**
+     * Get cache
+     *
+     * @return \Greengrape\Cache
+     */
+    public function getCache()
+    {
+        return $this->_cache;
+    }
+
+    /**
      * Execute the request
      *
      * @return void
@@ -86,10 +118,14 @@ class Kernel
     public function execute()
     {
         $request = new Request();
-        $cache = new Cache(APP_PATH . '/cache/content');
 
         $uri = $request->getRequestedFile();
-        $cache->start($uri);
+
+        // Special option to clear cache for this file with ?cache=clear
+        if ($request->cache == 'clear') {
+            $this->getCache()->clear($uri);
+        }
+        $this->getCache()->start($uri);
 
         $sitemap = new Sitemap($this->getContentDir(), $request->getBaseUrl());
 
@@ -108,7 +144,7 @@ class Kernel
         $this->setupNavigationItems($sitemap, $uri, $view);
 
         echo $view->renderFile($this->getContentDir() . DIRECTORY_SEPARATOR . $location);
-        $cache->end();
+        $this->getCache()->end();
     }
 
     /**
