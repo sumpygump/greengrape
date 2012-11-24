@@ -149,18 +149,28 @@ class Sitemap
         $map = array();
         
         foreach ($files as $file) {
-            // Skip empty directories
             if (is_dir($file)) {
-                continue;
+                $isDir = true;
+            } else {
+                $isDir = false;
             }
 
+            // Remove the common first part
             $file = str_replace($this->getContentDir() . '/', '', $file);
 
             $url = str_replace('.md', '', $file);
+            $url = NavigationItem::translateOrderedName($url);
 
             if ($url == 'index') {
                 // If we're left with just index, change to home page
-                $url = '/';
+                $map['/'] = $file;
+                continue;
+            }
+
+            if ($isDir) {
+                $map[$url . '/'] = $file;
+                $map[$url] = array('canonical' => $url . '/');
+                continue;
             }
 
             // If the last segment is 'index', add an entry for the
@@ -168,14 +178,15 @@ class Sitemap
             $urlSegments = explode('/', $url);
 
             if (end($urlSegments) == 'index') {
-                $alternateUrlA = str_replace('index', '', $url);
-                $map[$alternateUrlA] = $file;
+                $url = str_replace('index', '', $url);
 
-                $alternateUrlB = str_replace('/index', '', $url);
-                $map[$alternateUrlB] = array('canonical' => $alternateUrlA);
-            } else {
                 $map[$url] = $file;
+
+                $map[rtrim($url, '/')] = array('canonical' => $url);
+                continue;
             }
+
+            $map[$url] = $file;
         }
 
         return $map;
@@ -225,7 +236,16 @@ class Sitemap
             return array();
         }
 
-        $basePath = $this->getContentDir() . DIRECTORY_SEPARATOR . $item->getHref();
+        $location = $this->getLocationForUrl($item->getHref());
+
+        if (dirname($location->getFile()) == '.') {
+            $basePath = $this->getContentDir() . DIRECTORY_SEPARATOR
+                . $location->getFile() . DIRECTORY_SEPARATOR;
+        } else {
+            $basePath = $this->getContentDir() . DIRECTORY_SEPARATOR
+                . dirname($location->getFile()) . DIRECTORY_SEPARATOR;
+        }
+
         $items = glob($basePath . '*', GLOB_ONLYDIR);
 
         $navigationItems = array();
@@ -238,7 +258,9 @@ class Sitemap
             }
 
             $baseUrl = $item->getHref();
-            $navigationItems[] = new NavigationItem($subItem, $baseUrl . $subItem . '/', $this->getBaseUrl());
+            $navigationItems[] = new NavigationItem(
+                $subItem, $baseUrl . $subItem . '/', $this->getBaseUrl()
+            );
         }
 
         return $navigationItems;
