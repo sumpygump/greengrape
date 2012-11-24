@@ -149,6 +149,7 @@ class Sitemap
         $map = array();
         
         foreach ($files as $file) {
+            // Skip empty directories
             if (is_dir($file)) {
                 continue;
             }
@@ -156,15 +157,16 @@ class Sitemap
             $file = str_replace($this->getContentDir() . '/', '', $file);
 
             $url = str_replace('.md', '', $file);
-            $url = strtolower($url);
 
             if ($url == 'index') {
+                // If we're left with just index, change to home page
                 $url = '/';
             }
 
             // If the last segment is 'index', add an entry for the
             // file without the word 'index'
             $urlSegments = explode('/', $url);
+
             if (end($urlSegments) == 'index') {
                 $alternateUrlA = str_replace('index', '', $url);
                 $map[$alternateUrlA] = $file;

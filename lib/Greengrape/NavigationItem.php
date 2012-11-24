@@ -68,6 +68,8 @@ class NavigationItem
      */
     public function setText($text)
     {
+        $text = self::translateOrderedName($text);
+
         // Replace any '-{lowercase letter}', so 'rss-feed' becomes 'rss feed'
         $text = preg_replace('/\-([a-z])/', ' $1', $text);
 
@@ -164,5 +166,20 @@ class NavigationItem
         }
 
         return $this->_baseUrl . $file;
+    }
+
+    public static function translateOrderedName($text)
+    {
+        // You can affect the order of the items by naming the folders with 
+        // n.<name>, where n is a number.
+        // this: 01.services, 02.about-us
+        if (preg_match('/^([0-9]+)\.(.*)/', $text, $matches)) {
+            // We don't need to use this, it is already sorted correctly. 
+            // We just need to strip off the numbers and we're good.
+            $sort = $matches[1];
+            $text = $matches[2];
+        }
+
+        return $text;
     }
 }
