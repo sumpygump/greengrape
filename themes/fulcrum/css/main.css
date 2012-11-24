@@ -104,11 +104,13 @@ h2 {
     color:#5b4e08;
     font-size:28px;
     margin-top:40px;
+    position:relative;
 }
 
 h3 {
     color:#333;
     font-size:20px;
+    position:relative;
 }
 
 pre {
@@ -175,6 +177,28 @@ li code {
 .sub-navigation.nav-pills > .active > a:hover {
     color:#fff;
     background-color:#340659;
+}
+
+.anchor-link {
+    opacity: 0;
+    color: #000;
+    font-family: "Helvetica Neue", "Helvetica", Arial, san-serif;
+    font-size: 18px;
+    -webkit-transition: opacity linear .1s;
+    left: -15px;
+    padding-right: 10px;
+    position: absolute;
+}
+
+.anchor-link:hover {
+    opacity: 1 !important;
+    color: #000;
+    text-decoration: none;
+}
+
+h2:hover .anchor-link,
+h3:hover .anchor-link {
+    opacity: .5;
 }
 
 /* ==========================================================================
