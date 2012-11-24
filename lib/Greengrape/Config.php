@@ -43,7 +43,9 @@ class Config implements \ArrayAccess
     public function __construct($configFile = '')
     {
         $this->_data = $this->_defaults;
-        $this->loadFile($configFile);
+        if ($configFile != '') {
+            $this->loadFile($configFile);
+        }
     }
 
     /**
@@ -84,11 +86,11 @@ class Config implements \ArrayAccess
      */
     public function set($key, $value)
     {
-        if (is_null($key)) {
-            $this->_data[] = $value;
-        } else {
-            $this->_data[$key] = $value;
+        if (is_null($key) || !is_scalar($key)) {
+            return false;
         }
+
+        $this->_data[$key] = $value;
     }
 
     /**
@@ -115,6 +117,10 @@ class Config implements \ArrayAccess
      */
     public function offsetExists($offset)
     {
+        if (!is_scalar($offset)) {
+            return false;
+        }
+
         return isset($this->_data[$offset]);
     }
 
