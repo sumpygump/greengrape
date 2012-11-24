@@ -8,6 +8,7 @@
 namespace Greengrape\View;
 
 use Greengrape\View\AssetManager;
+use Greengrape\Exception\NotFoundException;
 
 /**
  * Theme class
@@ -62,7 +63,7 @@ class Theme
         $themePath = $themesDir . DIRECTORY_SEPARATOR . $this->getName();
 
         if (!file_exists($themePath)) {
-            throw new \Exception("Theme '" . $this->getName() . "' not found. (Looking in path '" . $themePath . "')");
+            throw new NotFoundException("Theme '" . $this->getName() . "' not found. (Looking in path '" . $themePath . "')");
         }
 
         $this->setPath($themePath);

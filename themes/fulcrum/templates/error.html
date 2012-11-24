@@ -1,5 +1,6 @@
-<h1>Error 404 Page Not Found</h1>
+<h1>Error 500 Internal Server Error</h1>
 <div class="alert alert-error alert-block">
     <h4>Error!</h4>
-    {{content|raw}}
+    <pre>{{content}}</pre>
+    <div>{{ trace|raw }}</div>
 </div>

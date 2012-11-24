@@ -119,16 +119,119 @@ class Handler
             $theme = new Theme(self::getKernel()->getConfig('theme'), $request->getBaseUrl());
             $view  = new View($theme);
 
+            $view->setParams(self::getKernel()->getConfig());
+
+            if ($exception instanceof \Greengrape\Exception\NotFoundException) {
+                header('HTTP/1.1 404 Not Found');
+                $templateFile = '404.html';
+            } else {
+                header('HTTP/1.1 500 Internal Server Error');
+                $templateFile = 'error.html';
+            }
+
             $content = new Content('', $theme);
-            $content->setTemplateFile('error.html');
+            $content->setTemplateFile($templateFile);
             $content->setContent($exception->getMessage());
 
-            header('HTTP/1.1 404 Not Found');
-            echo $view->render($content);
+            $vars = array(
+                'trace' => self::displayException($exception),
+            );
+
+            echo $view->render($content, $vars);
         } catch (\Exception $newException) {
-            print 'Exception found while handling exception: ' . $newException->getMessage() . "\n";
-            print 'This was the original exception: ' . $exception->getMessage();
+            $errorTitle = 'Exception found while handling exception:';
+            $message = htmlentities($newException->getMessage());
+            printf(self::EXCEPTION_MESSAGE_CAPSULE, $errorTitle, $message);
+            print self::displayException($newException);
+
+            if ($newException->getMessage() != $exception->getMessage()) {
+                $errorTitle = 'This was the original exception:';
+                $message = htmlentities($exception->getMessage());
+                printf(self::EXCEPTION_MESSAGE_CAPSULE, $errorTitle, $message);
+            }
         }
+    }
+
+    /**
+     * Get the message from the exception that includes the file and line number
+     *
+     * @param \Exception $exception Exception object
+     * @return string
+     */
+    public static function getInformativeMessage($exception)
+    {
+        return "Error code #" . $exception->getCode()
+            . " in file " . $exception->getFile()
+            . " on line " . $exception->getLine() . ".";
+    }
+
+    /**
+     * Display exception
+     *
+     * @param mixed $e Exception object
+     * @return string
+     */
+    public static function displayException($e)
+    {
+        $out  = "";
+        $out .= "<p>"
+            . get_class($e) . ": "
+            . self::getInformativeMessage($e) . "</p>";
+        $out .= "<p>Trace:</p>";
+
+        $trace = $e->getTrace();
+
+        $out  .= "<table class=\"table table-bordered table-condensed table-striped\">"
+            . "<tr><th>#</th>"
+            . "<th style=\"text-align:left\">function</th>"
+            . "<th style=\"text-align:left\">location</th>"
+            . "<th style=\"text-align:left\">args</th></tr>";
+
+        foreach ($trace as $i=>$tl) {
+            $file  = isset($tl['file']) ? $tl['file'] : '';
+            $class = isset($tl['class']) ? $tl['class'] : 'main';
+            $line  = isset($tl['line']) ? $tl['line'] : '0';
+            $out  .= "<tr>"
+                . "<td>" . $i . "</td>"
+                . "<td>" . $class . "::" .  $tl['function'] . "()</td>"
+                . "<td>" . $file  . ":" . $line . "</td>"
+                . "<td>" . self::renderTraceArgs($tl['args']) . "</td>"
+                . "</tr>";
+        }
+
+        $out .= "</table>";
+
+        return $out;
+    }
+
+    /**
+     * Display Trace Args
+     *
+     * @param mixed $args Arguments to display
+     * @param string $glue The glue used to implode() the args if array
+     * @return string
+     */
+    public static function renderTraceArgs($args, $glue="\n")
+    {
+        $out = '';
+
+        if (is_array($args)) {
+            foreach ($args as $arg) {
+                if (is_object($arg)) {
+                    $out .= get_class($arg) . $glue;
+                } else {
+                    if (is_array($arg)) {
+                        $out .= 'Array' . $glue;
+                        continue;
+                    }
+                    $out .= '"' . substr($arg, 0, 40) . '..."' . $glue;
+                }
+            }
+        } else {
+            $out .= '"' . substr($args, 0, 40) . '..."';
+        }
+
+        return htmlentities($out);
     }
 
     /**
@@ -159,4 +262,6 @@ class Handler
 
         return $errorLevels[$code];
     }
+
+    const EXCEPTION_MESSAGE_CAPSULE = '<div style="margin:4px;padding:8px;color:#b94a48;background-color:#f2dede;border:1px solid #eed3d7;border-radius:4px;"><p style="margin:0;font-size:24px;font-weight:bold;">Error: %s</p><pre>%s</pre></div>';
 }

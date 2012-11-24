@@ -9,6 +9,7 @@ namespace Greengrape;
 
 use Greengrape\View\Content;
 use Greengrape\View\Layout;
+use Greengrape\Exception\NotFoundException;
 
 /**
  * View
@@ -104,7 +105,7 @@ class View
         $layoutFile = $this->getTheme()->getPath('layout.html');
 
         if (!file_exists($layoutFile)) {
-            throw new \Exception("Layout file not found: '$layoutFile'");
+            throw new NotFoundException("Layout file not found: '$layoutFile'");
         }
 
         $layout = new Layout($layoutFile, $this->getTheme());
@@ -247,7 +248,7 @@ class View
      * @param Content $content Content object
      * @return string
      */
-    public function render(Content $content)
+    public function render(Content $content, $vars = array())
     {
         $layout = $this->getLayout();
 
@@ -261,6 +262,6 @@ class View
 
         $layout->setTitle($content->getTitle());
 
-        return $layout->render($content->render());
+        return $layout->render($content->render(), $vars);
     }
 }
