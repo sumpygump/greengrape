@@ -194,6 +194,12 @@ class Sitemap
         $mainNavigation = array();
         foreach ($items as $item) {
             $item = str_replace($this->getContentDir() . '/', '', $item);
+
+            if (substr($item, 0, 1) == '_') {
+                // skip items that start with underscore, they are hidden
+                continue;
+            }
+
             $mainNavigation[] = new NavigationItem($item, $item . '/', $this->getBaseUrl());
         }
 
@@ -225,6 +231,12 @@ class Sitemap
         $navigationItems = array();
         foreach ($items as $subItem) {
             $subItem = str_replace($basePath, '', $subItem);
+
+            if (substr($subItem, 0, 1) == '_') {
+                // skip items that start with underscore, they are hidden
+                continue;
+            }
+
             $baseUrl = $item->getHref();
             $navigationItems[] = new NavigationItem($subItem, $baseUrl . $subItem . '/', $this->getBaseUrl());
         }

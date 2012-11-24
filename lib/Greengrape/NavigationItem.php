@@ -168,6 +168,15 @@ class NavigationItem
         return $this->_baseUrl . $file;
     }
 
+    /**
+     * Translate an ordered folder name
+     *
+     * If the folder starts with number and a dot, we will strip off the number 
+     * and the dot so it appears more normal in the listing
+     *
+     * @param string $text Folder name
+     * @return void
+     */
     public static function translateOrderedName($text)
     {
         // You can affect the order of the items by naming the folders with 
