@@ -5,9 +5,9 @@
 
 require 'init.php';
 
-$config = array(
-    'theme' => 'fulcrum',
-);
+$config = new Greengrape\Config('config.ini');
 
-$app = new Greengrape\Kernel($config);
-$app->execute();
+$kernel = new Greengrape\Kernel($config);
+Greengrape\Exception\Handler::initHandlers($kernel);
+
+$kernel->execute();

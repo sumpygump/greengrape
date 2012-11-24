@@ -1,0 +1,8 @@
+; Site name
+sitename = "Greengrape"
+
+; Theme to use
+theme = "fulcrum"
+
+; Whether cache is enabled
+enable_cache = false

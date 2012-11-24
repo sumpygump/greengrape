@@ -8,6 +8,7 @@
 namespace Greengrape\View;
 
 use Greengrape\View\Template;
+use Greengrape\View\Content;
 use \Twig_Environment;
 use \Twig_Loader_String;
 
@@ -33,6 +34,27 @@ class Layout extends Template
      * @var string
      */
     protected $_title = '';
+
+    /**
+     * Navigation items
+     *
+     * @var array
+     */
+    protected $_navigationItems = array();
+
+    /**
+     * Sub navigation items
+     *
+     * @var array
+     */
+    protected $_subNavigationItems = array();
+
+    /**
+     * Params
+     *
+     * @var array
+     */
+    protected $_params = array();
 
     /**
      * Constructor
@@ -69,14 +91,22 @@ class Layout extends Template
     {
         $title = trim($title);
 
+        // Allow to completely reset the title
         if ($reset) {
             $this->_title = $title;
             return $this;
         }
 
+        // Don't add to the title if it was blank
+        if ($title == '') {
+            return $this;
+        }
+
         if (trim($this->_title) == '') {
+            // If the current title is blank, we're replacing
             $this->_title = $title;
         } else {
+            // Otherwise prepend with separator
             $this->_title = $title . ' | ' . $this->_title;
         }
 
@@ -106,6 +136,46 @@ class Layout extends Template
     }
 
     /**
+     * Set Params
+     *
+     * @param array $params Params
+     * @return \Greengrape\View\Layout
+     */
+    public function setParams($params)
+    {
+        $this->_params = $params;
+        return $this;
+    }
+
+    /**
+     * Get a param by key name
+     *
+     * @param string $key Key name
+     * @return mixed
+     */
+    public function getParam($key)
+    {
+        if (!isset($this->_params[$key])) {
+            return null;
+        }
+
+        return $this->_params[$key];
+    }
+
+    /**
+     * Magic call method to handle fetching from params
+     *
+     * @param string $method Name of method called
+     * @param array $args Arguments with invocation
+     * @return void
+     */
+    public function __call($method, $args)
+    {
+        $key = $method;
+        return $this->getParam($key);
+    }
+
+    /**
      * Render the content in layout
      *
      * @param string $content The main content area to be rendered
@@ -125,5 +195,91 @@ class Layout extends Template
         $layoutContent = file_get_contents($this->getFile());
 
         return $twig->render($layoutContent, $vars);
+    }
+
+    /**
+     * Set navigation items
+     *
+     * @param array $navigationItems Array of navigation items
+     * @return \Greengrape\View\Layout
+     */
+    public function setNavigationItems($navigationItems)
+    {
+        $this->_navigationItems = $navigationItems;
+        return $this;
+    }
+
+    /**
+     * Get navigation items
+     *
+     * @return array
+     */
+    public function getNavigationItems()
+    {
+        return $this->_navigationItems;
+    }
+
+    /**
+     * Set sub navigation items
+     *
+     * @param array $navigationItems Array of navigation items
+     * @return \Greengrape\View\Layout
+     */
+    public function setSubNavigationItems($navigationItems)
+    {
+        $this->_subNavigationItems = $navigationItems;
+        return $this;
+    }
+
+    /**
+     * Get sub navigation items
+     *
+     * @return array
+     */
+    public function getSubNavigationItems()
+    {
+        return $this->_subNavigationItems;
+    }
+
+    /**
+     * Get Navigation for rendering
+     *
+     * @return string
+     */
+    public function getNavigation()
+    {
+        if (0 == count($this->getNavigationItems())) {
+            return '';
+        }
+
+        $templateFile = $this->getTheme()->getPath('templates/_navigation.html');
+        $template = new Template($templateFile, $this->getTheme());
+
+        $vars = array(
+            'navigation' => $this->getNavigationItems(),
+        );
+
+        return $template->render('', $vars);
+    }
+
+    /**
+     * Get subnavigation for rendering
+     *
+     * @return string
+     */
+    public function subnavigation()
+    {
+        if (0 == count($this->getSubNavigationItems())) {
+            return '';
+        }
+
+        $templateFile = $this->getTheme()->getPath('templates/_subnavigation.html');
+        $template = new Template($templateFile, $this->getTheme());
+
+        $vars = array(
+            'navigation' => $this->getSubNavigationItems(),
+        );
+
+        return $template->render('', $vars);
     }
 }
