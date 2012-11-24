@@ -47,6 +47,10 @@ class Kernel
         $this->setConfig($config);
 
         $this->setCache(new Cache(APP_PATH . '/cache/content'));
+
+        if (!$this->getConfig('enable_cache')) {
+            $this->getCache()->disable();
+        }
     }
 
     /**
@@ -57,7 +61,7 @@ class Kernel
      */
     public function setConfig($config)
     {
-        if (!isset($config['theme'])) {
+        if (!isset($config['theme']) || trim($config['theme']) == '') {
             $config['theme'] = 'fulcrum';
         }
 
@@ -139,7 +143,9 @@ class Kernel
         }
 
         $theme = new Theme($this->getConfig('theme'), $request->getBaseUrl());
-        $view  = new View($theme);
+        $theme->setDefaultTitle($this->getConfig('sitename'));
+
+        $view = new View($theme);
 
         $this->setupNavigationItems($sitemap, $uri, $view);
 
