@@ -122,11 +122,15 @@ class Handler
             $view->setParams(self::getKernel()->getConfig());
 
             if ($exception instanceof \Greengrape\Exception\NotFoundException) {
-                header('HTTP/1.1 404 Not Found');
+                $httpHeader   = 'HTTP/1.1 404 Not Found';
                 $templateFile = '404.html';
             } else {
-                header('HTTP/1.1 500 Internal Server Error');
+                $httpHeader   = 'HTTP/1.1 500 Internal Server Error';
                 $templateFile = 'error.html';
+            }
+
+            if (!headers_sent()) {
+                header($httpHeader);
             }
 
             $content = new Content('', $theme);

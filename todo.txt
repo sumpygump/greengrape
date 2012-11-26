@@ -1,0 +1,75 @@
+Features for greengrape
+--------
+[X] Request/router
+[X] Site map discovery 
+[X] Navigation generation
+[X] Correct issue with difference in generating navigation urls (/)
+[X] Set title based on main navigation
+[X] sub-navigation
+[X] Cache
+[X] config.ini reader
+[X] Support navigation order
+[X] Support folders hidden from navigation
+[X] Site name and other meta data available to layout
+[X] Update with html5 boilerplate
+[X] Handle images and links in markdown (non-theme images)
+[X] Other exceptions (e.g. Twig parse errors) thrown show as 404 but should be 500
+[X] Update README.md
+[X] Robust way of linking within site
+[ ] Unit tests
+[ ] template partials
+[ ] Add utility to check a theme
+[ ] clear cache command
+[ ] security
+[ ] Package as a .phar file?
+
+# What features do sites usually have?
+
+General
+ - A masthead, banner, site logo, brand (information about the site)
+    role=banner
+    (Site-oriented content typically includes things such as the logo or
+    identity of the site sponsor, and site-specific search tool. A banner
+    usually appears at the top of the page and typically spans the full width.)
+ - Main content body
+ - Footer information (role=contentinfo)
+
+Navigation (role=navigation)
+ - "Network" links (to external but related sites)
+ - Main navigation (usually on every page at the top, for easy access to
+   different sections of the site).
+ - Sub navigation (separate list or else as "dropdown menus")
+ - Table of contents
+ - Breadcrumbs
+ - Site search (role=search)
+ - Index (listing of articles)
+ - Site map
+
+Articles (role=main)
+ - Blog (entries like a journal that have an associated date and therefore a
+   sequence)
+   - entries are articles
+   - articles can have categories and tags
+ - RSS feeds / syndication
+ - Comments
+
+Social Media
+ - Social media links (static)
+ - Sharing capabilities (share the site, share a page, share an entry to
+   popular social media sites)
+   - addthis
+ - Popularity icons (indicating how many people have shared or liked the page).
+ - Sharing/commenting panels with fixed position. (share-rail)
+
+Asides (role=complementary)
+ - Listings to related content (dynamic)
+ - Links to related sites (static)
+ - Featured partners
+ - Events
+ - Top content (top stories)
+ - Trending content
+ - Other asides, such as polls, subscription forms, media gallery,
+   discussion/forum tie ins
+ - Ads (either in the banner or down the sides or in the between content in the
+   middle)
+

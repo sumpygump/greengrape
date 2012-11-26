@@ -1,0 +1,163 @@
+#!/usr/bin/env php
+<?php
+
+chdir('..');
+
+$generator = new GenerateTestFiles($argv);
+$generator->createTests();
+
+class GenerateTestFiles
+{
+    protected $_dryRun = false;
+    protected $_verbose = false;
+
+    public function __construct($argv)
+    {
+        if (in_array('--dry-run', $argv)) {
+            $this->_dryRun = true;
+        }
+
+        if (in_array('--verbose', $argv)
+            || in_array('-v', $argv)
+        ) {
+            $this->_verbose = true;
+        }
+    }
+
+    public function createTests()
+    {
+        $root = 'lib/';
+        $files = self::rglob($root . '*.php');
+
+        printf("Found %s php files in '%s'\n\n", count($files), $root);
+
+        $templateTestFile = file_get_contents('tests/_test-template.php');
+
+        foreach ($files as $file) {
+            $pathinfo = pathinfo($file);
+
+            // Figure out the class name
+            $className = $pathinfo['filename'];
+
+            // Figure out the namespace
+            $namespace = str_replace($root, '', $pathinfo['dirname']);
+            $namespace = str_replace('/', '\\', $namespace);
+
+            // Figure out the test namespace
+            $testNamespace = self::getTestNamespace($namespace);
+
+            $packageName = self::getPackageName($namespace);
+
+            $testClassName = $className . 'Test';
+
+            // Figure out the path to the test file
+            $testFile = 'tests/' . $pathinfo['dirname']
+                . DIRECTORY_SEPARATOR . $pathinfo['filename']
+                . 'Test.php';
+
+            if ($this->_verbose) {
+                printf(
+                    "File: %s\nClass: %s\nNamespace: %s\nTest File: %s\nTest Class: %s\nTest Namespace: %s\n\n",
+                    $file, $className, $namespace, $testFile, $testClassName, $testNamespace
+                );
+            }
+
+            if (!$this->_dryRun) {
+                printf("Checking file '%s'...", $testFile);
+                if (file_exists($testFile)) {
+                    echo "File exists. Skipping.\n";
+                    continue;
+                }
+
+                $testFileContents = $templateTestFile;
+                $testFileContents = str_replace('__className__', $className, $testFileContents);
+                $testFileContents = str_replace('__packageName__', $packageName, $testFileContents);
+                $testFileContents = str_replace('__namespace__', $namespace, $testFileContents);
+                $testFileContents = str_replace('__testClassName__', $testClassName, $testFileContents);
+                $testFileContents = str_replace('__testNamespace__', $testNamespace, $testFileContents);
+
+                // Write the file!
+                self::ensurePathExists($testFile);
+                file_put_contents($testFile, $testFileContents);
+                printf("Wrote file '%s'\n", $testFile);
+            }
+        }
+    }
+
+    /**
+     * Get the test namespace from a namespace
+     *
+     * Translate Project\View\CacheManager
+     * to Project\Tests\View\CacheManager
+     *
+     * @param string $namespace Namespace
+     * @return string New test namespace
+     */
+    public static function getTestNamespace($namespace)
+    {
+        $parts = explode('\\', $namespace);
+
+        // Take off the first item, it is the library name
+        $packageName = array_shift($parts);
+
+        // Add the word 'Tests' to the beginning
+        array_unshift($parts, 'Tests');
+
+        // Now add the library name back to the beginning
+        array_unshift($parts, $packageName);
+
+        return implode('\\', $parts);
+    }
+
+    public static function getPackageName($namespace)
+    {
+        $parts = explode('\\', $namespace);
+
+        // Take off the first item, it is the library name
+        $packageName = array_shift($parts);
+
+        return $packageName;
+    }
+
+    public static function ensurePathExists($filePath)
+    {
+        $dir = dirname($filePath);
+
+        if (!file_exists($dir)) {
+            mkdir($dir);
+        }
+    }
+
+    /**
+     * Recursive Glob
+     * 
+     * @param string $pattern Pattern
+     * @param int $flags Flags to pass to glob
+     * @param string $path Path to glob in
+     * @return array
+     */
+    public static function rglob($pattern, $flags = 0, $path = '')
+    {
+        if (!$path && ($dir = dirname($pattern)) != '.') {
+            if ($dir == '\\' || $dir == '/') {
+                // This gets into infinite loop
+                return array();
+            }
+            return self::rglob(
+                basename($pattern),
+                $flags, $dir . DIRECTORY_SEPARATOR
+            );
+        }
+
+        $paths = glob($path . '*', GLOB_ONLYDIR | GLOB_NOSORT);
+        $files = glob($path . $pattern, $flags);
+
+        foreach ($paths as $p) {
+            $files = array_merge(
+                $files, self::rglob($pattern, $flags, $p . DIRECTORY_SEPARATOR)
+            );
+        }
+
+        return $files;
+    }
+}

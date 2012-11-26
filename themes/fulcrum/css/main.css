@@ -161,20 +161,22 @@ li code {
     background-color:#847f00;
 }
 
-.main-navigation {
+.main-navigation,
+.main-navigation ul {
     padding:0;
 }
-.sub-navigation {
+.sub-navigation,
+.sub-navigation ul {
     padding:0;
     margin-top:-20px;
 }
-.sub-navigation.nav-pills > li > a,
-.sub-navigation.nav-pills > li > a:hover {
+.sub-navigation .nav-pills > li > a,
+.sub-navigation .nav-pills > li > a:hover {
     color:#340659;
 }
 
-.sub-navigation.nav-pills > .active > a,
-.sub-navigation.nav-pills > .active > a:hover {
+.sub-navigation .nav-pills > .active > a,
+.sub-navigation .nav-pills > .active > a:hover {
     color:#fff;
     background-color:#340659;
 }

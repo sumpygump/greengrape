@@ -7,6 +7,8 @@
 
 namespace Greengrape;
 
+use Greengrape\Exception\GreengrapeException;
+
 /**
  * Cache
  *
@@ -16,6 +18,15 @@ namespace Greengrape;
  */
 class Cache
 {
+    /**
+     * Whether to allow this script to exit
+     *
+     * Turn off for unit tests
+     *
+     * @var bool
+     */
+    public static $allowExit = true;
+
     /**
      * Whether cache is enabled
      *
@@ -48,12 +59,22 @@ class Cache
         $this->setDirectory($cacheDir);
     }
 
+    /**
+     * Disable the cache
+     *
+     * @return \Greengrape\Cache
+     */
     public function disable()
     {
         $this->_enabled = false;
         return $this;
     }
 
+    /**
+     * Enable the cache
+     *
+     * @return \Greengrape\Cache
+     */
     public function enable()
     {
         $this->_enabled = true;
@@ -69,11 +90,11 @@ class Cache
     public function setDirectory($cacheDir)
     {
         if (!file_exists($cacheDir)) {
-            throw new \Exception("Cannot set cache dir. Path does not exist: '$cacheDir'.");
+            throw new GreengrapeException("Cannot set cache dir. Path does not exist: '$cacheDir'.");
         }
 
         if (!is_writable($cacheDir)) {
-            throw new \Exception("Cannot set cache dir. Path not writable: '$cacheDir'.");
+            throw new GreengrapeException("Cannot set cache dir. Path not writable: '$cacheDir'.");
         }
 
         $this->_cacheDir = $cacheDir;
@@ -103,13 +124,14 @@ class Cache
             return false;
         }
 
-        // Save cachefilename indicating we are going to capture output
-        $this->_cachefilename = $this->getCacheFilename($uri);
+        // Save cacheFilename indicating we are going to capture output
+        $this->_cacheFilename = $this->getCacheFilename($uri);
 
-        if (file_exists($this->_cachefilename)) {
+        if (file_exists($this->_cacheFilename)) {
             echo "<!-- Cached file -->\n";
-            include $this->_cachefilename;
-            exit();
+            include $this->_cacheFilename;
+            self::safeExit();
+            return true;
         }
 
         ob_start();
@@ -124,13 +146,13 @@ class Cache
     public function end()
     {
         // If not enabled, do nothing
-        // If cachefilename is not set, we are not actively capturing output to 
+        // If cacheFilename is not set, we are not actively capturing output to 
         // save to the cache file, so do nothing.
-        if (!$this->_enabled || !$this->_cachefilename) {
+        if (!$this->_enabled || !$this->_cacheFilename) {
             return false;
         }
 
-        file_put_contents($this->_cachefilename, ob_get_contents());
+        file_put_contents($this->_cacheFilename, ob_get_contents());
         ob_end_flush();
         return true;
     }
@@ -165,6 +187,13 @@ class Cache
 
         if (file_exists($filename)) {
             unlink($filename);
+        }
+    }
+
+    public static function safeExit()
+    {
+        if (self::$allowExit) {
+            exit(0);
         }
     }
 }

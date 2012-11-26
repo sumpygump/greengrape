@@ -8,7 +8,7 @@
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', '1');
 
-define('APP_PATH', realpath(__DIR__));
+defined('APP_PATH') || define('APP_PATH', realpath(__DIR__));
 
 require_once 'vendor/autoload.php';
 
@@ -26,5 +26,6 @@ include_once 'lib/Greengrape/View/Template.php';
 include_once 'lib/Greengrape/View/Layout.php';
 include_once 'lib/Greengrape/View/Content.php';
 include_once 'lib/Greengrape/View/AssetManager.php';
+include_once 'lib/Greengrape/Exception/GreengrapeException.php';
 include_once 'lib/Greengrape/Exception/Handler.php';
 include_once 'lib/Greengrape/Exception/NotFoundException.php';

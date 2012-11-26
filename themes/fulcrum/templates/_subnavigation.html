@@ -1,9 +1,11 @@
-<ul class="sub-navigation nav nav-pills">
-    {% for item in navigation %}
-        {% if item.isActive %}
-    <li class="active"><a href="{{ item.href(true) }}">{{ item.text }}</a></li>
-        {% else %}
-    <li><a href="{{ item.href(true) }}">{{ item.text }}</a></li>
-        {% endif %}
-    {% endfor %}
-</ul>
+<nav class="sub-navigation">
+    <ul class="nav nav-pills">
+        {% for item in navigation %}
+            {% if item.isActive %}
+        <li class="active"><a href="{{ item.href(true) }}">{{ item.text }}</a></li>
+            {% else %}
+        <li><a href="{{ item.href(true) }}">{{ item.text }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</nav>
