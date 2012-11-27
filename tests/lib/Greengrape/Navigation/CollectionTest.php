@@ -1,22 +1,22 @@
 <?php
 /**
- * NavigationItem test class file
+ * Collection test class file
  *
  * @package Greengrape
  */
 
-namespace Greengrape\Tests;
+namespace Greengrape\Tests\Navigation;
 
-use Greengrape\NavigationItem;
+use Greengrape\Navigation\Collection;
 
 /**
- * NavigationItem Test
+ * Collection Test
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class NavigationItemTest extends \BaseTestCase
+class CollectionTest extends \BaseTestCase
 {
     /**
      * Setup before tests
@@ -25,7 +25,7 @@ class NavigationItemTest extends \BaseTestCase
      */
     public function setUp()
     {
-        //$this->_object = new NavigationItem();
+        //$this->_object = new Collection();
     }
 
     /**
@@ -45,6 +45,6 @@ class NavigationItemTest extends \BaseTestCase
      */
     public function testConstructNoArgs()
     {
-        $navigationItem = new NavigationItem();
+        $collection = new Collection();
     }
 }
