@@ -108,6 +108,13 @@ class KernelTest extends \BaseTestCase
 
     public function testExecute()
     {
+        ob_start();
+        $this->_object->execute();
+        $contents = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertContains('<title>', $contents);
+        $this->assertContains('</body>', $contents);
     }
 
     /**

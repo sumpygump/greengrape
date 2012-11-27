@@ -190,6 +190,13 @@ class Cache
         }
     }
 
+    /**
+     * Only exit if it is allowed
+     *
+     * Useful for unit testing
+     *
+     * @return void
+     */
     public static function safeExit()
     {
         if (self::$allowExit) {

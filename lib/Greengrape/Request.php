@@ -87,7 +87,7 @@ class Request
             $file = '/';
         }
 
-        return $file;
+        return urldecode($file);
     }
 
     /**

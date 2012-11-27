@@ -95,6 +95,10 @@ body {
     line-height:22px;
 }
 
+h1, h2, h3, .masthead {
+    font-family: 'CamboRegular', serif;
+}
+
 h1 {
     color:#847f00;
     font-size:35px;

@@ -7,6 +7,8 @@
 
 namespace Greengrape;
 
+use \ArrayAccess;
+
 /**
  * Config
  *
@@ -14,7 +16,7 @@ namespace Greengrape;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class Config implements \ArrayAccess
+class Config implements ArrayAccess
 {
     /**
      * Data storage for config settings

@@ -5,10 +5,10 @@
  * @package Greengrape
  */
 
-namespace Greengrape;
+namespace Greengrape\Navigation;
 
 /**
- * NavigationItem
+ * Navigation Item
  *
  * Represents an item in main or sub navigation
  *
@@ -16,7 +16,7 @@ namespace Greengrape;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class NavigationItem
+class Item
 {
     /**
      * The text of the navigation link
@@ -31,6 +31,13 @@ class NavigationItem
      * @var string
      */
     protected $_href = '';
+
+    /**
+     * The raw path name
+     *
+     * @var string
+     */
+    protected $_rawHref = '';
 
     /**
      * Whether the link is currently active
@@ -64,7 +71,7 @@ class NavigationItem
      * Set the text
      *
      * @param string $text Link text
-     * @return \Greengrape\NavigationItem
+     * @return \Greengrape\Navigation\Item
      */
     public function setText($text)
     {
@@ -94,10 +101,12 @@ class NavigationItem
      * Set the href of the link
      *
      * @param string $href Href
-     * @return \Greengrape\NavigationItem
+     * @return \Greengrape\Navigation\Item
      */
     public function setHref($href)
     {
+        $this->setRawHref($href);
+
         $href = self::translateOrderedName($href);
         $this->_href = $href;
         return $this;
@@ -115,17 +124,45 @@ class NavigationItem
                 // This prevents from doubling up the '/'
                 return $this->getBaseUrl('/');
             }
-            return $this->getBaseUrl('/' . $this->_href);
+
+            $pathParts = explode('/', rtrim($this->_href, '/'));
+            $path = '';
+            foreach ($pathParts as $part) {
+                $path .= urlencode($part) . '/';
+            }
+            return $this->getBaseUrl('/' . $path);
         }
 
         return $this->_href;
     }
 
     /**
+     * Set the actual raw folder name
+     *
+     * @param string $href Folder name
+     * @return \Greengrape\Navigation\Item
+     */
+    public function setRawHref($href)
+    {
+        $this->_rawHref = $href;
+        return $this;
+    }
+
+    /**
+     * Get the actual raw folder name
+     *
+     * @return string
+     */
+    public function getRawHref()
+    {
+        return $this->_rawHref;
+    }
+
+    /**
      * Set whether this navigation is active
      *
      * @param bool $value active state
-     * @return \Greengrape\NavigationItem
+     * @return \Greengrape\Navigation\Item
      */
     public function setIsActive($value)
     {

@@ -96,13 +96,15 @@ class Handler
     {
         $error = error_get_last();
 
-        if (!empty($error)) {
-            // This way fatal errors will get logged as well.
-            self::handleError(
-                $error['type'], $error['message'],
-                $error['file'], $error['line']
-            );
+        if (empty($error)) {
+            return false;
         }
+
+        // This way fatal errors will get handled as well.
+        self::handleError(
+            $error['type'], $error['message'],
+            $error['file'], $error['line']
+        );
     }
 
     /**

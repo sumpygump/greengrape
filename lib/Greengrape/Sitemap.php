@@ -7,7 +7,7 @@
 
 namespace Greengrape;
 
-use Greengrape\NavigationItem;
+use Greengrape\Navigation\Item as NavigationItem;
 
 /**
  * Sitemap
@@ -35,32 +35,16 @@ class Sitemap
     protected $_map = array();
 
     /**
-     * Main navigation
-     *
-     * @var array
-     */
-    protected $_mainNavigation = array();
-
-    /**
-     * Base URL
-     *
-     * @var string
-     */
-    protected $_baseUrl = '/';
-
-    /**
      * Constructor
      *
      * @param string $contentDir Content directory path
      * @return void
      */
-    public function __construct($contentDir, $baseUrl = '/')
+    public function __construct($contentDir)
     {
         $this->setContentDir($contentDir);
-        $this->setBaseUrl($baseUrl);
 
         $this->_map = $this->createMap();
-        $this->_mainNavigation = $this->createMainNavigation();
     }
 
     /**
@@ -86,32 +70,6 @@ class Sitemap
     }
 
     /**
-     * Set Base URL
-     *
-     * @param string $url URL
-     * @return \Greengrape\Sitemap
-     */
-    public function setBaseUrl($url)
-    {
-        $this->_baseUrl = $url;
-        return $this;
-    }
-
-    /**
-     * Get the base URL
-     *
-     * @return string
-     */
-    public function getBaseUrl($file = '')
-    {
-        if ($file == '') {
-            return $this->_baseUrl;
-        }
-
-        return $this->_baseUrl . $file;
-    }
-
-    /**
      * Get content location for given URL
      *
      * @param string $url Url
@@ -125,16 +83,6 @@ class Sitemap
         }
 
         return new Location($url);
-    }
-
-    /**
-     * Get main navigation items
-     *
-     * @return void
-     */
-    public function getMainNavigation()
-    {
-        return $this->_mainNavigation;
     }
 
     /**
@@ -190,80 +138,6 @@ class Sitemap
         }
 
         return $map;
-    }
-
-    /**
-     * Create main navigation
-     *
-     * @return array
-     */
-    public function createMainNavigation()
-    {
-        $path = $this->getContentDir() . DIRECTORY_SEPARATOR . '*';
-        $items = glob($path, GLOB_ONLYDIR);
-
-        $mainNavigation = array();
-        foreach ($items as $item) {
-            $item = str_replace($this->getContentDir() . '/', '', $item);
-
-            if (substr($item, 0, 1) == '_') {
-                // skip items that start with underscore, they are hidden
-                continue;
-            }
-
-            $mainNavigation[] = new NavigationItem($item, $item . '/', $this->getBaseUrl());
-        }
-
-        if (!empty($mainNavigation)) {
-            $home = new NavigationItem('Home', '/', $this->getBaseUrl());
-            array_unshift($mainNavigation, $home);
-        }
-
-        return $mainNavigation;
-    }
-
-    /**
-     * Create sub navigation items for a main item
-     *
-     * @param \Greengrape\NavigationItem $item Main navigation item
-     * @return array
-     */
-    public function createSubNavigationItems($item)
-    {
-        if (!$item || $item->getHref() == '/') {
-            // If no item available or if it is the home page, ignore the sub 
-            // navigation
-            return array();
-        }
-
-        $location = $this->getLocationForUrl($item->getHref());
-
-        if (dirname($location->getFile()) == '.') {
-            $basePath = $this->getContentDir() . DIRECTORY_SEPARATOR
-                . $location->getFile() . DIRECTORY_SEPARATOR;
-        } else {
-            $basePath = $this->getContentDir() . DIRECTORY_SEPARATOR
-                . dirname($location->getFile()) . DIRECTORY_SEPARATOR;
-        }
-
-        $items = glob($basePath . '*', GLOB_ONLYDIR);
-
-        $navigationItems = array();
-        foreach ($items as $subItem) {
-            $subItem = str_replace($basePath, '', $subItem);
-
-            if (substr($subItem, 0, 1) == '_') {
-                // skip items that start with underscore, they are hidden
-                continue;
-            }
-
-            $baseUrl = $item->getHref();
-            $navigationItems[] = new NavigationItem(
-                $subItem, $baseUrl . $subItem . '/', $this->getBaseUrl()
-            );
-        }
-
-        return $navigationItems;
     }
 
     /**

@@ -16,12 +16,15 @@ Features for greengrape
 [X] Other exceptions (e.g. Twig parse errors) thrown show as 404 but should be 500
 [X] Update README.md
 [X] Robust way of linking within site
+[X] Package as a .phar file? - No -- tried it, too many issues, maybe revisit later
 [ ] Unit tests
 [ ] template partials
 [ ] Add utility to check a theme
-[ ] clear cache command
-[ ] security
-[ ] Package as a .phar file?
+[ ] Clear cache command
+[ ] Security Concerns - access to files, web root
+[ ] Support HTML files as content
+[ ] Support Textile files as content
+[ ] Support Plain Text files as content
 
 # What features do sites usually have?
 
