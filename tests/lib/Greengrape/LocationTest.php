@@ -47,4 +47,47 @@ class LocationTest extends \BaseTestCase
     {
         $location = new Location();
     }
+
+    public function testConstructEmptyArray()
+    {
+        $location = new Location(array());
+
+        $this->assertEquals('', $location->getFile());
+    }
+
+    public function testConstructArrayWithValue()
+    {
+        $location = new Location(array('foo' => 'bar'));
+
+        $this->assertEquals('bar', $location->getFile());
+    }
+
+    public function testConstructInteger()
+    {
+        $location = new Location(2);
+
+        $this->assertEquals('2', $location->getFile());
+    }
+
+    public function testConstructString()
+    {
+        $location = new Location('foobar');
+
+        $this->assertEquals('foobar', $location->getFile());
+    }
+
+    public function testConstructArrayWithCanonical()
+    {
+        $location = new Location(array('canonical' => 'maka'));
+
+        $this->assertEquals('', $location->getFile());
+        $this->assertEquals('maka', $location->getCanonical());
+    }
+
+    public function testToString()
+    {
+        $location = new Location('foobar');
+
+        $this->assertEquals('foobar', $location->__toString());
+    }
 }

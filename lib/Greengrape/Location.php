@@ -77,6 +77,9 @@ class Location
      */
     public function setFile($file)
     {
+        if (is_array($file)) {
+            $file = reset($file);
+        }
         $this->_file = (string) $file;
         return $this;
     }

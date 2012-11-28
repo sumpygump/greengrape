@@ -34,8 +34,25 @@ class Collection implements Iterator
      */
     protected $_items = array();
 
+    /**
+     * Root item
+     *
+     * @var \Greengrape\Navigation\Item
+     */
     protected $_rootItem;
+
+    /**
+     * Content directory (root dir for all content files)
+     *
+     * @var string
+     */
     protected $_contentDir = '';
+
+    /**
+     * Base URL (web root - for generating links to navigation items)
+     *
+     * @var string
+     */
     protected $_baseUrl = '';
 
     /**
@@ -116,6 +133,16 @@ class Collection implements Iterator
 
         return $this->_contentDir . DIRECTORY_SEPARATOR
             . $this->_rootItem->getRawHref();
+    }
+
+    /**
+     * Return items array
+     *
+     * @return void
+     */
+    public function toArray()
+    {
+        return $this->_items;
     }
 
     /**
