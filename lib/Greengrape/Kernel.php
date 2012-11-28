@@ -150,8 +150,7 @@ class Kernel
             $this->redirect($request->getBaseUrl('/') . $location->getCanonical());
         }
 
-        $theme = new Theme($this->getConfig('theme'), $request->getBaseUrl());
-        $theme->setDefaultTitle($this->getConfig('sitename'));
+        $theme = $this->makeTheme($request);
 
         $view = new View($theme);
         $view->setParams($this->getConfig());
@@ -160,6 +159,26 @@ class Kernel
 
         echo $view->renderFile($this->getContentDir() . DIRECTORY_SEPARATOR . $location);
         $this->getCache()->end();
+    }
+
+    /**
+     * Make the theme object
+     *
+     * @param Greengrape\Request $request Request object
+     * @return Greengrape\View\Theme
+     */
+    public function makeTheme($request)
+    {
+        if ($request->preview_theme) {
+            $themeName = $request->preview_theme;
+        } else {
+            $themeName = $this->getConfig('theme');
+        }
+
+        $theme = new Theme($themeName, $request->getBaseUrl());
+        $theme->setDefaultTitle($this->getConfig('sitename'));
+
+        return $theme;
     }
 
     /**

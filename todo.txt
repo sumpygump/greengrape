@@ -17,11 +17,13 @@ Features for greengrape
 [X] Update README.md
 [X] Robust way of linking within site
 [X] Package as a .phar file? - No -- tried it, too many issues, maybe revisit later
+[X] Ability to preview a theme with ?preview_theme=themename
 [ ] Unit tests
 [ ] template partials
 [ ] Add utility to check a theme
 [ ] Clear cache command
 [ ] Security Concerns - access to files, web root
+[ ] Don't expose real paths in error messages (add a setting to allow for this, like dev mode)
 [ ] Support HTML files as content
 [ ] Support Textile files as content
 [ ] Support Plain Text files as content
