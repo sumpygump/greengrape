@@ -7,6 +7,8 @@
 
 namespace Greengrape\Navigation;
 
+use Greengrape\Exception\GreengrapeException;
+
 /**
  * Navigation Item
  *
@@ -75,6 +77,10 @@ class Item
      */
     public function setText($text)
     {
+        if (!is_string($text)) {
+            throw new GreengrapeException('Navigation Item text must be a string');
+        }
+
         $text = self::translateOrderedName($text);
 
         // Replace any '-{lowercase letter}', so 'rss-feed' becomes 'rss feed'
@@ -82,6 +88,10 @@ class Item
 
         // Uppercase first letters of each word, so 'rss feed' becomes 'Rss Feed'
         $text = ucwords($text);
+
+        if ($text == '') {
+            throw new GreengrapeException("Text cannot be blank. Input: '$text'");
+        }
 
         $this->_text = $text;
         return $this;
@@ -105,6 +115,10 @@ class Item
      */
     public function setHref($href)
     {
+        if (!is_string($href)) {
+            throw new GreengrapeException('Navigation Item href must be a string');
+        }
+
         $this->setRawHref($href);
 
         $href = self::translateOrderedName($href);
@@ -130,6 +144,7 @@ class Item
             foreach ($pathParts as $part) {
                 $path .= urlencode($part) . '/';
             }
+
             return $this->getBaseUrl('/' . $path);
         }
 
@@ -164,7 +179,7 @@ class Item
      * @param bool $value active state
      * @return \Greengrape\Navigation\Item
      */
-    public function setIsActive($value)
+    public function setIsActive($value = true)
     {
         $this->_isActive = (bool) $value;
         return $this;
@@ -188,7 +203,10 @@ class Item
      */
     public function setBaseUrl($url)
     {
-        $this->_baseUrl = $url;
+        // base url should not end in a slash, so we'll strip it off it it has 
+        // one on the end
+        $this->_baseUrl = rtrim($url, '/');
+
         return $this;
     }
 
