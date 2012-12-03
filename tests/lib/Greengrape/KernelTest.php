@@ -118,6 +118,23 @@ class KernelTest extends \BaseTestCase
     }
 
     /**
+     * testRedirect
+     *
+     * @expectedException Greengrape\Exception\GreengrapeException
+     * @return void
+     */
+    public function testRedirect()
+    {
+        $this->_object->redirect('0');
+    }
+
+    public function testSafeExit()
+    {
+        Kernel::$allowExit = false;
+        Kernel::safeExit();
+    }
+
+    /**
      * createConfigIni
      *
      * @param string $contents

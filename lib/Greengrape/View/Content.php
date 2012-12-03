@@ -9,6 +9,7 @@ namespace Greengrape\View;
 
 use dflydev\markdown\MarkdownParser;
 use Greengrape\Exception\NotFoundException;
+use Greengrape\Exception\GreengrapeException;
 
 /**
  * Content
@@ -57,11 +58,11 @@ class Content
      * @param string $file The file with the content to load
      * @return void
      */
-    public function __construct($file = '', $theme = null)
+    public function __construct($file = null, $theme = null)
     {
         $this->setTheme($theme);
 
-        if ($file != '') {
+        if (null !== $file && $file !== '') {
             $this->setFile($file);
             $this->readFile();
         }
@@ -108,6 +109,10 @@ class Content
      */
     public function getTheme()
     {
+        if (null === $this->_theme) {
+            throw new GreengrapeException('Theme not set.');
+        }
+
         return $this->_theme;
     }
 
@@ -200,6 +205,18 @@ class Content
     }
 
     /**
+     * Set title
+     *
+     * @param string $title Title
+     * @return \Greengrape\View\Content
+     */
+    public function setTitle($title)
+    {
+        $this->_title = $title;
+        return $this;
+    }
+
+    /**
      * Get the title (if any was set)
      *
      * @return string
@@ -265,10 +282,10 @@ class Content
         );
 
         $replacements = array(
-            '[$1](' . $baseUrl . '/$2)', // links inline
-            '[$1]: ' . $baseUrl . '/$2', // links referenced
-            '![$1](' . $baseUrl . '/assets', // image inline
-            '[$1]: ' . $baseUrl . '/assets', // images reference
+            '[$1](' . $baseUrl . '$2)', // links inline
+            '[$1]: ' . $baseUrl . '$2', // links referenced
+            '![$1](' . $baseUrl . 'assets', // image inline
+            '[$1]: ' . $baseUrl . 'assets', // images reference
         );
 
         $content = preg_replace($patterns, $replacements, $content);

@@ -42,6 +42,10 @@ class Request
             $requestInput = $_SERVER + $_GET;
         }
 
+        if (!is_array($requestInput)) {
+            $requestInput = array($requestInput);
+        }
+
         $this->_data = $requestInput;
         $this->_baseUrl = $this->_detectWwwRoot();
     }

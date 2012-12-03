@@ -25,7 +25,7 @@ class AssetManagerTest extends \BaseTestCase
      */
     public function setUp()
     {
-        //$this->_object = new AssetManager();
+        $this->_object = new AssetManager('testtheme');
     }
 
     /**
@@ -46,5 +46,66 @@ class AssetManagerTest extends \BaseTestCase
     public function testConstructNoArgs()
     {
         $assetManager = new AssetManager();
+    }
+
+    public function testConstructDefault()
+    {
+        $assetManager = new AssetManager('foobar1');
+
+        $this->assertTrue($assetManager instanceof AssetManager);
+    }
+
+    public function testSetBaseUrl()
+    {
+        $this->_object->setBaseUrl('/anotherBase');
+
+        $this->assertEquals('/anotherBase/', $this->_object->getBaseUrl());
+        $this->assertEquals('/anotherBase/a', $this->_object->getBaseUrl('a'));
+    }
+
+    public function testSetBaseUrlSlashAtEnd()
+    {
+        $this->_object->setBaseUrl('/anotherBase/');
+
+        $this->assertEquals('/anotherBase/', $this->_object->getBaseUrl());
+        $this->assertEquals('/anotherBase/test1', $this->_object->getBaseUrl('test1'));
+    }
+
+    public function testGetThemeBaseUrl()
+    {
+        $this->assertEquals('/themes/testtheme/', $this->_object->getThemeBaseUrl());
+    }
+
+    public function testFile()
+    {
+        $this->assertEquals('/themes/testtheme/css/a1.css', $this->_object->file('css/a1'));
+    }
+
+    public function testGetFilePathNoAssetRoot()
+    {
+        $file = $this->_object->getFilePath('a1');
+
+        $this->assertEquals('/themes/testtheme/a1', $file);
+    }
+
+    public function testGetFilePathWithExtension()
+    {
+        $file = $this->_object->getFilePath('a1.css');
+
+        $this->assertEquals('/themes/testtheme/a1.css', $file);
+    }
+
+    public function testGetFilePathWithUnknownExtension()
+    {
+        $file = $this->_object->getFilePath('a1.partytime');
+
+        $this->assertEquals('/themes/testtheme/a1.partytime', $file);
+    }
+
+    public function testGetFilePathWithUnsupportedAssetRoot()
+    {
+        $file = $this->_object->getFilePath('ggg/a2');
+
+        $this->assertEquals('/themes/testtheme/ggg/a2', $file);
     }
 }

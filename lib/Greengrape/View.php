@@ -7,9 +7,12 @@
 
 namespace Greengrape;
 
+use Greengrape\View\Theme;
 use Greengrape\View\Content;
 use Greengrape\View\Layout;
 use Greengrape\Exception\NotFoundException;
+use Greengrape\Navigation\Collection;
+use Greengrape\Navigation\Item;
 
 /**
  * View
@@ -79,7 +82,7 @@ class View
      * @param \Greengrape\View\Theme $theme Theme
      * @return \Greengrape\View
      */
-    public function setTheme($theme)
+    public function setTheme(Theme $theme)
     {
         $this->_theme = $theme;
         return $this;
@@ -141,10 +144,10 @@ class View
     /**
      * Set main navigation items
      *
-     * @param array $navigationItems Navigation items
+     * @param Greengrape\Navigation\Collection $navigationItems Navigation items
      * @return \Greengrape\View
      */
-    public function setNavigationItems($navigationItems)
+    public function setNavigationItems(Collection $navigationItems)
     {
         $this->_navigationItems = $navigationItems;
         return $this;
@@ -153,7 +156,7 @@ class View
     /**
      * Get Main navigation items
      *
-     * @return array
+     * @return Greengrape\Navigation\Collection
      */
     public function getNavigationItems()
     {
@@ -166,10 +169,10 @@ class View
      * From here we'll be able to pull information about the current main level 
      * navigation
      *
-     * @param \Greengrape\NavigationItem $item Item
+     * @param \Greengrape\Navigation\Item $item Item
      * @return \Greengrape\View
      */
-    public function setActiveNavigationItem($item)
+    public function setActiveNavigationItem(Item $item)
     {
         $this->_activeNavigationItem = $item;
         return $this;
@@ -178,7 +181,7 @@ class View
     /**
      * Get active navigation item (if any was set)
      *
-     * @return \Greengrape\NavigationItem
+     * @return \Greengrape\Navigation\Item
      */
     public function getActiveNavigationItem()
     {
@@ -188,10 +191,10 @@ class View
     /**
      * Set the active subnavigation item
      *
-     * @param \Greengrape\NavigationItem $item Navigation item
+     * @param \Greengrape\Navigation\Item $item Navigation item
      * @return \Greengrape\View
      */
-    public function setActiveSubNavigationItem($item)
+    public function setActiveSubNavigationItem(Item $item)
     {
         $this->_activeSubNavigationItem = $item;
         return $this;
@@ -200,7 +203,7 @@ class View
     /**
      * Get active subnavigation item
      *
-     * @return \Greengrape\NavigationItem
+     * @return \Greengrape\Navigation\Item
      */
     public function getActiveSubNavigationItem()
     {
@@ -210,10 +213,10 @@ class View
     /**
      * Set sub navigation items
      *
-     * @param array $items Items
+     * @param Greengrape\Navigation\Collection $items Items
      * @return \Greengrape\View
      */
-    public function setSubNavigationItems($items)
+    public function setSubNavigationItems(Collection $items)
     {
         $this->_subNavigationItems = $items;
         return $this;
@@ -222,7 +225,7 @@ class View
     /**
      * Get subnavigation items
      *
-     * @return array
+     * @return Greengrape\Navigation\Collection
      */
     public function getSubNavigationItems()
     {

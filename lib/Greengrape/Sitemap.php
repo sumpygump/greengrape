@@ -8,6 +8,7 @@
 namespace Greengrape;
 
 use Greengrape\Navigation\Item as NavigationItem;
+use Greengrape\Exception\GreengrapeException;
 
 /**
  * Sitemap
@@ -55,6 +56,10 @@ class Sitemap
      */
     public function setContentDir($contentDir)
     {
+        if (!is_string($contentDir)) {
+            throw new GreengrapeException('Content dir must be a string');
+        }
+
         $this->_contentDir = $contentDir;
         return $this;
     }
@@ -83,6 +88,16 @@ class Sitemap
         }
 
         return new Location($url);
+    }
+
+    /**
+     * Get a count of the number of items in the map
+     *
+     * @return int
+     */
+    public function getCountMapItems()
+    {
+        return count($this->_map);
     }
 
     /**

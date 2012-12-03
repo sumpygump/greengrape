@@ -55,11 +55,14 @@ class Theme
      * @param string $name Theme name
      * @return void
      */
-    public function __construct($name, $baseUrl = '/')
+    public function __construct($name, $baseUrl = '/', $themesDir = null)
     {
         $this->setName($name);
 
-        $themesDir = APP_PATH . DIRECTORY_SEPARATOR . 'themes';
+        if (null === $themesDir) {
+            $themesDir = APP_PATH . DIRECTORY_SEPARATOR . 'themes';
+        }
+
         $themePath = $themesDir . DIRECTORY_SEPARATOR . $this->getName();
 
         if (!file_exists($themePath)) {

@@ -13,6 +13,7 @@ use Greengrape\Cache;
 use Greengrape\Navigation\Collection as NavigationCollection;
 use Greengrape\View;
 use Greengrape\View\Theme;
+use Greengrape\Exception\GreengrapeException;
 
 /**
  * Kernel class
@@ -233,7 +234,7 @@ class Kernel
     public function redirect($url)
     {
         if (headers_sent()) {
-            throw new Exception("Headers already sent, cannot redirect! (to '$url')");
+            throw new GreengrapeException("Headers already sent, cannot redirect! (to '$url')");
         }
 
         header("Location: " . $redirectUrl);
