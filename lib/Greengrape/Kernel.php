@@ -203,6 +203,12 @@ class Kernel
         }
         $view->setNavigationItems($mainNavigationCollection);
 
+        if (!$view->getActiveNavigationItem()) {
+            // If we don't have an active navigation item, don't try to get the 
+            // sub navigation
+            return false;
+        }
+
         $subNavigationCollection = new NavigationCollection($this->getContentDir(), $request->getBaseUrl(), $view->getActiveNavigationItem());
         foreach ($subNavigationCollection as $subItem) {
             // If the first part of the URI matches this item's href then this 
@@ -237,7 +243,7 @@ class Kernel
             throw new GreengrapeException("Headers already sent, cannot redirect! (to '$url')");
         }
 
-        header("Location: " . $redirectUrl);
+        header("Location: " . $url);
 
         $this->safeExit();
     }
