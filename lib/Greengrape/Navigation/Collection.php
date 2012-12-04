@@ -103,6 +103,22 @@ class Collection implements Iterator
     }
 
     /**
+     * Add items to collection
+     *
+     * @param array $items Array of Navigation Items
+     * @return Greengrape\Navigation\Collection
+     */
+    public function addItems($items)
+    {
+        foreach ($items as $item) {
+            $item->setBaseUrl($this->_baseUrl);
+            $this->_items[] = $item;
+        }
+
+        return $this;
+    }
+
+    /**
      * Get child folders from specified root
      *
      * @return array

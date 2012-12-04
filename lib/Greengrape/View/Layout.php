@@ -9,6 +9,8 @@ namespace Greengrape\View;
 
 use Greengrape\View\Template;
 use Greengrape\View\Content;
+use Greengrape\Navigation\Collection;
+use Greengrape\Navigation\Item;
 use \Twig_Environment;
 use \Twig_Loader_String;
 
@@ -200,7 +202,7 @@ class Layout extends Template
     /**
      * Set navigation items
      *
-     * @param array $navigationItems Array of navigation items
+     * @param Greengrape\Navigation\Collection $navigationItems Array of navigation items
      * @return \Greengrape\View\Layout
      */
     public function setNavigationItems($navigationItems)
@@ -267,7 +269,7 @@ class Layout extends Template
      *
      * @return string
      */
-    public function subnavigation()
+    public function getSubnavigation()
     {
         if (0 == count($this->getSubNavigationItems())) {
             return '';

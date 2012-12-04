@@ -119,7 +119,6 @@ class Handler
 
         try {
             $theme = new Theme(self::getKernel()->getConfig('theme'), $request->getBaseUrl());
-            var_dump($theme);
             $view  = new View($theme);
 
             $view->setParams(self::getKernel()->getConfig());
