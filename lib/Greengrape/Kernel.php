@@ -239,7 +239,7 @@ class Kernel
      */
     public function redirect($url)
     {
-        if (headers_sent()) {
+        if (headers_sent() || PHP_SAPI == 'cli') {
             throw new GreengrapeException("Headers already sent, cannot redirect! (to '$url')");
         }
 

@@ -122,17 +122,6 @@ class ConfigTest extends \BaseTestCase
         $this->assertEquals('bar', $this->_object->get('foo'));
     }
 
-    /**
-     * testAccessMultiArray
-     *
-     * @expectedException PHPUnit_Framework_Error
-     * @return void
-     */
-    public function testAccessMultiArray()
-    {
-        $x = $this->_object['foo']['bar'];
-    }
-
     public function createConfigIni($contents = '')
     {
         $filename = 'testconfig.ini';
