@@ -39,11 +39,11 @@ class Content
     protected $_content = '';
 
     /**
-     * Theme object
+     * View object
      *
-     * @var \Greengrape\View\Theme
+     * @var \Greengrape\View
      */
-    protected $_theme;
+    protected $_view;
 
     /**
      * Title
@@ -53,14 +53,22 @@ class Content
     protected $_title = '';
 
     /**
+     * Metadata
+     *
+     * @var array
+     */
+    protected $_metadata = array();
+
+    /**
      * Constructor
      *
      * @param string $file The file with the content to load
+     * @param Greengrape\View The view object
      * @return void
      */
-    public function __construct($file = null, $theme = null)
+    public function __construct($file = null, $view = null)
     {
-        $this->setTheme($theme);
+        $this->setView($view);
 
         if (null !== $file && $file !== '') {
             $this->setFile($file);
@@ -91,29 +99,39 @@ class Content
     }
 
     /**
-     * Set the theme object
+     * Set the view object
      *
-     * @param \Greengrape\View\Theme $theme Theme object
+     * @param \Greengrape\View $theme Theme object
      * @return \Greengrape\View\Content
      */
-    public function setTheme($theme)
+    public function setView($view)
     {
-        $this->_theme = $theme;
+        $this->_view = $view;
         return $this;
     }
 
     /**
-     * Get the theme object
+     * Get the view object
+     *
+     * @return \Greengrape\View
+     */
+    public function getView()
+    {
+        if (null === $this->_view) {
+            throw new GreengrapeException('View not set.');
+        }
+
+        return $this->_view;
+    }
+
+    /**
+     * Get the theme (from the view object)
      *
      * @return \Greengrape\View\Theme
      */
     public function getTheme()
     {
-        if (null === $this->_theme) {
-            throw new GreengrapeException('Theme not set.');
-        }
-
-        return $this->_theme;
+        return $this->getView()->getTheme();
     }
 
     /**
@@ -194,14 +212,71 @@ class Content
             throw new NotFoundException("Content file not found: '" . $this->getFile() . "'");
         }
 
-        $fileContents = file_get_contents($this->getFile());
+        $fileContents = trim(file_get_contents($this->getFile()));
 
-        $metadata = array(
+        $metadata = $this->readMetadata($fileContents);
+
+        if (isset($metadata['title'])) {
+            $this->setTitle($metadata['title']);
+        }
+
+        $this->setTemplateFile($metadata['template']);
+        $this->setMetadata($metadata);
+        $this->setContent($fileContents);
+    }
+
+    /**
+     * Read the meta data from the contents
+     *
+     * @param string $contents Contents from content file
+     * @return array Array of meta data
+     */
+    public function readMetadata(&$contents)
+    {
+        $defaults = array(
             'template' => 'default.html',
         );
 
-        $this->setTemplateFile($metadata['template']);
-        $this->setContent($fileContents);
+        if (!preg_match('/^---\n([^\-]*)\n---/', $contents, $matches)) {
+            return $defaults;
+        }
+
+        $pos = strlen($matches[0]);
+
+        $contents = substr($contents, $pos);
+
+        $metadata = parse_ini_string($matches[1]);
+
+        return array_merge($defaults, $metadata);
+    }
+
+    /**
+     * Set the meta data
+     *
+     * @param array $metadata
+     * @return Greengrape\View\Content
+     */
+    public function setMetadata($metadata)
+    {
+        $this->_metadata = $metadata;
+        return $this;
+    }
+
+    /**
+     * Get metadata
+     *
+     * @param string $key A specific metadata item to return (optional)
+     * @return array
+     */
+    public function getMetadata($key = null)
+    {
+        if (null === $key) {
+            return $this->_metadata;
+        }
+
+        if (array_key_exists($key, $this->_metadata)) {
+            return $this->_metadata[$key];
+        }
     }
 
     /**
@@ -245,7 +320,24 @@ class Content
         $content = $this->filterMarkdown($content);
 
         $htmlContent = $markdownParser->transformMarkdown($content);
-        return $this->getTemplate()->render($htmlContent);
+
+        $vars = $this->getMetadata();
+
+        // Handle any asides (partials)
+        $asides = $this->getMetadata('aside');
+        if (is_array($asides)) {
+            unset($vars['aside']);
+            $vars['aside'] = array();
+            foreach ($asides as $aside) {
+                $vars['aside'][$aside] = $this->getView()->renderPartial($aside);
+            }
+        }
+
+        return $this->getTemplate()->render($htmlContent, $vars);
+    }
+
+    public function renderSubContent($file)
+    {
     }
 
     /**

@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="content span8" role="main">
+        {{ content|raw }}
+    </div>
+    <div class="aside-container span4">
+        {% for item in aside %}
+        <aside>
+            {{ item|raw }}
+        </aside>
+        {% endfor %}
+    </div>
+</div>

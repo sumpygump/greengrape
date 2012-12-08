@@ -12,6 +12,7 @@ defined('APP_PATH') || define('APP_PATH', realpath(__DIR__));
 
 require_once 'vendor/autoload.php';
 
+// TODO: Use an autoloader for these classes
 // Greengrape classes
 include_once 'lib/Greengrape/Kernel.php';
 include_once 'lib/Greengrape/Config.php';

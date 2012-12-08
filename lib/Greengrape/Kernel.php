@@ -154,11 +154,12 @@ class Kernel
         $theme = $this->makeTheme($request);
 
         $view = new View($theme);
+        $view->setContentDir($this->getContentDir());
         $view->setParams($this->getConfig());
 
         $this->setupNavigationItems($request, $uri, $view);
 
-        echo $view->renderFile($this->getContentDir() . DIRECTORY_SEPARATOR . $location);
+        echo $view->renderContentFile($location);
         $this->getCache()->end();
     }
 

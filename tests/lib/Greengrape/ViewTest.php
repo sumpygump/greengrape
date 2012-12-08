@@ -39,6 +39,7 @@ class ViewTest extends \BaseTestCase
 
         $testThemesDir = APP_PATH . DIRECTORY_SEPARATOR . 'tests';
         $this->_object = new View(new MockTheme('foobar', '/', $testThemesDir));
+        $this->_object->setContentDir(realpath('.'));
     }
 
     /**
@@ -201,14 +202,14 @@ class ViewTest extends \BaseTestCase
      */
     public function testRenderFileNoExists()
     {
-        $output = $this->_object->renderFile('fake.md');
+        $output = $this->_object->renderContentFile('fake.md');
     }
 
     public function testRenderFile()
     {
         file_put_contents('foobar/templates/contentfile.md', '#hiya');
 
-        $output = $this->_object->renderFile('foobar/templates/contentfile.md');
+        $output = $this->_object->renderContentFile('foobar/templates/contentfile.md');
         $this->assertContains('<h1>hiya</h1>', $output);
 
         unlink('foobar/templates/contentfile.md');

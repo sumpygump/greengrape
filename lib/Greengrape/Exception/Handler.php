@@ -135,7 +135,7 @@ class Handler
                 header($httpHeader);
             }
 
-            $content = new Content('', $theme);
+            $content = new Content('', $view);
             $content->setTemplateFile($templateFile);
             $content->setContent($exception->getMessage());
 

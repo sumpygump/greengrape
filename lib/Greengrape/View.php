@@ -66,6 +66,13 @@ class View
     protected $_params = array();
 
     /**
+     * Content dir
+     *
+     * @var string
+     */
+    protected $_contentDir = '';
+
+    /**
      * Constructor
      *
      * @param string $themePath Base of theme path
@@ -117,6 +124,32 @@ class View
         $layout->setParams($this->getParams());
 
         return $layout;
+    }
+
+    /**
+     * Set content dir (The root of where all the content files are)
+     *
+     * @param string $dir Directory
+     * @return \Greengrape\View
+     */
+    public function setContentDir($dir)
+    {
+        $this->_contentDir = $dir;
+        return $this;
+    }
+
+    /**
+     * Get the content directory
+     *
+     * @return string
+     */
+    public function getContentDir()
+    {
+        if ($this->_contentDir == '') {
+            return APP_PATH . DIRECTORY_SEPARATOR . 'content';
+        }
+
+        return $this->_contentDir;
     }
 
     /**
@@ -235,14 +268,31 @@ class View
     /**
      * Render content inside the layout
      *
+     * Look for the file in the content directory
+     *
      * @param string $content Content string
      * @return string
      */
-    public function renderFile($file)
+    public function renderContentFile($file)
     {
-        $content = new Content($file, $this->getTheme());
+        $file = $this->getContentDir() . DIRECTORY_SEPARATOR . $file;
+
+        $content = new Content($file, $this);
 
         return $this->render($content);
+    }
+
+    /**
+     * Render partial
+     *
+     * @param mixed $file
+     * @return void
+     */
+    public function renderPartial($file)
+    {
+        $file = $this->getContentDir() . DIRECTORY_SEPARATOR . $file;
+        $content = new Content($file, $this);
+        return $content->render();
     }
 
     /**

@@ -19,6 +19,7 @@ Features for greengrape
 [X] Package as a .phar file? - No -- tried it, too many issues, maybe revisit later
 [X] Ability to preview a theme with ?preview_theme=themename
 [X] Unit tests
+[ ] Content meta data
 [ ] Template partials
 [ ] Add utility to check a theme for errors
 [ ] Clear cache command

@@ -9,6 +9,7 @@ namespace Greengrape\Tests\View;
 
 use Greengrape\View\Content;
 use Greengrape\View\Theme;
+use Greengrape\View;
 
 /**
  * Content Test
@@ -34,8 +35,11 @@ class ContentTest extends \BaseTestCase
         $testThemesDir = APP_PATH . DIRECTORY_SEPARATOR . 'tests';
         $theme = new Theme('foobar', '/baseurl', $testThemesDir);
 
+        $view = new View($theme);
+        $view->setContentDir(realpath('.'));
+
         file_put_contents('mycontentfile.md', '#contents');
-        $this->_object = new Content('mycontentfile.md', $theme);
+        $this->_object = new Content('mycontentfile.md', $view);
     }
 
     /**
