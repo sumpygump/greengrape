@@ -73,7 +73,7 @@ class Kernel
     public function setConfig($config)
     {
         if (!isset($config['theme']) || trim($config['theme']) == '') {
-            $config['theme'] = 'fulcrum';
+            $config['theme'] = 'grapeseed';
         }
 
         $this->_config = $config;

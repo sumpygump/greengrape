@@ -27,6 +27,7 @@ include_once 'lib/Greengrape/View/Theme.php';
 include_once 'lib/Greengrape/View/Template.php';
 include_once 'lib/Greengrape/View/Layout.php';
 include_once 'lib/Greengrape/View/Content.php';
+include_once 'lib/Greengrape/View/ContentPartial.php';
 include_once 'lib/Greengrape/View/AssetManager.php';
 include_once 'lib/Greengrape/Exception/GreengrapeException.php';
 include_once 'lib/Greengrape/Exception/Handler.php';

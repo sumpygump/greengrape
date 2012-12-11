@@ -60,6 +60,13 @@ class Content
     protected $_metadata = array();
 
     /**
+     * Template filename
+     *
+     * @var string
+     */
+    protected $_defaultTemplateFile = 'main.html';
+
+    /**
      * Constructor
      *
      * @param string $file The file with the content to load
@@ -154,7 +161,7 @@ class Content
     public function getTemplate()
     {
         if (null == $this->_template) {
-            $this->setTemplateFile('default.html');
+            $this->setTemplateFile($this->_defaultTemplateFile);
         }
 
         return $this->_template;
@@ -234,10 +241,10 @@ class Content
     public function readMetadata(&$contents)
     {
         $defaults = array(
-            'template' => 'default.html',
+            'template' => $this->_defaultTemplateFile,
         );
 
-        if (!preg_match('/^---\n([^\-]*)\n---/', $contents, $matches)) {
+        if (!preg_match('/^---\s*\v(.*)\v---\s*\v/s', $contents, $matches)) {
             return $defaults;
         }
 

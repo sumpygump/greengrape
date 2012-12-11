@@ -32,7 +32,7 @@ class Config implements ArrayAccess
      */
     protected $_defaults = array(
         'sitename'     => '[Greengrape]',
-        'theme'        => 'fulcrum',
+        'theme'        => 'grapeseed',
         'enable_cache' => true,
     );
 

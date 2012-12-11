@@ -91,7 +91,7 @@ textarea {
 body {
     padding-top:20px;
     font-family:serif;
-    font-size:16px;
+    font-size:14px;
     line-height:22px;
 }
 
@@ -185,6 +185,7 @@ li code {
     background-color:#340659;
 }
 
+/* Misc */
 .anchor-link {
     opacity: 0;
     color: #000;

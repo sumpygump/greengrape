@@ -22,6 +22,8 @@ Features for greengrape
 [ ] Content meta data
 [ ] Template partials
 [ ] Add utility to check a theme for errors
+[ ] Rename layout.* calls from within templates to site.* and have this object
+also available in partialed templates.
 [ ] Clear cache command
 [ ] Security Concerns - access to files, web root
 [ ] Don't expose real paths in error messages (add a setting to allow for this, like dev mode)

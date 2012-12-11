@@ -35,7 +35,7 @@ class ViewTest extends \BaseTestCase
         mkdir('foobar');
         mkdir('foobar' . DIRECTORY_SEPARATOR . 'templates');
         file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'layout.html', '{{ layout.content|raw }}');
-        file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default.html', '{{ content | raw }}');
+        file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'main.html', '{{ content | raw }}');
 
         $testThemesDir = APP_PATH . DIRECTORY_SEPARATOR . 'tests';
         $this->_object = new View(new MockTheme('foobar', '/', $testThemesDir));

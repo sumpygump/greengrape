@@ -22,11 +22,11 @@ class Theme
     /**
      * Name of this theme
      *
-     * The default theme is fulcrum
+     * The default theme is grapeseed
      *
      * @var string
      */
-    protected $_name = 'fulcrum';
+    protected $_name = 'grapeseed';
 
     /**
      * Path to theme files

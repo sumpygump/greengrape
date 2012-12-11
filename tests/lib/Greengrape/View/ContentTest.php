@@ -30,7 +30,7 @@ class ContentTest extends \BaseTestCase
         mkdir('foobar');
         mkdir('foobar' . DIRECTORY_SEPARATOR . 'templates');
         file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'layout.html', '{{ layout.content|raw }}');
-        file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default.html', '{{ content | raw }}');
+        file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'main.html', '{{ content | raw }}');
 
         $testThemesDir = APP_PATH . DIRECTORY_SEPARATOR . 'tests';
         $theme = new Theme('foobar', '/baseurl', $testThemesDir);
@@ -94,7 +94,7 @@ class ContentTest extends \BaseTestCase
         $this->_object->setTemplate(null);
 
         $this->assertEquals(
-            'default.html', basename($this->_object->getTemplate()->getFile())
+            'main.html', basename($this->_object->getTemplate()->getFile())
         );
     }
 

@@ -89,7 +89,7 @@ class KernelTest extends \BaseTestCase
         $this->_object->setConfig($config);
 
         $this->assertEquals('b', $this->_object->getConfig('a'));
-        $this->assertEquals('fulcrum', $this->_object->getConfig('theme'));
+        $this->assertEquals('grapeseed', $this->_object->getConfig('theme'));
     }
 
     public function testGetConfig()
@@ -100,7 +100,7 @@ class KernelTest extends \BaseTestCase
 
         $this->_object->setConfig($config);
 
-        $config['theme'] = 'fulcrum';
+        $config['theme'] = 'grapeseed';
 
         $this->assertEquals($config, $this->_object->getConfig());
         $this->assertNull($this->_object->getConfig('notsetvalue'));

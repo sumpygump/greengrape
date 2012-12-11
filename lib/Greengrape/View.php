@@ -9,6 +9,7 @@ namespace Greengrape;
 
 use Greengrape\View\Theme;
 use Greengrape\View\Content;
+use Greengrape\View\ContentPartial;
 use Greengrape\View\Layout;
 use Greengrape\Exception\NotFoundException;
 use Greengrape\Navigation\Collection;
@@ -291,7 +292,7 @@ class View
     public function renderPartial($file)
     {
         $file = $this->getContentDir() . DIRECTORY_SEPARATOR . $file;
-        $content = new Content($file, $this);
+        $content = new ContentPartial($file, $this);
         return $content->render();
     }
 
