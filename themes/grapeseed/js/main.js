@@ -13,6 +13,13 @@ var AnchorLinks = {
     }
 };
 
+var HighlightCode = {
+    init: function() {
+        hljs.initHighlighting();
+    }
+}
+
 $(function() {
     AnchorLinks.init();
+    HighlightCode.init();
 });

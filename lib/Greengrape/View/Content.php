@@ -7,7 +7,7 @@
 
 namespace Greengrape\View;
 
-use dflydev\markdown\MarkdownParser;
+use Greengrape\MarkdownExtendedParser;
 use Greengrape\Exception\NotFoundException;
 use Greengrape\Exception\GreengrapeException;
 
@@ -322,7 +322,7 @@ class Content
             $content = $this->getContent();
         }
 
-        $markdownParser = new MarkdownParser();
+        $markdownParser = new MarkdownExtendedParser();
 
         $content = $this->filterMarkdown($content);
 

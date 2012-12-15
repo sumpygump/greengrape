@@ -20,6 +20,7 @@ include_once 'lib/Greengrape/Request.php';
 include_once 'lib/Greengrape/Sitemap.php';
 include_once 'lib/Greengrape/Cache.php';
 include_once 'lib/Greengrape/Location.php';
+include_once 'lib/Greengrape/MarkdownExtendedParser.php';
 include_once 'lib/Greengrape/Navigation/Collection.php';
 include_once 'lib/Greengrape/Navigation/Item.php';
 include_once 'lib/Greengrape/View.php';

@@ -19,7 +19,7 @@ Features for greengrape
 [X] Package as a .phar file? - No -- tried it, too many issues, maybe revisit later
 [X] Ability to preview a theme with ?preview_theme=themename
 [X] Unit tests
-[ ] Content meta data
+[X] Content meta data
 [ ] Template partials
 [ ] Add utility to check a theme for errors
 [ ] Rename layout.* calls from within templates to site.* and have this object
@@ -30,6 +30,7 @@ also available in partialed templates.
 [ ] Support HTML files as content
 [ ] Support Textile files as content
 [ ] Support Plain Text files as content
+[ ] Add a TOC for headings in the documents
 
 # What features do sites usually have?
 

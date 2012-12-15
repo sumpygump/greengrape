@@ -92,7 +92,6 @@ body {
     padding-top:20px;
     font-family:serif;
     font-size:14px;
-    line-height:22px;
 }
 
 h1, h2, h3, .masthead {
@@ -119,6 +118,10 @@ h3 {
 
 pre {
     background-color:#f0e9a0;
+}
+pre code {
+    background-color:#f0e9a0;
+    font-size:14px;
 }
 code {
     color:#5b4e08;
