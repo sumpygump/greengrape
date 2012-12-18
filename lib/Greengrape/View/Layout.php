@@ -284,4 +284,22 @@ class Layout extends Template
 
         return $template->render('', $vars);
     }
+
+    /**
+     * Get include (Include another template file)
+     *
+     * @param string $filename Filename of tempalte file
+     * @return string
+     */
+    public function getInclude($filename)
+    {
+        $templateFile = $this->getTheme()->getPath('templates/' . $filename);
+        $template = new Template($templateFile, $this->getTheme());
+
+        $vars = array(
+            'layout' => $this,
+        );
+
+        return $template->render('', $vars);
+    }
 }

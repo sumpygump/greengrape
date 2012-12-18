@@ -343,10 +343,6 @@ class Content
         return $this->getTemplate()->render($htmlContent, $vars);
     }
 
-    public function renderSubContent($file)
-    {
-    }
-
     /**
      * Run any filters required before the markdown content is parsed
      *

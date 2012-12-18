@@ -20,11 +20,7 @@
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
         <div class="container">
-            <div class="masthead row" role="banner">
-                <img class="pull-left" src="{{ asset.file('img/greengrape.jpg') }}"
-                title="Painting by Abbey Ryan (ryanstudio.blogspot.com)" />
-                <div class="site-name">{{ layout.sitename }}</div>
-            </div>
+            {{ layout.include('_banner.html')|raw }}
             <hr />
 
             {{ layout.navigation|raw }}
