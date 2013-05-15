@@ -21,7 +21,7 @@ Features for greengrape
 [X] Unit tests
 [X] Content meta data
 [X] Template partials
-[ ] Add utility to check a theme for errors
+[X] Add utility to check a theme for errors
 [ ] Clear cache command
 [ ] Security Concerns - access to files, web root
 [ ] Don't expose real paths in error messages (add a setting to allow for this, like dev mode)

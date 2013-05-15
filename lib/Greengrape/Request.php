@@ -86,7 +86,14 @@ class Request
         $uriParts = parse_url($this->getRequestUri());
         $path     = $uriParts['path'];
 
-        $file = str_replace($this->getBaseUrl('/'), '', $path);
+        // When the base Url is /, we need to strip off the leftmost slash from 
+        // the path to correctly match an entry in the site map
+        if ($this->getBaseUrl() == '/') {
+            $file = ltrim($path, '/');
+        } else {
+            $file = str_replace($this->getBaseUrl('/'), '', $path);
+        }
+
         if ($file == '') {
             $file = '/';
         }
@@ -111,11 +118,17 @@ class Request
      */
     public function getBaseUrl($file = '')
     {
+        $baseUrl = $this->_baseUrl;
+
         if ($file == '') {
-            return $this->_baseUrl;
+            return $baseUrl;
         }
 
-        return $this->_baseUrl . $file;
+        if ($this->getBaseUrl() == '/') {
+            $baseUrl = ltrim($baseUrl, '/');
+        }
+
+        return $baseUrl . $file;
     }
 
     /**

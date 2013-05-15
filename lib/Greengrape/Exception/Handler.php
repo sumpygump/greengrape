@@ -137,7 +137,7 @@ class Handler
 
             $content = new Content('', $view);
             $content->setTemplateFile($templateFile);
-            $content->setContent($exception->getMessage());
+            $content->setContent($exception->getMessage() . '<pre>' . $exception->getTraceAsString() . '</pre>');
 
             $vars = array(
                 'trace' => self::displayException($exception),
