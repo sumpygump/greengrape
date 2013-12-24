@@ -199,7 +199,7 @@ class Item
      * Set Base URL
      *
      * @param string $url URL
-     * @return \Greengrape\Sitemap
+     * @return \Greengrape\Navigation\Item
      */
     public function setBaseUrl($url)
     {

@@ -23,6 +23,7 @@ include_once 'lib/Greengrape/Location.php';
 include_once 'lib/Greengrape/MarkdownExtendedParser.php';
 include_once 'lib/Greengrape/Navigation/Collection.php';
 include_once 'lib/Greengrape/Navigation/Item.php';
+include_once 'lib/Greengrape/Chronolog/Collection.php';
 include_once 'lib/Greengrape/View.php';
 include_once 'lib/Greengrape/View/Theme.php';
 include_once 'lib/Greengrape/View/Template.php';

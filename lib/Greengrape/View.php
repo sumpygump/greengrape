@@ -306,15 +306,23 @@ class View
     {
         $layout = $this->getLayout();
 
-        if ($item = $this->getActiveNavigationItem()) {
-            $layout->setTitle($item->getText());
-        }
+        if ($content->getName() != 'index') {
+            if ($item = $this->getActiveNavigationItem()) {
+                $layout->setTitle($item->getText());
+            }
 
-        if ($subItem = $this->getActiveSubNavigationItem()) {
-            $layout->setTitle($subItem->getText());
+            if ($subItem = $this->getActiveSubNavigationItem()) {
+                $layout->setTitle($subItem->getText());
+            }
         }
 
         $layout->setTitle($content->getTitle());
+
+        // Fetch all the metadata from the content and set it to the layout so 
+        // it can be accessed by the layout view template.
+        foreach ($content->getMetadata() as $name => $value) {
+            $layout->setParam($name, $value);
+        }
 
         return $layout->render($content->render(), $vars);
     }

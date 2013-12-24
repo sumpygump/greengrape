@@ -10,6 +10,8 @@ namespace Greengrape\View;
 use Greengrape\MarkdownExtendedParser;
 use Greengrape\Exception\NotFoundException;
 use Greengrape\Exception\GreengrapeException;
+use Greengrape\Chronolog\Collection as EntryCollection;
+use Greengrape\Navigation\Item as NavItem;
 
 /**
  * Content
@@ -24,6 +26,11 @@ use Greengrape\Exception\GreengrapeException;
  */
 class Content
 {
+    const TYPE_PAGE      = 'page';
+    const TYPE_ENTRY     = 'entry';
+    const TYPE_ENTRIES   = 'entries';
+    const TYPE_CHRONOLOG = 'chronolog';
+
     /**
      * File to load
      *
@@ -70,7 +77,7 @@ class Content
      * Constructor
      *
      * @param string $file The file with the content to load
-     * @param Greengrape\View The view object
+     * @param Greengrape\View $view The view object
      * @return void
      */
     public function __construct($file = null, $view = null)
@@ -205,6 +212,25 @@ class Content
     }
 
     /**
+     * Get blurb content
+     *
+     * @return string Transformed content
+     */
+    public function getBlurb()
+    {
+        $content = $this->getContent();
+        $content = strip_tags($content);
+
+        // Replace multiple blank lines with just one blank line
+        $content = preg_replace('/\r?\n(\s*\r?\n){2,}/', "\n\n", $content);
+        $content = explode("\n", $content);
+
+        $content = implode("\n", array_slice($content, 0, 10));
+        
+        return $this->transform(rtrim($content) . '...');
+    }
+
+    /**
      * Read the content file
      *
      * This will retrieve the content from the file
@@ -242,9 +268,10 @@ class Content
     {
         $defaults = array(
             'template' => $this->_defaultTemplateFile,
+            'type'     => self::TYPE_PAGE,
         );
 
-        if (!preg_match('/^---\s*\v(.*)\v---\s*\v/s', $contents, $matches)) {
+        if (!preg_match('/^---\s*\v(.*)\v---\s*\v*/s', $contents, $matches)) {
             return $defaults;
         }
 
@@ -299,13 +326,58 @@ class Content
     }
 
     /**
+     * Get the name of this content, which is the filename sans extension
+     *
+     * @return void
+     */
+    public function getName()
+    {
+        $path = $this->getFile();
+        $name = pathinfo($path, PATHINFO_FILENAME);
+
+        return $name;
+    }
+
+    /**
      * Get the title (if any was set)
      *
      * @return string
      */
     public function getTitle()
     {
+        if (!$this->_title) {
+            return $this->getName();
+        }
+
         return $this->_title;
+    }
+
+    /**
+     * Get URL for this content
+     *
+     * @return void
+     */
+    public function getUrl()
+    {
+        $path = $this->getFile();
+        $name = $this->getName();
+        
+        // The base URL tells us the web root of the application
+        $baseUrl = $this->getTheme()->getAssetManager()->getBaseUrl();
+
+        // The content dir gives the full path to the directory of this 
+        // collection.
+        $contentDir = $this->getView()->getContentDir();
+
+        // Strip off the content dir from the full path so we're left with the 
+        // relative web root of the file
+        $webPath = dirname(str_replace($contentDir . DIRECTORY_SEPARATOR, '', $path));
+        $webPath = NavItem::translateOrderedName($webPath);
+
+        // The url is the baseUrl + '/' + webPath + '/' + name of object
+        $url = rtrim($baseUrl, '/') . '/' . $webPath . '/' . $name; 
+
+        return $url;
     }
 
     /**
@@ -322,13 +394,24 @@ class Content
             $content = $this->getContent();
         }
 
-        $markdownParser = new MarkdownExtendedParser();
+        $pageType = $this->getMetadata('type');
 
-        $content = $this->filterMarkdown($content);
-
-        $htmlContent = $markdownParser->transformMarkdown($content);
-
+        $htmlContent = $this->transform($content);
         $vars = $this->getMetadata();
+
+        // Chronolog page type is a listing of entries
+        if ($pageType == self::TYPE_CHRONOLOG
+            || $pageType == self::TYPE_ENTRIES
+            || $pageType == self::TYPE_ENTRY
+        ) {
+            $root = dirname($this->_file);
+            $baseUrl = $this->getTheme()->getAssetManager()->getBaseUrl();
+            $entries = new EntryCollection($root, $this->getView());
+
+            $entries->reverse();
+
+            $vars['entries'] = $entries;
+        }
 
         // Handle any asides (partials)
         $asides = $this->getMetadata('aside');
@@ -341,6 +424,23 @@ class Content
         }
 
         return $this->getTemplate()->render($htmlContent, $vars);
+    }
+
+    /**
+     * Transform (using markdown engine)
+     *
+     * @param string $content Content
+     * @return void
+     */
+    public function transform($content)
+    {
+        $markdownParser = new MarkdownExtendedParser();
+
+        $content = $this->filterMarkdown($content);
+
+        $htmlContent = $markdownParser->transformMarkdown($content);
+
+        return $htmlContent;
     }
 
     /**

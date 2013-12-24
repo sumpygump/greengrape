@@ -150,6 +150,19 @@ class Layout extends Template
     }
 
     /**
+     * Set an individual param
+     *
+     * @param string $paramName Param key
+     * @param mixed $value Value of param to set
+     * @return \Greengrape\View\Layout
+     */
+    public function setParam($paramName, $value)
+    {
+        $this->_params[$paramName] = $value;
+        return $this;
+    }
+
+    /**
      * Get a param by key name
      *
      * @param string $key Key name
