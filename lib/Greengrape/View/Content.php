@@ -271,7 +271,7 @@ class Content
             'type'     => self::TYPE_PAGE,
         );
 
-        if (!preg_match('/^---\s*\v(.*)\v---(?:$|\s\v)/s', $contents, $matches)) {
+        if (!preg_match('/^---\s*\v(.*)\v---(?:$|\s|\s\v)/s', $contents, $matches)) {
             return $defaults;
         }
 
