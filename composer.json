@@ -3,5 +3,15 @@
     "require": {
         "twig/twig": "1.*",
         "dflydev/markdown": "1.*"
+    },
+    "autoload": {
+        "psr-0": { "": "lib/" }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Greengrape\\ScriptHandler::createConfigFile",
+            "Greengrape\\ScriptHandler::createHtaccessFile",
+            "Greengrape\\ScriptHandler::makeCacheWritable"
+        ]
     }
 }

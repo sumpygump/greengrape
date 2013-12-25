@@ -58,6 +58,10 @@ class Config implements ArrayAccess
      */
     public function loadFile($filename)
     {
+        if (!file_exists($filename)) {
+            throw new \Exception("Config file does not exist or is not readable: '$filename'");
+        }
+
         $raw = parse_ini_file($filename, true);
 
         $this->_data = array_merge($this->_data, $raw);
