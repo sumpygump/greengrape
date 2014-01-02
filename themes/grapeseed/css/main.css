@@ -65,25 +65,6 @@ fieldset {
     padding: 0;
 }
 
-/*
- * Allow only vertical resizing of textareas.
- */
-
-textarea {
-    resize: vertical;
-}
-
-/* ==========================================================================
-   Chrome Frame prompt
-   ========================================================================== */
-
-.chromeframe {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
-}
-
 /* ---------------------------------------------------------------------
 RESET CSS (thanks Eric Meyer)
 ------------------------------------------------------------------------ */
@@ -195,7 +176,7 @@ body {
     color: #333333;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
     font-family: 'CamboRegular', serif;
 }
@@ -216,11 +197,18 @@ h2 {
 }
 
 h3 {
-    color:#333;
-    font-size:20px;
+    color: #333333;
+    font-size: 20px;
     margin: 20px 0 10px 0;
+    position: relative;
     line-height: 40px;
-    position:relative;
+}
+
+h4 {
+    color: #333333;
+    font-size: 18px;
+    margin: 20px 0 10px 0;
+    line-height: 30px;
 }
 
 p {
@@ -237,6 +225,10 @@ li code {
 
 a {
     text-decoration: none;
+}
+
+em {
+    font-style: italic;
 }
 
 /*--------------------------------------------------
@@ -473,6 +465,35 @@ h3:hover .anchor-link {
 
 .pull-left {
     float: left;
+}
+
+/*--------------------------------------------------
+ Alert block
+----------------------------------------------------*/
+.alert-error h3,
+.alert-error h4 {
+    color: #a94442;
+}
+
+.alert-error p {
+    padding: 10px;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.alert-block pre {
+    padding: 10px;
+    background-color: #eeeeee;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    overflow-y: scroll;
 }
 
 /*
