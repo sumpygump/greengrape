@@ -9,6 +9,7 @@ namespace Greengrape\View;
 
 use Greengrape\View\AssetManager;
 use Greengrape\Exception\NotFoundException;
+use Greengrape\Exception\GreengrapeException;
 
 /**
  * Theme class
@@ -22,11 +23,11 @@ class Theme
     /**
      * Name of this theme
      *
-     * The default theme is fulcrum
+     * The default theme is grapeseed
      *
      * @var string
      */
-    protected $_name = 'fulcrum';
+    protected $_name = 'grapeseed';
 
     /**
      * Path to theme files
@@ -50,16 +51,37 @@ class Theme
     protected $_title = '';
 
     /**
+     * A list of required theme files
+     *
+     * @var array
+     */
+    protected $_requiredThemeFiles = array(
+        'layout.html',
+        'templates/main.html',
+        'templates/default.html',
+    );
+
+    /**
+     * Storage for required theme files missing from this theme
+     *
+     * @var array
+     */
+    protected $_missingThemeFiles = array();
+
+    /**
      * Constructor
      *
      * @param string $name Theme name
      * @return void
      */
-    public function __construct($name, $baseUrl = '/')
+    public function __construct($name, $baseUrl = '/', $themesDir = null, $fallback = false)
     {
         $this->setName($name);
 
-        $themesDir = APP_PATH . DIRECTORY_SEPARATOR . 'themes';
+        if (null === $themesDir) {
+            $themesDir = APP_PATH . DIRECTORY_SEPARATOR . 'themes';
+        }
+
         $themePath = $themesDir . DIRECTORY_SEPARATOR . $this->getName();
 
         if (!file_exists($themePath)) {
@@ -69,6 +91,34 @@ class Theme
         $this->setPath($themePath);
 
         $this->setAssetManager(new AssetManager($this->getName(), $baseUrl));
+    }
+
+    /**
+     * Validate required files
+     *
+     * @return bool
+     */
+    public function validateRequiredFiles()
+    {
+        foreach ($this->_requiredThemeFiles as $file) {
+            $fullFilePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
+
+            if (!file_exists($fullFilePath)) {
+                $this->_missingThemeFiles[] = $file;
+            }
+        }
+
+        return !((bool) count($this->_missingThemeFiles));
+    }
+
+    /**
+     * Get missing theme files list
+     *
+     * @return array
+     */
+    public function getMissingThemeFiles()
+    {
+        return $this->_missingThemeFiles;
     }
 
     /**

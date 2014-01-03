@@ -1,0 +1,167 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Check Theme PHP CLI script
+ *
+ * @package Grapeseed
+ */
+
+// This file is in bin directory. Let's move up a directory so that the paths 
+// are always relative to the project root.
+$dir = realpath(dirname(dirname(__FILE__)));
+chdir($dir);
+
+require 'init.php';
+
+$program = array_shift($argv);
+
+$checkTheme = new CheckTheme($argv);
+$checkTheme->execute();
+
+/**
+ * Check Theme
+ *
+ * Console client to check the theme and produce output
+ *
+ * @package Grapeseed
+ * @author Jansen Price <jansen.price@gmail.com>
+ * @version $Id$
+ */
+class CheckTheme
+{
+    /**
+     * Arguments passed into script
+     *
+     * @var array
+     */
+    protected $_args = array();
+
+    /**
+     * Constructor
+     *
+     * @param array $argv CLI arguments
+     * @return void
+     */
+    public function __construct($argv)
+    {
+        $this->_args = $argv;
+    }
+
+    /**
+     * Execute main logic
+     *
+     * @return void
+     */
+    public function execute()
+    {
+        if (empty($this->_args) || trim($this->_args[0]) == '') {
+            $this->showUsage();
+            $this->listAvailableThemes();
+            exit(0);
+        }
+
+        $themeName = $this->_args[0];
+
+        if (!$this->isThemeAvailable($themeName)) {
+            echo "Theme '$themeName' not found.\n";
+            $this->showUsage();
+            $this->listAvailableThemes();
+            exit(0);
+        }
+
+        $this->validateTheme($themeName);
+    }
+
+    /**
+     * Show command usage
+     *
+     * @return void
+     */
+    public function showUsage()
+    {
+        echo "Usage: check-theme <theme-name>\n";
+    }
+
+    /**
+     * List available themes
+     *
+     * Searches files in the themes directory
+     * @return void
+     */
+    public function listAvailableThemes()
+    {
+        $themes = $this->getAvailableThemes();
+        echo "\nList of available themes:\n";
+        foreach ($themes as $theme) {
+            echo '  ' . $theme . "\n";
+        }
+    }
+
+    /**
+     * Get a list of available themes in themes directory
+     *
+     * @return array
+     */
+    public function getAvailableThemes()
+    {
+        $themes = glob('themes/*');
+
+        $themeNames = array();
+
+        foreach ($themes as $path) {
+            $themeNames[$path] = basename($path);
+        }
+
+        return $themeNames;
+    }
+
+    /**
+     * Determine whether a given theme name is available (theme exists in 
+     * themes directory).
+     *
+     * @param string $themeName Name of theme
+     * @return bool
+     */
+    public function isThemeAvailable($themeName)
+    {
+        $availableThemes = $this->getAvailableThemes();
+
+        $themeName = trim(strtolower($themeName));
+
+        foreach ($availableThemes as $availableTheme) {
+            if (strtolower($availableTheme) == $themeName) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Validate a theme
+     *
+     * @param string $themeName
+     * @return void
+     */
+    public function validateTheme($themeName)
+    {
+        print "Checking the theme '$themeName'...";
+        $theme = new Greengrape\View\Theme($themeName, '/');
+
+        $result = $theme->validateRequiredFiles();
+        print "done.\n";
+
+        if (!$result) {
+            echo "Error! The theme '$themeName' is missing the following required files:\n";
+            $missingFiles = $theme->getMissingThemeFiles();
+            $count = 1;
+            foreach ($missingFiles as $file) {
+                printf("  %s. %s\n", $count++, $file);
+            }
+            exit(1);
+        }
+
+        echo "Theme '$themeName' OK.\n";
+        exit(0);
+    }
+}

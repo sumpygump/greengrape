@@ -9,6 +9,8 @@ namespace Greengrape\View;
 
 use Greengrape\View\Template;
 use Greengrape\View\Content;
+use Greengrape\Navigation\Collection;
+use Greengrape\Navigation\Item;
 use \Twig_Environment;
 use \Twig_Loader_String;
 
@@ -148,6 +150,19 @@ class Layout extends Template
     }
 
     /**
+     * Set an individual param
+     *
+     * @param string $paramName Param key
+     * @param mixed $value Value of param to set
+     * @return \Greengrape\View\Layout
+     */
+    public function setParam($paramName, $value)
+    {
+        $this->_params[$paramName] = $value;
+        return $this;
+    }
+
+    /**
      * Get a param by key name
      *
      * @param string $key Key name
@@ -200,7 +215,7 @@ class Layout extends Template
     /**
      * Set navigation items
      *
-     * @param array $navigationItems Array of navigation items
+     * @param Greengrape\Navigation\Collection $navigationItems Array of navigation items
      * @return \Greengrape\View\Layout
      */
     public function setNavigationItems($navigationItems)
@@ -267,7 +282,7 @@ class Layout extends Template
      *
      * @return string
      */
-    public function subnavigation()
+    public function getSubnavigation()
     {
         if (0 == count($this->getSubNavigationItems())) {
             return '';
@@ -278,6 +293,24 @@ class Layout extends Template
 
         $vars = array(
             'navigation' => $this->getSubNavigationItems(),
+        );
+
+        return $template->render('', $vars);
+    }
+
+    /**
+     * Get include (Include another template file)
+     *
+     * @param string $filename Filename of tempalte file
+     * @return string
+     */
+    public function getInclude($filename)
+    {
+        $templateFile = $this->getTheme()->getPath('templates/' . $filename);
+        $template = new Template($templateFile, $this->getTheme());
+
+        $vars = array(
+            'layout' => $this,
         );
 
         return $template->render('', $vars);

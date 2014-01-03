@@ -1,0 +1,37 @@
+<div class="wrapper">
+    <div class="grid">
+        <div class="grid-col grid-col_8of12">
+            <div class="content" role="main">
+                <h1>{{ title }}</h1>
+                {{ content|raw }}
+                {% if entries|length > 0 %}
+                    {% for entry in entries %}
+                    <h2 class="entry-hdg">{{ entry.title }}</h2>
+                    <p class="entry-date">{{ entry.metadata('date') }}</p>
+                    <div class="entry">
+                        {{ entry.blurb|raw }}
+                        <p><a href="{{ entry.url }}">Read More</a></p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="grid-col grid-col_4of12">
+            <div class="content">
+                {% if entries|length > 0 %}
+                    <h3>Entries</h3>
+                    <ul class="entries-list">
+                    {% for entry in entries %}
+                        <li><a href="{{ entry.url }}">{{ entry.title }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                {% for item in aside %}
+                <aside>
+                    {{ item|raw }}
+                </aside>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

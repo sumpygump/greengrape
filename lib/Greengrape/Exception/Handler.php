@@ -96,13 +96,15 @@ class Handler
     {
         $error = error_get_last();
 
-        if (!empty($error)) {
-            // This way fatal errors will get logged as well.
-            self::handleError(
-                $error['type'], $error['message'],
-                $error['file'], $error['line']
-            );
+        if (empty($error)) {
+            return false;
         }
+
+        // This way fatal errors will get handled as well.
+        self::handleError(
+            $error['type'], $error['message'],
+            $error['file'], $error['line']
+        );
     }
 
     /**
@@ -122,16 +124,20 @@ class Handler
             $view->setParams(self::getKernel()->getConfig());
 
             if ($exception instanceof \Greengrape\Exception\NotFoundException) {
-                header('HTTP/1.1 404 Not Found');
+                $httpHeader   = 'HTTP/1.1 404 Not Found';
                 $templateFile = '404.html';
             } else {
-                header('HTTP/1.1 500 Internal Server Error');
+                $httpHeader   = 'HTTP/1.1 500 Internal Server Error';
                 $templateFile = 'error.html';
             }
 
-            $content = new Content('', $theme);
+            if (!headers_sent()) {
+                header($httpHeader);
+            }
+
+            $content = new Content('', $view);
             $content->setTemplateFile($templateFile);
-            $content->setContent($exception->getMessage());
+            $content->setContent($exception->getMessage() . '<pre>' . $exception->getTraceAsString() . '</pre>');
 
             $vars = array(
                 'trace' => self::displayException($exception),

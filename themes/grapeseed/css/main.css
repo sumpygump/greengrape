@@ -1,0 +1,620 @@
+/* ---------------------------------------------------------------------
+CSS for Grapeseed Greengrape Theme
+
+Original Author: Jansen Price
+Contributors: 
+
+Target Browsers: All
+Media Type: Screen, Print
+Width: All Sizes
+------------------------------------------------------------------------ */
+
+/* ---------------------------------------------------------------------
+ RESET CSS (thanks Eric Meyer)
+------------------------------------------------------------------------ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font-weight: inherit;
+    font-style: inherit;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+:focus {
+    outline: 0;
+}
+
+html {
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+/* ---------------------------------------------------------------------
+ H5BP Opinionated defaults
+------------------------------------------------------------------------ */
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* ---------------------------------------------------------------------
+ HTML5 Block / Inline Block declarations
+------------------------------------------------------------------------ */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, main, menu, nav, section {
+    display: block;
+}
+
+audio, canvas, video {
+    display: inline-block;
+}
+
+/* ---------------------------------------------------------------------
+ Form Reset Styles
+------------------------------------------------------------------------ */
+input[type=search]::-webkit-search-cancel-button,
+input[type=search]::-webkit-search-decoration,
+input[type=search]::-webkit-search-results-button,
+input[type=search]::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+}
+
+input {
+    -webkit-appearance: none;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+textarea {
+    overflow: auto;
+    vertical-align: top;
+    resize: vertical;
+}
+
+::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* ---------------------------------------------------------------------
+ Base Styles
+------------------------------------------------------------------------ */
+
+body {
+    margin: 0;
+    font-family: serif;
+    font-size: 16px;
+    line-height: 22px;
+    color: #333333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    font-family: 'CamboRegular', serif;
+}
+
+h1 {
+    color: #847f00;
+    font-size: 35px;
+    line-height: 40px;
+    margin: 10px 0;
+}
+
+h2 {
+    color: #5b4e08;
+    font-size: 28px;
+    margin: 40px 0 10px 0;
+    position: relative;
+    line-height: 40px;
+}
+
+h3 {
+    color: #333333;
+    font-size: 20px;
+    margin: 20px 0 10px 0;
+    position: relative;
+    line-height: 40px;
+}
+
+h4 {
+    color: #333333;
+    font-size: 18px;
+    margin: 20px 0 10px 0;
+    line-height: 30px;
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+li {
+    line-height: 22px;
+}
+
+li code {
+    line-height: 1.7;
+}
+
+a {
+    text-decoration: none;
+}
+
+em {
+    font-style: italic;
+}
+
+/* ---------------------------------------------------------------------
+ Container
+------------------------------------------------------------------------ */
+
+.container {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    zoom: 1;
+}
+
+/* ---------------------------------------------------------------------
+ Masthead
+------------------------------------------------------------------------ */
+
+.masthead {
+    margin-left: 0;
+    font-family: 'CamboRegular', serif;
+}
+
+.masthead:before,
+.masthead:after,
+.nav-pills:before,
+.nav-pills:after
+{
+    content: "";
+    display: table;
+    line-height: 0;
+}
+
+.nav-pills:after,
+.masthead:after {
+    clear: both;
+}
+
+.masthead img {
+    border-radius:12px;
+}
+
+.masthead .site-name {
+    font-size: 52px;
+    line-height: 52px;
+    margin-top: 33px;
+    margin-left: 124px;
+    font-weight: bold;
+    color: #5b4e08;
+}
+
+/* ---------------------------------------------------------------------
+ Footer
+------------------------------------------------------------------------ */
+
+.footer {
+    border-top:1px solid #ddd;
+    margin-top:40px;
+    padding:20px;
+    font-size:12px;
+    text-align:center;
+    color:#5b4e08;
+}
+
+/* ---------------------------------------------------------------------
+ Nav
+------------------------------------------------------------------------ */
+
+.nav {
+    margin-bottom: 20px;
+    margin-left: 0;
+    list-style: none;
+    margin: 0 0 25px 0;
+}
+
+.nav-pills li {
+    float: left;
+    line-height: 20px;
+}
+
+.nav-pills > li > a {
+    display: block;
+    padding: 8px 12px;
+    margin-top: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    line-height: 14px;
+}
+
+.nav-pills > li > a:hover {
+    text-decoration: none;
+    background-color: #eeeeee;
+}
+
+.nav-pills > li > a,
+.nav-pills > li > a:hover {
+    color:#847f00;
+}
+
+.nav-pills > .active > a,
+.nav-pills > .active > a:hover {
+    color:#fff;
+    background-color:#847f00;
+}
+
+.main-navigation,
+.main-navigation ul {
+    padding:0;
+}
+.sub-navigation,
+.sub-navigation ul {
+    padding:0;
+    margin-top:-20px;
+}
+.sub-navigation .nav-pills > li > a,
+.sub-navigation .nav-pills > li > a:hover {
+    color:#340659;
+}
+
+.sub-navigation .nav-pills > .active > a,
+.sub-navigation .nav-pills > .active > a:hover {
+    color:#fff;
+    background-color:#340659;
+}
+
+/* ---------------------------------------------------------------------
+ Anchor Link
+------------------------------------------------------------------------ */
+
+.anchor-link {
+    opacity: 0;
+    color: #000;
+    font-family: "Helvetica Neue", "Helvetica", Arial, san-serif;
+    font-size: 18px;
+    -webkit-transition: opacity linear .1s;
+    left: -15px;
+    padding-right: 10px;
+    position: absolute;
+}
+
+.anchor-link:hover {
+    opacity: 1 !important;
+    color: #000;
+    text-decoration: none;
+}
+
+h2:hover .anchor-link,
+h3:hover .anchor-link {
+    opacity: .5;
+}
+
+/* ---------------------------------------------------------------------
+ Content Area
+------------------------------------------------------------------------ */
+
+.content ul {
+    margin: 0 0 10px 25px;
+    list-style-type: disc;
+}
+
+.content ol {
+    margin: 0 0 10px 25px;
+    list-style-type: decimal;
+}
+
+.content code,
+.content pre {
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.content code {
+    color:#5b4e08;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    padding: 2px 4px;
+    font-size: 14px;
+}
+
+.content pre {
+    background-color: #f0e9a0;
+    display: block;
+    font-size: 13px;
+    line-height: 20px;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    margin: 0 0 10px;
+    padding: 9.5px;
+}
+
+.content pre code {
+    background-color: #f0e9a0;
+    border: none;
+}
+
+.content table {
+    max-width: 100%;
+    background-color: transparent;
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #dddddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.content table th,
+.content table td {
+    padding: 8px;
+    line-height: 20px;
+    vertical-align: top;
+    border-top: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+}
+
+.content table th {
+    font-weight: bold;
+    border-bottom: 2px solid #dddddd;
+    background-color: #f2f2f2;
+}
+
+.content table thead th {
+    vertical-align: bottom;
+}
+
+/* ---------------------------------------------------------------------
+ Helper classes
+------------------------------------------------------------------------ */
+
+.pull-left {
+    float: left;
+}
+
+/* ---------------------------------------------------------------------
+ Alert block
+------------------------------------------------------------------------ */
+.alert-error h3,
+.alert-error h4 {
+    color: #a94442;
+}
+
+.alert-error p {
+    padding: 10px;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.alert-block pre {
+    padding: 10px;
+    background-color: #eeeeee;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    overflow-y: scroll;
+}
+
+/* ---------------------------------------------------------------------
+ Utility: Image replacement
+------------------------------------------------------------------------ */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 100%;
+}
+
+/* ---------------------------------------------------------------------
+ Utility: Hide from both screenreaders and browsers: h5bp.com/u
+------------------------------------------------------------------------ */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+/* ---------------------------------------------------------------------
+ Utility: Hide only visually, but available for screenreaders: h5bp.com/v
+------------------------------------------------------------------------ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/* ---------------------------------------------------------------------
+ Utility: Hide visually and from screenreaders, but maintain layout
+------------------------------------------------------------------------ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/* ---------------------------------------------------------------------
+ Print styles
+ Inlined to avoid required HTTP connection: h5bp.com/r
+------------------------------------------------------------------------ */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

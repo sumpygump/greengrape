@@ -2,7 +2,7 @@
 sitename = "Greengrape"
 
 ; Theme to use
-theme = "fulcrum"
+theme = "grapeseed"
 
 ; Whether cache is enabled
 enable_cache = false

@@ -48,7 +48,7 @@ class AssetManager
         $baseUrl = rtrim($baseUrl, '/');
 
         $this->setBaseUrl($baseUrl);
-        $this->setThemeBaseUrl($this->getBaseUrl() . '/themes/' . $themeName);
+        $this->setThemeBaseUrl($this->getBaseUrl('/themes/' . $themeName));
     }
 
     /**
@@ -70,11 +70,13 @@ class AssetManager
      */
     public function getBaseUrl($file = '')
     {
+        $baseUrl = rtrim($this->_baseUrl, '/') . '/';
+
         if ($file == '') {
-            return $this->_baseUrl;
+            return $baseUrl;
         }
 
-        return $this->_baseUrl . $file;
+        return $baseUrl . ltrim($file, '/');
     }
 
     /**
@@ -145,7 +147,7 @@ class AssetManager
     /**
      * Detect asset type (css, js) based on folder requested
      *
-     * This is expecting that all '.js' files will be in 'js/', etc.
+     * This is expecting that all file in 'js/' should default to ending in '.js'
      *
      * @param string $filepath Path to a file
      * @return string

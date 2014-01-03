@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{{ layout.title }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="{{ layout.description }}">
+        <meta name="author" content="{{ layout.author }}">
+        <link rel="stylesheet" href="{{ asset.file('lib/highlight/styles/magula.css') }}" />
+        <link rel="stylesheet" media="screen and (min-width: 1em)" href="{{ asset.file('css/main') }}" />
+        <link rel="stylesheet" media="screen and (min-width: 940px)" href="{{ asset.file('css/screen-lg') }}" />
+        <link rel="stylesheet" href="{{ asset.file('fonts/cambo/stylesheet.css') }}" />
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="container">
+            {{ layout.include('_banner.html')|raw }}
+            <hr />
+
+            {{ layout.navigation|raw }}
+            {{ layout.subnavigation|raw }}
+
+            {{ layout.content|raw }}
+
+            <footer class="footer" role="contentinfo">
+                <p><em>Grapeseed</em> theme by sumpygump | Site powered by Greengrape.</p>
+            </footer>
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="{{ asset.file('js/jquery-1.8.3.min.js') }}"><\/script>')</script>
+        <script type="text/javascript" src="{{ asset.file('lib/highlight/highlight.pack.js') }}"></script>
+        <script type="text/javascript" src="{{ asset.file('js/plugins') }}"></script>
+        <script type="text/javascript" src="{{ asset.file('js/main') }}"></script>
+    </body>
+</html>

@@ -7,9 +7,13 @@
 
 namespace Greengrape;
 
+use Greengrape\View\Theme;
 use Greengrape\View\Content;
+use Greengrape\View\ContentPartial;
 use Greengrape\View\Layout;
 use Greengrape\Exception\NotFoundException;
+use Greengrape\Navigation\Collection;
+use Greengrape\Navigation\Item;
 
 /**
  * View
@@ -63,6 +67,13 @@ class View
     protected $_params = array();
 
     /**
+     * Content dir
+     *
+     * @var string
+     */
+    protected $_contentDir = '';
+
+    /**
      * Constructor
      *
      * @param string $themePath Base of theme path
@@ -79,7 +90,7 @@ class View
      * @param \Greengrape\View\Theme $theme Theme
      * @return \Greengrape\View
      */
-    public function setTheme($theme)
+    public function setTheme(Theme $theme)
     {
         $this->_theme = $theme;
         return $this;
@@ -117,6 +128,32 @@ class View
     }
 
     /**
+     * Set content dir (The root of where all the content files are)
+     *
+     * @param string $dir Directory
+     * @return \Greengrape\View
+     */
+    public function setContentDir($dir)
+    {
+        $this->_contentDir = $dir;
+        return $this;
+    }
+
+    /**
+     * Get the content directory
+     *
+     * @return string
+     */
+    public function getContentDir()
+    {
+        if ($this->_contentDir == '') {
+            return APP_PATH . DIRECTORY_SEPARATOR . 'content';
+        }
+
+        return $this->_contentDir;
+    }
+
+    /**
      * Get params
      *
      * @param array $params Params
@@ -141,10 +178,10 @@ class View
     /**
      * Set main navigation items
      *
-     * @param array $navigationItems Navigation items
+     * @param Greengrape\Navigation\Collection $navigationItems Navigation items
      * @return \Greengrape\View
      */
-    public function setNavigationItems($navigationItems)
+    public function setNavigationItems(Collection $navigationItems)
     {
         $this->_navigationItems = $navigationItems;
         return $this;
@@ -153,7 +190,7 @@ class View
     /**
      * Get Main navigation items
      *
-     * @return array
+     * @return Greengrape\Navigation\Collection
      */
     public function getNavigationItems()
     {
@@ -166,10 +203,10 @@ class View
      * From here we'll be able to pull information about the current main level 
      * navigation
      *
-     * @param \Greengrape\NavigationItem $item Item
+     * @param \Greengrape\Navigation\Item $item Item
      * @return \Greengrape\View
      */
-    public function setActiveNavigationItem($item)
+    public function setActiveNavigationItem(Item $item)
     {
         $this->_activeNavigationItem = $item;
         return $this;
@@ -178,7 +215,7 @@ class View
     /**
      * Get active navigation item (if any was set)
      *
-     * @return \Greengrape\NavigationItem
+     * @return \Greengrape\Navigation\Item
      */
     public function getActiveNavigationItem()
     {
@@ -188,10 +225,10 @@ class View
     /**
      * Set the active subnavigation item
      *
-     * @param \Greengrape\NavigationItem $item Navigation item
+     * @param \Greengrape\Navigation\Item $item Navigation item
      * @return \Greengrape\View
      */
-    public function setActiveSubNavigationItem($item)
+    public function setActiveSubNavigationItem(Item $item)
     {
         $this->_activeSubNavigationItem = $item;
         return $this;
@@ -200,7 +237,7 @@ class View
     /**
      * Get active subnavigation item
      *
-     * @return \Greengrape\NavigationItem
+     * @return \Greengrape\Navigation\Item
      */
     public function getActiveSubNavigationItem()
     {
@@ -210,10 +247,10 @@ class View
     /**
      * Set sub navigation items
      *
-     * @param array $items Items
+     * @param Greengrape\Navigation\Collection $items Items
      * @return \Greengrape\View
      */
-    public function setSubNavigationItems($items)
+    public function setSubNavigationItems(Collection $items)
     {
         $this->_subNavigationItems = $items;
         return $this;
@@ -222,7 +259,7 @@ class View
     /**
      * Get subnavigation items
      *
-     * @return array
+     * @return Greengrape\Navigation\Collection
      */
     public function getSubNavigationItems()
     {
@@ -232,14 +269,31 @@ class View
     /**
      * Render content inside the layout
      *
+     * Look for the file in the content directory
+     *
      * @param string $content Content string
      * @return string
      */
-    public function renderFile($file)
+    public function renderContentFile($file)
     {
-        $content = new Content($file, $this->getTheme());
+        $file = $this->getContentDir() . DIRECTORY_SEPARATOR . $file;
+
+        $content = new Content($file, $this);
 
         return $this->render($content);
+    }
+
+    /**
+     * Render partial
+     *
+     * @param mixed $file
+     * @return void
+     */
+    public function renderPartial($file)
+    {
+        $file = $this->getContentDir() . DIRECTORY_SEPARATOR . $file;
+        $content = new ContentPartial($file, $this);
+        return $content->render();
     }
 
     /**
@@ -252,15 +306,23 @@ class View
     {
         $layout = $this->getLayout();
 
-        if ($item = $this->getActiveNavigationItem()) {
-            $layout->setTitle($item->getText());
-        }
+        if ($content->getName() != 'index') {
+            if ($item = $this->getActiveNavigationItem()) {
+                $layout->setTitle($item->getText());
+            }
 
-        if ($subItem = $this->getActiveSubNavigationItem()) {
-            $layout->setTitle($subItem->getText());
+            if ($subItem = $this->getActiveSubNavigationItem()) {
+                $layout->setTitle($subItem->getText());
+            }
         }
 
         $layout->setTitle($content->getTitle());
+
+        // Fetch all the metadata from the content and set it to the layout so 
+        // it can be accessed by the layout view template.
+        foreach ($content->getMetadata() as $name => $value) {
+            $layout->setParam($name, $value);
+        }
 
         return $layout->render($content->render(), $vars);
     }
