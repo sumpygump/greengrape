@@ -37,6 +37,10 @@ class ScriptHandler
     {
         print "[greengrape] Making cache directory writable...";
         chmod('cache', 0777);
+
+        if (!file_exists('cache/content')) {
+            mkdir ('cache/content');
+        }
         chmod('cache/content', 0777);
         print "done.\n";
     }
