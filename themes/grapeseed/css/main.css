@@ -1,72 +1,16 @@
-/*
- * HTML5 Boilerplate
- *
- * What follows is the result of much research on cross-browser styling.
- * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
- * Kroc Camen, and the H5BP dev community and team.
- */
+/* ---------------------------------------------------------------------
+CSS for Grapeseed Greengrape Theme
 
-/* ==========================================================================
-   Base styles: opinionated defaults
-   ========================================================================== */
+Original Author: Jansen Price
+Contributors: 
 
-html,
-button,
-input,
-select,
-textarea {
-    color: #222;
-}
-
-/*
- * Remove text-shadow in selection highlight: h5bp.com/i
- * These selection declarations have to be separate.
- * Customize the background color to match your design.
- */
-
-::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
-}
-
-::selection {
-    background: #b3d4fc;
-    text-shadow: none;
-}
-
-/*
- * A better looking default horizontal rule
- */
-
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
-}
-
-/*
- * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
- */
-
-img {
-    vertical-align: middle;
-}
-
-/*
- * Remove default fieldset styles.
- */
-
-fieldset {
-    border: 0;
-    margin: 0;
-    padding: 0;
-}
+Target Browsers: All
+Media Type: Screen, Print
+Width: All Sizes
+------------------------------------------------------------------------ */
 
 /* ---------------------------------------------------------------------
-RESET CSS (thanks Eric Meyer)
+ RESET CSS (thanks Eric Meyer)
 ------------------------------------------------------------------------ */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -125,6 +69,46 @@ html {
 }
 
 /* ---------------------------------------------------------------------
+ H5BP Opinionated defaults
+------------------------------------------------------------------------ */
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* ---------------------------------------------------------------------
  HTML5 Block / Inline Block declarations
 ------------------------------------------------------------------------ */
 article, aside, details, figcaption, figure,
@@ -164,15 +148,15 @@ textarea {
     padding: 0;
 }
 
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
+/* ---------------------------------------------------------------------
+ Base Styles
+------------------------------------------------------------------------ */
 
 body {
     margin: 0;
     font-family: serif;
-    font-size: 18px;
-    line-height: 20px;
+    font-size: 16px;
+    line-height: 22px;
     color: #333333;
 }
 
@@ -216,11 +200,11 @@ p {
 }
 
 li {
-    line-height: 20px;
+    line-height: 22px;
 }
 
 li code {
-    line-height:1.7;
+    line-height: 1.7;
 }
 
 a {
@@ -231,21 +215,22 @@ em {
     font-style: italic;
 }
 
-/*--------------------------------------------------
+/* ---------------------------------------------------------------------
  Container
-----------------------------------------------------*/
+------------------------------------------------------------------------ */
 
 .container {
-    width: 940px;
+    padding-left: 20px;
+    padding-right: 20px;
     margin-top: 20px;
     margin-right: auto;
     margin-left: auto;
     zoom: 1;
 }
 
-/*--------------------------------------------------
+/* ---------------------------------------------------------------------
  Masthead
-----------------------------------------------------*/
+------------------------------------------------------------------------ */
 
 .masthead {
     margin-left: 0;
@@ -280,9 +265,9 @@ em {
     color: #5b4e08;
 }
 
-/*--------------------------------------------------
+/* ---------------------------------------------------------------------
  Footer
-----------------------------------------------------*/
+------------------------------------------------------------------------ */
 
 .footer {
     border-top:1px solid #ddd;
@@ -293,9 +278,9 @@ em {
     color:#5b4e08;
 }
 
-/*--------------------------------------------------
+/* ---------------------------------------------------------------------
  Nav
-----------------------------------------------------*/
+------------------------------------------------------------------------ */
 
 .nav {
     margin-bottom: 20px;
@@ -357,9 +342,9 @@ em {
     background-color:#340659;
 }
 
-/*--------------------------------------------------
+/* ---------------------------------------------------------------------
  Anchor Link
-----------------------------------------------------*/
+------------------------------------------------------------------------ */
 
 .anchor-link {
     opacity: 0;
@@ -383,13 +368,18 @@ h3:hover .anchor-link {
     opacity: .5;
 }
 
-/*--------------------------------------------------
+/* ---------------------------------------------------------------------
  Content Area
-----------------------------------------------------*/
+------------------------------------------------------------------------ */
 
 .content ul {
     margin: 0 0 10px 25px;
     list-style-type: disc;
+}
+
+.content ol {
+    margin: 0 0 10px 25px;
+    list-style-type: decimal;
 }
 
 .content code,
@@ -459,17 +449,17 @@ h3:hover .anchor-link {
     vertical-align: bottom;
 }
 
-/*--------------------------------------------------
+/* ---------------------------------------------------------------------
  Helper classes
-----------------------------------------------------*/
+------------------------------------------------------------------------ */
 
 .pull-left {
     float: left;
 }
 
-/*--------------------------------------------------
+/* ---------------------------------------------------------------------
  Alert block
-----------------------------------------------------*/
+------------------------------------------------------------------------ */
 .alert-error h3,
 .alert-error h4 {
     color: #a94442;
@@ -496,9 +486,9 @@ h3:hover .anchor-link {
     overflow-y: scroll;
 }
 
-/*
- * Image replacement
- */
+/* ---------------------------------------------------------------------
+ Utility: Image replacement
+------------------------------------------------------------------------ */
 
 .ir {
     background-color: transparent;
@@ -515,18 +505,18 @@ h3:hover .anchor-link {
     height: 100%;
 }
 
-/*
- * Hide from both screenreaders and browsers: h5bp.com/u
- */
+/* ---------------------------------------------------------------------
+ Utility: Hide from both screenreaders and browsers: h5bp.com/u
+------------------------------------------------------------------------ */
 
 .hidden {
     display: none !important;
     visibility: hidden;
 }
 
-/*
- * Hide only visually, but have it available for screenreaders: h5bp.com/v
- */
+/* ---------------------------------------------------------------------
+ Utility: Hide only visually, but available for screenreaders: h5bp.com/v
+------------------------------------------------------------------------ */
 
 .visuallyhidden {
     border: 0;
@@ -539,11 +529,6 @@ h3:hover .anchor-link {
     width: 1px;
 }
 
-/*
- * Extends the .visuallyhidden class to allow the element to be focusable
- * when navigated to via the keyboard: h5bp.com/p
- */
-
 .visuallyhidden.focusable:active,
 .visuallyhidden.focusable:focus {
     clip: auto;
@@ -554,64 +539,18 @@ h3:hover .anchor-link {
     width: auto;
 }
 
-/*
- * Hide visually and from screenreaders, but maintain layout
- */
+/* ---------------------------------------------------------------------
+ Utility: Hide visually and from screenreaders, but maintain layout
+------------------------------------------------------------------------ */
 
 .invisible {
     visibility: hidden;
 }
 
-/*
- * Clearfix: contain floats
- *
- * For modern browsers
- * 1. The space content is one way to avoid an Opera bug when the
- *    `contenteditable` attribute is included anywhere else in the document.
- *    Otherwise it causes space to appear at the top and bottom of elements
- *    that receive the `clearfix` class.
- * 2. The use of `table` rather than `block` is only necessary if using
- *    `:before` to contain the top-margins of child elements.
- */
-
-.clearfix:before,
-.clearfix:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
-}
-
-.clearfix:after {
-    clear: both;
-}
-
-/*
- * For IE 6/7 only
- * Include this rule to trigger hasLayout and contain floats.
- */
-
-.clearfix {
-    *zoom: 1;
-}
-
-/* ==========================================================================
-   EXAMPLE Media Queries for Responsive Design.
-   Theses examples override the primary ('mobile first') styles.
-   Modify as content requires.
-   ========================================================================== */
-
-@media only screen and (min-width: 35em) {
-    /* Style adjustments for viewports that meet the condition */
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-       only screen and (min-resolution: 144dppx) {
-    /* Style adjustments for high resolution devices */
-}
-
-/* ==========================================================================
-   Print styles.
-   Inlined to avoid required HTTP connection: h5bp.com/r
-   ========================================================================== */
+/* ---------------------------------------------------------------------
+ Print styles
+ Inlined to avoid required HTTP connection: h5bp.com/r
+------------------------------------------------------------------------ */
 
 @media print {
     * {
@@ -679,4 +618,3 @@ h3:hover .anchor-link {
         page-break-after: avoid;
     }
 }
-

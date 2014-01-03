@@ -1,0 +1,20 @@
+/* ---------------------------------------------------------------------
+CSS for Grapeseed Greengrape Theme
+
+Original Author: Jansen Price
+Contributors: 
+
+Target Browsers: All
+Media Type: Screen
+Width: Large
+------------------------------------------------------------------------ */
+
+/* ---------------------------------------------------------------------
+ Container
+------------------------------------------------------------------------ */
+
+.container {
+    padding-left: 0;
+    padding-right: 0;
+    width: 940px;
+}
