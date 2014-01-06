@@ -211,8 +211,22 @@ a {
     text-decoration: none;
 }
 
+a {
+    color: #3333ee;
+}
+
+a:visited,
+a:hover,
+a:active {
+    color: #6666ee;
+}
+
 em {
     font-style: italic;
+}
+
+strong {
+    font-weight: bold;
 }
 
 /* ---------------------------------------------------------------------
@@ -262,6 +276,11 @@ em {
     margin-top: 33px;
     margin-left: 124px;
     font-weight: bold;
+    color: #5b4e08;
+}
+
+.masthead .site-name a,
+.masthead .site-name a:visited {
     color: #5b4e08;
 }
 
@@ -395,7 +414,7 @@ h3:hover .anchor-link {
     background-color: #f7f7f9;
     border: 1px solid #e1e1e8;
     padding: 2px 4px;
-    font-size: 14px;
+    font-size: 80%;
 }
 
 .content pre {
@@ -417,6 +436,14 @@ h3:hover .anchor-link {
 .content pre code {
     background-color: #f0e9a0;
     border: none;
+    font-size: 14px;
+}
+
+.content blockquote {
+    border-left: 5px solid #847f00;
+    background-color: #eeeeee;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 .content table {
