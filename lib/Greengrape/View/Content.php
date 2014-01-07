@@ -470,7 +470,7 @@ class Content
         $baseUrl = $this->getTheme()->getAssetManager()->getBaseUrl();
 
         $patterns = array(
-            '/\[(.*)\]\(((?!http|#)[^\)])+\)/', // links inline
+            '/\[(.*)\]\(((?!http|#)[^\)]+)\)/', // links inline
             '/\[(.*)\]\W*:\W*((?!http|#)[^\W]+)/', // links referenced
             '/!\[(.*)\]\(assets/', // images inline
             '/\[(.*)\]\W*:\W*assets/', // images reference
