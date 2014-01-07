@@ -450,11 +450,11 @@ class Content
      *
      * 1. Change links to include the baseUrl
      *    [zzz](blah...) becomes [zzz](/baseUrl/blah...)
-     *    But not links that start with 'http'
+     *    But not links that start with 'http' or '#'
      *
      * 2. Change links referenced later to include the baseUrl
      *    [zzz]: pageref... becomes [zzz]: /baseurl/pageref...
-     *    But not links that start with 'http'
+     *    But not links that start with 'http' or '#'
      *
      * 3. Change image insertions to include the baseUrl
      *    ![zzz](assets/img/foo.jpg) becomes ![zzz](/baseurl/assets/img/foo.jpg)
@@ -470,8 +470,8 @@ class Content
         $baseUrl = $this->getTheme()->getAssetManager()->getBaseUrl();
 
         $patterns = array(
-            '/\[(.*)\]\(((?!http)[^\)]+)\)/', // links inline
-            '/\[(.*)\]\W*:\W*((?!http)[^\W]+)/', // links referenced
+            '/\[(.*)\]\(((?!http|#)[^\)])+\)/', // links inline
+            '/\[(.*)\]\W*:\W*((?!http|#)[^\W]+)/', // links referenced
             '/!\[(.*)\]\(assets/', // images inline
             '/\[(.*)\]\W*:\W*assets/', // images reference
         );
