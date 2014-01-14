@@ -471,7 +471,7 @@ class Content
 
         $patterns = array(
             '/\[(.*)\]\(((?!http|#)[^\)]+)\)/', // links inline
-            '/\[(.*)\]\W*:\W*((?!http|#)[^\W]+)/', // links referenced
+            '/\[((?!\^)[^\]]+)\]\W*:\W*((?!http|#)[^\W]+)/', // links referenced
             '/!\[(.*)\]\(assets/', // images inline
             '/\[(.*)\]\W*:\W*assets/', // images reference
         );
