@@ -7,7 +7,8 @@
 
 namespace Greengrape\Navigation;
 
-use \Iterator;
+use Iterator;
+use Countable;
 use Greengrape\Navigation\Item;
 
 /**
@@ -18,7 +19,7 @@ use Greengrape\Navigation\Item;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class Collection implements Iterator
+class Collection implements Iterator,Countable
 {
     /**
      * Cursor position in items array
@@ -217,5 +218,17 @@ class Collection implements Iterator
     public function valid()
     {
         return isset($this->_items[$this->_cursor]);
+    }
+
+    /**
+     * Count number of items
+     *
+     * For Countable interface
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->_items);
     }
 }
