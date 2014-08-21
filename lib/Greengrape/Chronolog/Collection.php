@@ -71,7 +71,7 @@ class Collection implements Iterator
      */
     public function populate()
     {
-        $paths = $this->_getChildren();
+        $paths = $this->getChildren();
 
         foreach ($paths as $path) {
             // get 2013-04-01-foo from 2013-04-01-foo.md
@@ -129,9 +129,9 @@ class Collection implements Iterator
      *
      * @return array
      */
-    protected function _getChildren()
+    protected function getChildren()
     {
-        $rootPath = $this->_getRootPath();
+        $rootPath = $this->getRootPath();
 
         return glob(rtrim($rootPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '*');
     }
@@ -141,7 +141,7 @@ class Collection implements Iterator
      *
      * @return string
      */
-    protected function _getRootPath()
+    protected function getRootPath()
     {
         return $this->_rootPath;
     }

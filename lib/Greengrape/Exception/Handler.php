@@ -81,7 +81,7 @@ class Handler
     {
         list($errno, $message, $file, $line) = func_get_args();
 
-        $message = self::_convertErrorCode($errno)
+        $message = self::convertErrorCode($errno)
             . ": " . $message . " in " . $file . ":" . $line;
 
         print $message;
@@ -246,7 +246,7 @@ class Handler
      * @param int $code The PHP error code
      * @return string
      */
-    protected static function _convertErrorCode($code)
+    protected static function convertErrorCode($code)
     {
         $errorLevels = array(
             1     => 'E_ERROR',

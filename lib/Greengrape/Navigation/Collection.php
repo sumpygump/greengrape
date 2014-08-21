@@ -80,7 +80,7 @@ class Collection implements Iterator,Countable
      */
     public function populate()
     {
-        $paths = $this->_getChildren();
+        $paths = $this->getChildren();
 
         foreach ($paths as $path) {
             $path = str_replace($this->_contentDir . DIRECTORY_SEPARATOR, '', $path);
@@ -124,14 +124,14 @@ class Collection implements Iterator,Countable
      *
      * @return array
      */
-    protected function _getChildren()
+    protected function getChildren()
     {
         // If the root is the home, don't return any children
         if ($this->_rootItem && $this->_rootItem->getHref() == '/') {
             return array();
         }
 
-        $rootPath = $this->_getRootPath();
+        $rootPath = $this->getRootPath();
 
         return glob(rtrim($rootPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);
     }
@@ -141,7 +141,7 @@ class Collection implements Iterator,Countable
      *
      * @return string
      */
-    protected function _getRootPath()
+    protected function getRootPath()
     {
         // If there is no root item, the root is the content dir
         if (null === $this->_rootItem) {

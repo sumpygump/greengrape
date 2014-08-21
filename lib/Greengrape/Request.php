@@ -47,7 +47,7 @@ class Request
         }
 
         $this->_data = $requestInput;
-        $this->_baseUrl = $this->_detectWwwRoot();
+        $this->_baseUrl = $this->detectWwwRoot();
     }
 
     /**
@@ -136,7 +136,7 @@ class Request
      *
      * @return string
      */
-    protected function _detectWwwRoot()
+    protected function detectWwwRoot()
     {
         $baseUrl        = '';
         $filename       = $this->get('SCRIPT_FILENAME', '');
