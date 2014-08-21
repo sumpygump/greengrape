@@ -108,8 +108,6 @@ class MarkdownExtendedParser extends MarkdownExtraParser
      */
     public function doFencedCodeBlocks($text)
     {
-        $less_than_tab = $this->tab_width;
-
         $text = preg_replace_callback('{
                 (?:\n|\A)
                 # 1: Opening marker
