@@ -179,7 +179,7 @@ class Item
      * @param bool $value active state
      * @return \Greengrape\Navigation\Item
      */
-    public function setIsActive($value = true)
+    public function setActive($value = true)
     {
         $this->_isActive = (bool) $value;
         return $this;
@@ -190,7 +190,7 @@ class Item
      *
      * @return bool
      */
-    public function getIsActive()
+    public function getActive()
     {
         return $this->_isActive;
     }

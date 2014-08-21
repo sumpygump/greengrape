@@ -198,7 +198,7 @@ class Kernel
             // If the first part of the URI matches this item's href then this 
             // should be the active navigation item
             if (strpos($uri, $item->getHref()) === 0) {
-                $item->setIsActive(true);
+                $item->setActive(true);
                 $view->setActiveNavigationItem($item);
             }
         }
@@ -215,7 +215,7 @@ class Kernel
             // If the first part of the URI matches this item's href then this 
             // should be the active navigation item
             if (strpos($uri, $subItem->getHref()) === 0) {
-                $subItem->setIsActive(true);
+                $subItem->setActive(true);
                 $view->setActiveSubNavigationItem($subItem);
             }
         }

@@ -175,18 +175,18 @@ class ItemTest extends \BaseTestCase
         $this->assertEquals('/mybase/', $this->_object->getHref(true));
     }
 
-    public function testSetIsActiveEmpty()
+    public function testSetActiveEmpty()
     {
-        $this->_object->setIsActive();
+        $this->_object->setActive();
 
-        $this->assertTrue($this->_object->getIsActive());
+        $this->assertTrue($this->_object->getActive());
     }
 
-    public function testSetIsActiveFalse()
+    public function testSetActiveFalse()
     {
-        $this->_object->setIsActive(false);
+        $this->_object->setActive(false);
 
-        $this->assertFalse($this->_object->getIsActive());
+        $this->assertFalse($this->_object->getActive());
     }
 
     public function testGetBaseUrlEmpty()
