@@ -169,7 +169,7 @@ class Kernel
      * @param Greengrape\Request $request Request object
      * @return Greengrape\View\Theme
      */
-    public function makeTheme($request)
+    public function makeTheme(Request $request)
     {
         if ($request->preview_theme) {
             $themeName = $request->preview_theme;
