@@ -1,5 +1,8 @@
 {
     "name": "sumpygump/greengrape",
+    "description": "A static website builder. Create markdown files and a theme and then serve up as HTML.",
+    "type": "project",
+    "license": "MIT",
     "require": {
         "twig/twig": "1.*",
         "dflydev/markdown": "1.*"
