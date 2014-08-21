@@ -186,12 +186,12 @@ class Kernel
     /**
      * Set up the navigation items and assign them to the view
      *
-     * @param \Greengrape\Sitemap $sitemap Sitemap object
+     * @param Greengrape\Request $sitemap Sitemap object
      * @param string $uri Current URI
-     * @param \Greengrape\View $view View object
+     * @param Greengrape\View $view View object
      * @return void
      */
-    public function setupNavigationItems($request, $uri, $view)
+    public function setupNavigationItems(Request $request, $uri, View $view)
     {
         $mainNavigationCollection = new NavigationCollection($this->getContentDir(), $request->getBaseUrl());
         foreach ($mainNavigationCollection as $item) {

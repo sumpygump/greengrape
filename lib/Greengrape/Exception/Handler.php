@@ -164,7 +164,7 @@ class Handler
      * @param \Exception $exception Exception object
      * @return string
      */
-    public static function getInformativeMessage($exception)
+    public static function getInformativeMessage(\Exception $exception)
     {
         return "Error code #" . $exception->getCode()
             . " in file " . $exception->getFile()
@@ -174,10 +174,10 @@ class Handler
     /**
      * Display exception
      *
-     * @param mixed $e Exception object
+     * @param \Exception $e Exception object
      * @return string
      */
-    public static function displayException($e)
+    public static function displayException(\Exception $e)
     {
         $out  = "";
         $out .= "<p>"
