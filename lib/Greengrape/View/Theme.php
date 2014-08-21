@@ -74,7 +74,7 @@ class Theme
      * @param string $name Theme name
      * @return void
      */
-    public function __construct($name, $baseUrl = '/', $themesDir = null, $fallback = false)
+    public function __construct($name, $baseUrl = '/', $themesDir = null)
     {
         $this->setName($name);
 
