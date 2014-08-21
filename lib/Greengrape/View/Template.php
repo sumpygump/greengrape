@@ -7,7 +7,6 @@
 
 namespace Greengrape\View;
 
-use Greengrape\View\AssetManager;
 use Greengrape\Exception\NotFoundException;
 use \Twig_Environment;
 use \Twig_Loader_String;

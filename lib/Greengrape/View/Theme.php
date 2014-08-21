@@ -9,7 +9,6 @@ namespace Greengrape\View;
 
 use Greengrape\View\AssetManager;
 use Greengrape\Exception\NotFoundException;
-use Greengrape\Exception\GreengrapeException;
 
 /**
  * Theme class

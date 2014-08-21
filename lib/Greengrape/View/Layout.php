@@ -8,9 +8,6 @@
 namespace Greengrape\View;
 
 use Greengrape\View\Template;
-use Greengrape\View\Content;
-use Greengrape\Navigation\Collection;
-use Greengrape\Navigation\Item;
 use \Twig_Environment;
 use \Twig_Loader_String;
 
