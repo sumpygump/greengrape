@@ -32,7 +32,7 @@ class ConfigTest extends \BaseTestCase
     /**
      * testConstructFileNoExist
      *
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testConstructFileNoExist()

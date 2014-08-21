@@ -8,6 +8,7 @@
 namespace Greengrape;
 
 use \ArrayAccess;
+use Greengrape\Exception\GreengrapeException;
 
 /**
  * Config
@@ -59,7 +60,7 @@ class Config implements ArrayAccess
     public function loadFile($filename)
     {
         if (!file_exists($filename)) {
-            throw new \Exception("Config file does not exist or is not readable: '$filename'");
+            throw new GreengrapeException("Config file does not exist or is not readable: '$filename'");
         }
 
         $raw = parse_ini_file($filename, true);
