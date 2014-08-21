@@ -405,7 +405,6 @@ class Content
             || $pageType == self::TYPE_ENTRY
         ) {
             $root = dirname($this->_file);
-            $baseUrl = $this->getTheme()->getAssetManager()->getBaseUrl();
             $entries = new EntryCollection($root, $this->getView());
 
             $entries->reverse();
