@@ -221,11 +221,13 @@ class Content
         $content = $this->getContent();
         $content = strip_tags($content);
 
+        $content = wordwrap($content);
+
         // Replace multiple blank lines with just one blank line
         $content = preg_replace('/\r?\n(\s*\r?\n){2,}/', "\n\n", $content);
         $content = explode("\n", $content);
 
-        $content = implode("\n", array_slice($content, 0, 10));
+        $content = implode("\n", array_slice($content, 0, 5));
         
         return $this->transform(rtrim($content) . '...');
     }
@@ -388,7 +390,7 @@ class Content
      * @param string $content Optional content to render instead
      * @return string Rendered HTML (via markdown)
      */
-    public function render($content = null)
+    public function render($content = null, $params = array())
     {
         if ($content === null) {
             $content = $this->getContent();
@@ -397,7 +399,7 @@ class Content
         $pageType = $this->getMetadata('type');
 
         $htmlContent = $this->transform($content);
-        $vars = $this->getMetadata();
+        $vars = $this->getMetadata() + $params;
 
         // Chronolog page type is a listing of entries
         if ($pageType == self::TYPE_CHRONOLOG
@@ -405,6 +407,9 @@ class Content
             || $pageType == self::TYPE_ENTRY
         ) {
             $root = dirname($this->_file);
+            if ($this->getMetadata('entriesroot')) {
+                $root = $root . '/' . $this->getMetadata('entriesroot');
+            }
             $entries = new EntryCollection($root, $this->getView());
 
             $entries->reverse();

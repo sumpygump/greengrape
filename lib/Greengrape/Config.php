@@ -154,4 +154,14 @@ class Config implements ArrayAccess
     {
         return $this->get($offset);
     }
+
+    /**
+     * Convert to array
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->_data;
+    }
 }

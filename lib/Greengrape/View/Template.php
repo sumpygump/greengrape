@@ -8,8 +8,9 @@
 namespace Greengrape\View;
 
 use Greengrape\Exception\NotFoundException;
-use \Twig_Environment;
-use \Twig_Loader_String;
+use \Twig\Environment as Twig_Environment;
+use \Twig\Loader\ArrayLoader as Twig_Loader_ArrayLoader;
+use \Twig\Extension\DebugExtension as Twig_DebugExtension;
 
 /**
  * Template
@@ -118,13 +119,17 @@ class Template
     {
         $vars['content'] = $content;
 
-        $loader = new Twig_Loader_String();
-        $twig   = new Twig_Environment($loader);
+        $loader = new Twig_Loader_ArrayLoader();
+        $twig   = new Twig_Environment($loader, array(
+            'debug' => true,
+        ));
+        $twig->addExtension(new Twig_DebugExtension());
 
         $twig->addGlobal('asset', $this->getAssetManager());
 
         $templateContent = file_get_contents($this->getFile());
 
-        return $twig->render($templateContent, $vars);
+        $template = $twig->createTemplate($templateContent);
+        return $template->render($vars);
     }
 }

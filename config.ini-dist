@@ -6,3 +6,13 @@ theme = "grapeseed"
 
 ; Whether cache is enabled
 enable_cache = false
+
+; Google Analytics Tracking Id
+ga_id = ""
+
+; Additional view params
+author = ""
+description = ""
+
+; Debug mode
+debug = false

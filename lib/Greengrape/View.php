@@ -280,7 +280,7 @@ class View
 
         $content = new Content($file, $this);
 
-        return $this->render($content);
+        return $this->render($content, $this->getParams()->toArray());
     }
 
     /**
@@ -324,6 +324,6 @@ class View
             $layout->setParam($name, $value);
         }
 
-        return $layout->render($content->render(), $vars);
+        return $layout->render($content->render(null, array('site' => $vars)), $vars);
     }
 }
