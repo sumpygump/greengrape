@@ -10,6 +10,7 @@
     "autoload": {
         "psr-0": { "": "lib/" }
     },
+    "bin": [ "bin/greengrape-install", "bin/check-theme" ],
     "scripts": {
         "post-install-cmd": [
             "Greengrape\\ScriptHandler::createConfigFile",

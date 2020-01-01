@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Copy bootstrap files and config
+cp vendor/sumpygump/greengrape/index.php ./index.php
+cp vendor/sumpygump/greengrape/init.php ./init.php
+cp vendor/sumpygump/greengrape/config.ini-dist ./config.ini
+cp vendor/sumpygump/greengrape/favicon.ico ./favicon.ico
+
+# Copy a default theme
+mkdir -v themes
+cp -vR vendor/sumpygump/greengrape/themes/grapeseed/ themes
+
+# Create cache directory and set permissions
+mkdir -vp cache/content
+chmod -v a+w cache -R
+
+# Create content directory
+mkdir -v content
