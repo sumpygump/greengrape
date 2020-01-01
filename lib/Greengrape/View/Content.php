@@ -185,7 +185,14 @@ class Content
     public function setTemplateFile($file)
     {
         $templateFile = $this->getTheme()->getPath('templates/' . $file);
-        $this->setTemplate(new Template($templateFile, $this->getTheme()));
+        try {
+            $this->setTemplate(new Template($templateFile, $this->getTheme()));
+        } catch (\Exception $e) {
+            // TODO: accumulate errors that we are trying to recover from to
+            // diagnose issues that are silently "corrected"
+            $templateFile = $this->getTheme()->getPath('templates/default.html');
+            $this->setTemplate(new Template($templateFile, $this->getTheme()));
+        }
 
         return $this;
     }
@@ -228,7 +235,7 @@ class Content
         $content = explode("\n", $content);
 
         $content = implode("\n", array_slice($content, 0, 5));
-        
+
         return $this->transform(rtrim($content) . '...');
     }
 
@@ -363,21 +370,21 @@ class Content
     {
         $path = $this->getFile();
         $name = $this->getName();
-        
+
         // The base URL tells us the web root of the application
         $baseUrl = $this->getTheme()->getAssetManager()->getBaseUrl();
 
-        // The content dir gives the full path to the directory of this 
+        // The content dir gives the full path to the directory of this
         // collection.
         $contentDir = $this->getView()->getContentDir();
 
-        // Strip off the content dir from the full path so we're left with the 
+        // Strip off the content dir from the full path so we're left with the
         // relative web root of the file
         $webPath = dirname(str_replace($contentDir . DIRECTORY_SEPARATOR, '', $path));
         $webPath = NavItem::translateOrderedName($webPath);
 
         // The url is the baseUrl + '/' + webPath + '/' + name of object
-        $url = rtrim($baseUrl, '/') . '/' . $webPath . '/' . $name; 
+        $url = rtrim($baseUrl, '/') . '/' . $webPath . '/' . $name;
 
         return $url;
     }

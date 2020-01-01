@@ -84,7 +84,7 @@ class Kernel
     /**
      * Get config
      *
-     * If no arguments it will return the entire configuration array, otherwise 
+     * If no arguments it will return the entire configuration array, otherwise
      * it will return the setting for the given option parameter
      *
      * @param string $param Param name
@@ -193,9 +193,10 @@ class Kernel
      */
     public function setupNavigationItems(Request $request, $uri, View $view)
     {
-        $mainNavigationCollection = new NavigationCollection($this->getContentDir(), $request->getBaseUrl());
+        $config = ['include_home_in_nav' => $this->getConfig('include_home_in_nav', true)];
+        $mainNavigationCollection = new NavigationCollection($this->getContentDir(), $request->getBaseUrl(), null, $config);
         foreach ($mainNavigationCollection as $item) {
-            // If the first part of the URI matches this item's href then this 
+            // If the first part of the URI matches this item's href then this
             // should be the active navigation item
             if (strpos($uri, $item->getHref()) === 0) {
                 $item->setActive(true);
@@ -205,14 +206,14 @@ class Kernel
         $view->setNavigationItems($mainNavigationCollection);
 
         if (!$view->getActiveNavigationItem()) {
-            // If we don't have an active navigation item, don't try to get the 
+            // If we don't have an active navigation item, don't try to get the
             // sub navigation
             return false;
         }
 
         $subNavigationCollection = new NavigationCollection($this->getContentDir(), $request->getBaseUrl(), $view->getActiveNavigationItem());
         foreach ($subNavigationCollection as $subItem) {
-            // If the first part of the URI matches this item's href then this 
+            // If the first part of the URI matches this item's href then this
             // should be the active navigation item
             if (strpos($uri, $subItem->getHref()) === 0) {
                 $subItem->setActive(true);
@@ -248,7 +249,7 @@ class Kernel
 
         $this->safeExit();
     }
-    
+
     /**
      * Only exit if it is allowed
      *

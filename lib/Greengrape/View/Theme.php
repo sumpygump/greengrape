@@ -58,6 +58,8 @@ class Theme
         'layout.html',
         'templates/main.html',
         'templates/default.html',
+        'templates/404.html',
+        'templates/error.html',
     );
 
     /**

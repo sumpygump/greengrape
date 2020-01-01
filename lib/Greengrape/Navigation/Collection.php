@@ -57,6 +57,13 @@ class Collection implements Iterator,Countable
     protected $_baseUrl = '';
 
     /**
+     * Whether to include the home link in the nav
+     *
+     * @var bool
+     */
+    protected $includeHome = true;
+
+    /**
      * Constructor
      *
      * @param string $contentDir Realpath to content directory
@@ -64,8 +71,12 @@ class Collection implements Iterator,Countable
      * @param Greengrape\Navigation\Items $rootItem Root item
      * @return void
      */
-    public function __construct($contentDir, $baseUrl, $rootItem = null)
+    public function __construct($contentDir, $baseUrl, $rootItem = null, $config = [])
     {
+        if (isset($config['include_home_in_nav'])) {
+            $this->includeHome = $config['include_home_in_nav'];
+        }
+
         $this->_contentDir = $contentDir;
         $this->_baseUrl = $baseUrl;
         $this->_rootItem = $rootItem;
@@ -97,7 +108,7 @@ class Collection implements Iterator,Countable
         }
 
         // If we are at the actual site root, we need to add an item to Home
-        if (!$this->_rootItem && !empty($this->_items)) {
+        if ($this->includeHome && !$this->_rootItem && !empty($this->_items)) {
             $home = new Item('Home', '/', $this->_baseUrl);
             array_unshift($this->_items, $home);
         }
