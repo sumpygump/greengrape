@@ -15,4 +15,4 @@ mkdir -vp cache/content
 chmod -v a+w cache -R
 
 # Create content directory
-mkdir -v content
+cp -vR vendor/sumpygump/greengrape/content/ content
