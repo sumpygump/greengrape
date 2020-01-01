@@ -5,17 +5,15 @@
     "license": "MIT",
     "require": {
         "twig/twig": "3.*",
-        "dflydev/markdown": "1.*"
+        "dflydev/markdown": "1.*",
+        "dxw/phar-install": "*"
     },
     "autoload": {
         "psr-0": { "": "lib/" }
     },
     "bin": [ "bin/greengrape-install", "bin/check-theme" ],
     "scripts": {
-        "post-install-cmd": [
-            "Greengrape\\ScriptHandler::createConfigFile",
-            "Greengrape\\ScriptHandler::createHtaccessFile",
-            "Greengrape\\ScriptHandler::makeCacheWritable"
-        ]
+        "post-update-cmd": "vendor/bin/phar-install",
+        "post-update-cmd": "vendor/bin/greengrape-install"
     }
 }
