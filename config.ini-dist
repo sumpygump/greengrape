@@ -5,7 +5,7 @@ sitename = "Greengrape"
 theme = "grapeseed"
 
 ; Whether cache is enabled
-enable_cache = false
+enable_cache = true
 
 ; Google Analytics Tracking Id
 ga_id = ""
@@ -16,3 +16,6 @@ description = ""
 
 ; Debug mode
 debug = false
+
+; Whether to autogenerate an entry 'Home' in main nav
+include_home_in_nav = false

@@ -8,7 +8,7 @@ cp vendor/sumpygump/greengrape/favicon.ico ./favicon.ico
 
 # Copy a default theme
 mkdir -v themes
-cp -vR vendor/sumpygump/greengrape/themes/grapeseed/ themes
+cp -R vendor/sumpygump/greengrape/themes/grapeseed/ themes
 
 # Create cache directory and set permissions
 mkdir -vp cache/content
@@ -16,3 +16,8 @@ chmod -v a+w cache -R
 
 # Create content directory
 cp -vR vendor/sumpygump/greengrape/content/ content
+
+echo "Greengrape installed"
+echo "Be sure to check the config.ini file and update settings as needed"
+echo "Create your own theme directory and edit config.ini theme setting"
+echo "Edit the files in content directory to update site content"
