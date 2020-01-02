@@ -1,3 +1,7 @@
+---
+title = Welcome
+---
+
 # Welcome!
 
 Hello, this is the home page of your Greengrape site. If you are seeing this

@@ -47,7 +47,7 @@ class Csp
         "img-src" => "'self'",
         "object-src" => "'none'",
         "script-src" => "'self' http: https: 'strict-dynamic'",
-        "style-src" => "'self'",
+        "style-src" => "'self' 'unsafe-inline'",
     ];
 
     private $use_nonce = false;

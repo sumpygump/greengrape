@@ -292,13 +292,8 @@ class View
     {
         $file = $this->getContentDir() . DIRECTORY_SEPARATOR . $file;
         $content = new Content($file, $this);
-        $params = $this->getParams();
 
-        if ($params instanceof Config) {
-            $params = $params->toArray();
-        }
-
-        return $this->render($content, $params);
+        return $this->render($content);
     }
 
     /**
@@ -342,6 +337,12 @@ class View
             $layout->setParam($name, $value);
         }
 
-        return $layout->render($content->render(null, array('site' => $vars)), $vars);
+        $params = $this->getParams();
+        if ($params instanceof Config) {
+            $params = $params->toArray();
+        }
+        $params = $params + $vars;
+
+        return $layout->render($content->render(null, array('site' => $params)), $params);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Greengrape\Exception;
 
+use Greengrape\Csp;
 use Greengrape\Kernel;
 use Greengrape\Request;
 use Greengrape\View;
@@ -119,6 +120,7 @@ class Handler
 
         try {
             $theme = new Theme(self::getKernel()->getConfig('theme'), $request->getBaseUrl());
+            $theme->setDefaultTitle(self::getKernel()->getConfig('sitename'));
             $view  = new View($theme);
 
             $view->setParams(self::getKernel()->getConfig());
@@ -145,6 +147,12 @@ class Handler
             $vars = [
                 'trace' => self::displayException($exception),
             ];
+
+            $csp = new Csp(self::getKernel()->getConfig('csp'));
+            $view->setParam('nonce', $csp->getNonce());
+            if (!headers_sent()) {
+                $csp->render();
+            }
 
             echo $view->render($content, $vars);
         } catch (\Throwable $newException) {
