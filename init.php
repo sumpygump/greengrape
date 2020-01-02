@@ -18,5 +18,3 @@ if (file_exists(__DIR__ . '/vendor.phar')) {
 } else {
     die('Autoloader not found. Run `composer install`');
 }
-
-$autoload->add('Greengrape', __DIR__ . '/lib');
