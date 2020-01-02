@@ -5,21 +5,18 @@
  * @package Greengrape
  */
 
-/**
- * @see PHPUnit/Framework/TestCase.php
- */
-require_once 'PHPUnit/Framework/TestCase.php';
+use PHPUnit\Framework\TestCase;
 
 /**
  * Base Test Case
- * 
+ *
  * @uses PHPUnit_Framework_TestCase
  * @package Greengrape
  * @subpackage Tests
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class BaseTestCase extends PHPUnit_Framework_TestCase
+class BaseTestCase extends TestCase
 {
     /**
      * Storage of object being tested

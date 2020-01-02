@@ -113,7 +113,7 @@ class Handler
      * @param \Exception $exception The Exception object
      * @return void
      */
-    public static function handleException(\Exception $exception)
+    public static function handleException(\Throwable $exception)
     {
         $request = new Request();
 
@@ -142,12 +142,12 @@ class Handler
                 $content->setContent($exception->getMessage() . '<pre>' . $exception->getTraceAsString() . '</pre>');
             }
 
-            $vars = array(
+            $vars = [
                 'trace' => self::displayException($exception),
-            );
+            ];
 
             echo $view->render($content, $vars);
-        } catch (\Exception $newException) {
+        } catch (\Throwable $newException) {
             $errorTitle = 'Exception found while handling exception:';
             $message = htmlentities($newException->getMessage());
             printf(self::EXCEPTION_MESSAGE_CAPSULE, $errorTitle, $message);
@@ -167,7 +167,7 @@ class Handler
      * @param \Exception $exception Exception object
      * @return string
      */
-    public static function getInformativeMessage(\Exception $exception)
+    public static function getInformativeMessage(\Throwable $exception)
     {
         return "Error code #" . $exception->getCode()
             . " in file " . $exception->getFile()
@@ -180,7 +180,7 @@ class Handler
      * @param \Exception $e Exception object
      * @return string
      */
-    public static function displayException(\Exception $e)
+    public static function displayException(\Throwable $e)
     {
         $out  = "";
         $out .= "<p>"
@@ -196,7 +196,7 @@ class Handler
             . "<th style=\"text-align:left\">location</th>"
             . "<th style=\"text-align:left\">args</th></tr>";
 
-        foreach ($trace as $i=>$tl) {
+        foreach ($trace as $i => $tl) {
             $file  = isset($tl['file']) ? $tl['file'] : '';
             $class = isset($tl['class']) ? $tl['class'] : 'main';
             $line  = isset($tl['line']) ? $tl['line'] : '0';

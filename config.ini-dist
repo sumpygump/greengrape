@@ -1,11 +1,17 @@
 ; Site name
-sitename = "Greengrape"
+sitename = "Green-grape"
 
 ; Theme to use
-theme = "grapeseed"
+theme = "default"
 
 ; Whether cache is enabled
-enable_cache = true
+enable_cache = false
+
+; Debug mode
+debug = true
+
+; Whether to autogenerate an entry 'Home' in main nav
+include_home_in_nav = true
 
 ; Google Analytics Tracking Id
 ga_id = ""
@@ -14,8 +20,6 @@ ga_id = ""
 author = ""
 description = ""
 
-; Debug mode
-debug = false
-
-; Whether to autogenerate an entry 'Home' in main nav
-include_home_in_nav = false
+; CSP section
+[csp]
+use-nonce = true

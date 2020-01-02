@@ -19,6 +19,13 @@ use Greengrape\Exception\GreengrapeException;
 class Cache
 {
     /**
+     * Csp object
+     *
+     * @var Greengrape\Csp
+     */
+    public $csp;
+
+    /**
      * Whether to allow this script to exit
      *
      * Turn off for unit tests
@@ -112,6 +119,48 @@ class Cache
     }
 
     /**
+     * Set Csp object
+     *
+     * @param Greengrape\Csp $csp
+     * @return Cache
+     */
+    public function setCsp($csp)
+    {
+        $this->csp = $csp;
+        return $this;
+    }
+
+    /**
+     * Render the CSP headers
+     *
+     * @return void
+     */
+    public function renderCsp()
+    {
+        if (!$this->csp) {
+            // If there is no csp object, then ignore
+            return '';
+        }
+
+        return $this->csp->render();
+    }
+
+    /**
+     * Get CSP nonce
+     *
+     * @return void
+     */
+    public function getCspNonce()
+    {
+        if (!$this->csp) {
+            // If there is no csp object, then ignore
+            return '';
+        }
+
+        return $this->csp->getNonce();
+    }
+
+    /**
      * Start the cache
      *
      * @param string $uri URI
@@ -128,8 +177,14 @@ class Cache
         $this->_cacheFilename = $this->getCacheFilename($uri);
 
         if (file_exists($this->_cacheFilename)) {
-            echo "<!-- Cached file -->\n";
-            include $this->_cacheFilename;
+            $this->renderCsp();
+
+            $contents = file_get_contents($this->_cacheFilename);
+
+            // We need the nonces to still work from cached files so replace nonce placeholder
+            $contents = str_replace('REPLACE_WITH_NONCE', $this->getCspNonce(), $contents);
+
+            echo "<!-- Cached file -->\n" . $contents;
             self::safeExit();
             return true;
         }
@@ -146,14 +201,21 @@ class Cache
     public function end()
     {
         // If not enabled, do nothing
-        // If cacheFilename is not set, we are not actively capturing output to 
+        // If cacheFilename is not set, we are not actively capturing output to
         // save to the cache file, so do nothing.
         if (!$this->_enabled || !$this->_cacheFilename) {
             return false;
         }
 
-        file_put_contents($this->_cacheFilename, ob_get_contents());
+        $contents = ob_get_contents();
+
+        // We need the nonces to still work when served from cached version so
+        // replace the current nonce
+        $contents = str_replace($this->getCspNonce(), 'REPLACE_WITH_NONCE', $contents);
+
+        file_put_contents($this->_cacheFilename, $contents);
         ob_end_flush();
+
         return true;
     }
 

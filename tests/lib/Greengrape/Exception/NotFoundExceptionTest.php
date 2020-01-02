@@ -44,5 +44,6 @@ class NotFoundExceptionTest extends \BaseTestCase
      */
     public function testConstruct()
     {
+        $this->assertTrue($this->_object instanceof NotFoundException);
     }
 }

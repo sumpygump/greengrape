@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\Exception;
 
+use Greengrape\Config;
 use Greengrape\Exception\Handler;
 use Greengrape\Exception\NotFoundException;
 use Greengrape\Kernel;
@@ -34,7 +35,8 @@ class HandlerTest extends \BaseTestCase
      */
     public function setUp()
     {
-        $config = array();
+        $config = new Config();
+        $config['debug'] = true;
         $this->_kernel = new Kernel($config);
     }
 
@@ -51,6 +53,7 @@ class HandlerTest extends \BaseTestCase
     {
         Handler::initHandlers($this->_kernel);
         Handler::releaseHandlers();
+        $this->assertTrue($this->_kernel instanceof Kernel);
     }
 
     public function testGetKernel()
@@ -80,10 +83,10 @@ class HandlerTest extends \BaseTestCase
 
     public function testHandleShutdown()
     {
-        // I would have to trigger an error to test the rest of this method, 
-        // but I couldn't do it, even with output buffering and not have 
+        // I would have to trigger an error to test the rest of this method,
+        // but I couldn't do it, even with output buffering and not have
         // phpunit output some errors after running the tests
-        
+
         $result = Handler::handleShutdown();
 
         $this->assertFalse($result);

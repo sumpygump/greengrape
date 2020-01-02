@@ -1,0 +1,153 @@
+/* ---------------------------------------------------------------------
+CSS for Default Greengrape Theme
+
+Original Author: Jansen Price
+Contributors:
+------------------------------------------------------------------------ */
+
+/* ---------------------------------------------------------------------
+ Base Styles
+------------------------------------------------------------------------ */
+body {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    background-color: #ffffff;
+    color: #333333;
+}
+
+a {
+    color: #333333;
+}
+
+a:visited {
+    color: #333333;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+/* ---------------------------------------------------------------------
+ Layout
+------------------------------------------------------------------------ */
+.contain {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.page {
+    background-color: #929292;
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
+}
+
+header {
+    border-top: 10px solid #91a989;
+    background-color: #ffffff;
+}
+
+main {
+    background-color: #ffffff;
+}
+
+section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+section.reverse {
+    flex-direction: row-reverse;
+}
+
+article {
+}
+
+.content {
+    background-color: #ffffff;
+    padding: 40px;
+}
+
+aside {
+    padding: 40px;
+}
+
+.span3 { width: 33%; }
+.span9 { width: 66%; }
+
+/* ---------------------------------------------------------------------
+ Site name
+------------------------------------------------------------------------ */
+.site-name {
+    font-size: 36px;
+    padding: 40px;
+    font-weight: bold;
+}
+
+.site-name a {
+    text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------
+ Navigation
+------------------------------------------------------------------------ */
+nav li {
+    list-style-type: none;
+}
+
+.nav {
+    margin: 0;
+    display: flex;
+}
+
+.nav a {
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+}
+
+.main-navigation {
+    background-color: #83907f;
+    margin: 0;
+}
+
+.main-navigation a {
+    color: #ffffff;
+}
+
+.main-navigation .active a {
+    background-color: #d3dad0;
+    color: #333333;
+}
+
+.main-navigation a:hover {
+    background-color: #8e998a;
+    color: #ffffff;
+}
+
+.sub-navigation {
+    background-color: #e8e6b5;
+    margin: 0;
+}
+
+.sub-navigation .active a {
+    background-color: #f8f6c5;
+    color: #333333;
+}
+
+.sub-navigation a:hover {
+    background-color: #edecc4;
+}
+
+/* ---------------------------------------------------------------------
+ Footer
+------------------------------------------------------------------------ */
+footer {
+    background-color: #ffffff;
+    font-size: 11px;
+    padding: 10px 40px;
+    text-align: center;
+}

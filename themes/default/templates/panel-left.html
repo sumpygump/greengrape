@@ -1,0 +1,14 @@
+<section class="reverse">
+    <article class="span9" role="main">
+        <div class="content">
+            {{ content|raw }}
+        </div>
+    </article>
+    <div class="aside-container span3">
+        {% for item in aside %}
+        <aside>
+            {{ item|raw }}
+        </aside>
+        {% endfor %}
+    </div>
+</section>

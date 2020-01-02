@@ -44,5 +44,6 @@ class ContentPartialTest extends \BaseTestCase
      */
     public function testConstruct()
     {
+        $this->assertTrue($this->_object instanceof ContentPartial);
     }
 }

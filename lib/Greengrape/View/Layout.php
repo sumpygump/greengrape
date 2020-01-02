@@ -10,6 +10,7 @@ namespace Greengrape\View;
 use Greengrape\View\Template;
 use \Twig\Environment as Twig_Environment;
 use \Twig\Loader\ArrayLoader as Twig_Loader_ArrayLoader;
+use \Twig\Extension\DebugExtension as Twig_DebugExtension;
 
 /**
  * Layout
@@ -199,7 +200,8 @@ class Layout extends Template
         $this->setContent($content);
 
         $loader = new Twig_Loader_ArrayLoader();
-        $twig   = new Twig_Environment($loader);
+        $twig   = new Twig_Environment($loader, ['debug' => true]);
+        $twig->addExtension(new Twig_DebugExtension());
 
         $twig->addGlobal('asset', $this->getAssetManager());
         $twig->addGlobal('layout', $this);

@@ -8,6 +8,7 @@
 namespace Greengrape\Tests;
 
 use Greengrape\View;
+use Greengrape\View\Layout;
 use Greengrape\View\Theme;
 use Greengrape\Navigation\Collection;
 use Greengrape\Navigation\Item;
@@ -55,7 +56,7 @@ class ViewTest extends \BaseTestCase
     /**
      * Test constructor
      *
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
@@ -80,7 +81,7 @@ class ViewTest extends \BaseTestCase
     /**
      * testSetThemeNotTheme
      *
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException TypeError
      * @return void
      */
     public function testSetThemeString()
@@ -91,6 +92,7 @@ class ViewTest extends \BaseTestCase
     public function testGetLayout()
     {
         $layout = $this->_object->getLayout();
+        $this->assertTrue($layout instanceof Layout);
     }
 
     /**
@@ -125,7 +127,7 @@ class ViewTest extends \BaseTestCase
     /**
      * testSetNavigationItemsArray
      *
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException TypeError
      * @return void
      */
     public function testSetNavigationItemsArray()
@@ -137,7 +139,7 @@ class ViewTest extends \BaseTestCase
     /**
      * testSetActiveNavigationItemString
      *
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException TypeError
      * @return void
      */
     public function testSetActiveNavigationItemString()
@@ -157,7 +159,7 @@ class ViewTest extends \BaseTestCase
     /**
      * testSetActiveSubNavigationItemString
      *
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException TypeError
      * @return void
      */
     public function testSetActiveSubNavigationItemString()
@@ -177,7 +179,7 @@ class ViewTest extends \BaseTestCase
     /**
      * testSetSubNavigationItemsArray
      *
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException TypeError
      * @return void
      */
     public function testSetSubNavigationItemsArray()

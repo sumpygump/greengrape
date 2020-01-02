@@ -44,7 +44,7 @@ class ThemeTest extends \BaseTestCase
     /**
      * Test constructor
      *
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
@@ -80,6 +80,7 @@ class ThemeTest extends \BaseTestCase
         mkdir($themePath);
 
         $theme = new Theme('newfaketheme', '/baseUrl', APP_PATH . DIRECTORY_SEPARATOR . 'tests');
+        $this->assertTrue($theme instanceof Theme);
 
         rmdir($themePath);
     }

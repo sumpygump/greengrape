@@ -53,8 +53,8 @@ class TemplateTest extends \BaseTestCase
 
     /**
      * Test constructor
-     * 
-     * @expectedException PHPUnit_Framework_Error
+     *
+     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
@@ -68,6 +68,7 @@ class TemplateTest extends \BaseTestCase
         $theme = new Theme('foobar', '/baseurl', $testThemesDir);
 
         $template = new Template('template1.html', $theme);
+        $this->assertTrue($template instanceof Template);
     }
 
     /**

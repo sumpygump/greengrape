@@ -63,7 +63,7 @@ class KernelTest extends \BaseTestCase
     /**
      * Test constructor
      *
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
@@ -108,6 +108,7 @@ class KernelTest extends \BaseTestCase
 
     public function testExecute()
     {
+        Kernel::$allowExit = false;
         ob_start();
         $this->_object->execute();
         $contents = ob_get_contents();
@@ -132,6 +133,8 @@ class KernelTest extends \BaseTestCase
     {
         Kernel::$allowExit = false;
         Kernel::safeExit();
+
+        $this->assertTrue(true);
     }
 
     /**

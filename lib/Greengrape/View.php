@@ -7,6 +7,7 @@
 
 namespace Greengrape;
 
+use Greengrape\Config;
 use Greengrape\View\Theme;
 use Greengrape\View\Content;
 use Greengrape\View\ContentPartial;
@@ -154,7 +155,7 @@ class View
     }
 
     /**
-     * Get params
+     * Set params
      *
      * @param array $params Params
      * @return \Greengrape\View
@@ -162,6 +163,19 @@ class View
     public function setParams($params)
     {
         $this->_params = $params;
+        return $this;
+    }
+
+    /**
+     * Set an individual param
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return \Greengrape\View
+     */
+    public function setParam($key, $value)
+    {
+        $this->_params[$key] = $value;
         return $this;
     }
 
@@ -200,7 +214,7 @@ class View
     /**
      * Set active navigation item
      *
-     * From here we'll be able to pull information about the current main level 
+     * From here we'll be able to pull information about the current main level
      * navigation
      *
      * @param \Greengrape\Navigation\Item $item Item
@@ -277,10 +291,14 @@ class View
     public function renderContentFile($file)
     {
         $file = $this->getContentDir() . DIRECTORY_SEPARATOR . $file;
-
         $content = new Content($file, $this);
+        $params = $this->getParams();
 
-        return $this->render($content, $this->getParams()->toArray());
+        if ($params instanceof Config) {
+            $params = $params->toArray();
+        }
+
+        return $this->render($content, $params);
     }
 
     /**
@@ -318,7 +336,7 @@ class View
 
         $layout->setTitle($content->getTitle());
 
-        // Fetch all the metadata from the content and set it to the layout so 
+        // Fetch all the metadata from the content and set it to the layout so
         // it can be accessed by the layout view template.
         foreach ($content->getMetadata() as $name => $value) {
             $layout->setParam($name, $value);

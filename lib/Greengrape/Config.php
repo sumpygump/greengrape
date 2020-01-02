@@ -35,6 +35,7 @@ class Config implements ArrayAccess
         'sitename'     => '[Greengrape]',
         'theme'        => 'grapeseed',
         'enable_cache' => true,
+        'debug'        => false,
     );
 
     /**

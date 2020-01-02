@@ -10,6 +10,7 @@ namespace Greengrape;
 use Greengrape\Request;
 use Greengrape\Sitemap;
 use Greengrape\Cache;
+use Greengrape\Csp;
 use Greengrape\Navigation\Collection as NavigationCollection;
 use Greengrape\View;
 use Greengrape\View\Theme;
@@ -135,11 +136,13 @@ class Kernel
         $request = new Request();
 
         $uri = $request->getRequestedFile();
+        $csp = new Csp($this->getConfig('csp'));
 
         // Special option to clear cache for this file with ?cache=clear
         if ($request->cache == 'clear') {
             $this->getCache()->clear($uri);
         }
+        $this->getCache()->setCsp($csp);
         $this->getCache()->start($uri);
 
         $sitemap = new Sitemap($this->getContentDir(), $request->getBaseUrl());
@@ -158,6 +161,11 @@ class Kernel
         $view->setParams($this->getConfig());
 
         $this->setupNavigationItems($request, $uri, $view);
+
+        $view->setParam('nonce', $csp->getNonce());
+        if (self::$allowExit) {
+            $csp->render();
+        }
 
         echo $view->renderContentFile($location);
         $this->getCache()->end();

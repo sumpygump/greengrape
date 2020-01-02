@@ -53,7 +53,7 @@ class SitemapTest extends \BaseTestCase
     /**
      * Test constructor
      *
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()

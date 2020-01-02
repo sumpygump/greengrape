@@ -14,9 +14,7 @@ see the following:
 
  - `cache` - This folder stores cached versions of the content.
  - `content` - This is where you will edit the actual content files in markdown.
- - `lib` - This is the internal library for Greengrape.
  - `themes` - This is where theme files and assets are located.
- - `vendor` - This is for external libraries used by Greengrape.
 
 ## 2.0 Content Files
 
@@ -49,15 +47,13 @@ page.
 Theme files are located in the *themes* folder.
 
     themes/
-    └── fulcrum
+    └── default
         ├── css
-        │   ├── bootstrap.css
-        │   ├── bootstrap.min.css
-        │   └── style.css
+        │   └── main.css
         ├── img
         │   └── greengrape.jpg
         ├── js
-        │   └── global.js
+        │   └── main.js
         ├── layout.html
         └── templates
             ├── default.html

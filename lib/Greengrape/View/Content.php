@@ -17,7 +17,7 @@ use Greengrape\Navigation\Item as NavItem;
  * Content
  *
  * This defines a content block in markdown
- * In the future we would have separate content classes for different formats, 
+ * In the future we would have separate content classes for different formats,
  * but right now we only support markdown
  *
  * @package Greengrape
@@ -280,7 +280,9 @@ class Content
             'type'     => self::TYPE_PAGE,
         );
 
-        if (!preg_match('/^---\s*\v(.*)\v---(?:$|\s|\s\v)/s', $contents, $matches)) {
+        // The U modifier makes the regex ungreedy so it will only capture the
+        // first front-matter that appears in the file
+        if (!preg_match('/^---\s*\v(.*)\v---(?:$|\s|\s\v)/sU', $contents, $matches)) {
             return $defaults;
         }
 

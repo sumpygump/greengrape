@@ -54,7 +54,7 @@ class CacheTest extends \BaseTestCase
     /**
      * testConstructNoArgs
      *
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException \ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()

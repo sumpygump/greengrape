@@ -1,21 +1,26 @@
 #!/usr/bin/env bash
 
-# Copy bootstrap files and config
-cp vendor/sumpygump/greengrape/index.php ./index.php
-cp vendor/sumpygump/greengrape/init.php ./init.php
-cp vendor/sumpygump/greengrape/config.ini-dist ./config.ini
-cp vendor/sumpygump/greengrape/favicon.ico ./favicon.ico
+if [ -d "vendor/sumpygump/greengrape" ]; then
+    # This means greengrape was composed as a project dependency
+    # Copy over the appropriate files so the current project can bootstrap itself
 
-# Copy a default theme
-mkdir -v themes
-cp -R vendor/sumpygump/greengrape/themes/grapeseed/ themes
+    # Copy bootstrap files and config
+    cp vendor/sumpygump/greengrape/index.php ./index.php
+    cp vendor/sumpygump/greengrape/init.php ./init.php
+    cp vendor/sumpygump/greengrape/config.ini-dist ./config.ini
+    cp vendor/sumpygump/greengrape/favicon.ico ./favicon.ico
+
+    # Copy a default theme
+    mkdir -v themes
+    cp -R vendor/sumpygump/greengrape/themes/grapeseed/ themes
+
+    # Create content directory
+    cp -vR vendor/sumpygump/greengrape/content/ content
+fi
 
 # Create cache directory and set permissions
 mkdir -vp cache/content
 chmod -v a+w cache -R
-
-# Create content directory
-cp -vR vendor/sumpygump/greengrape/content/ content
 
 echo "Greengrape installed"
 echo "Be sure to check the config.ini file and update settings as needed"
