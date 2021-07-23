@@ -7,6 +7,8 @@
 
 namespace Greengrape\Tests;
 
+use Greengrape\Exception\GreengrapeException;
+use Greengrape\Exception\NotFoundException;
 use Greengrape\View;
 use Greengrape\View\Layout;
 use Greengrape\View\Theme;
@@ -31,7 +33,7 @@ class ViewTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         mkdir('foobar');
         mkdir('foobar' . DIRECTORY_SEPARATOR . 'templates');
@@ -48,7 +50,7 @@ class ViewTest extends \BaseTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         passthru('rm -rf foobar');
     }
@@ -56,22 +58,22 @@ class ViewTest extends \BaseTestCase
     /**
      * Test constructor
      *
-     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
     {
+        $this->expectException(\ArgumentCountError::class);
         $view = new View();
     }
 
     /**
      * testConstructThemeNotExist
      *
-     * @expectedException Greengrape\Exception\NotFoundException
      * @return void
      */
     public function testConstructThemeNotExist()
     {
+        $this->expectException(NotFoundException::class);
         $view = new View(new MockTheme('foo'));
 
         $this->assertTrue($view instanceof View);
@@ -81,11 +83,11 @@ class ViewTest extends \BaseTestCase
     /**
      * testSetThemeNotTheme
      *
-     * @expectedException TypeError
      * @return void
      */
     public function testSetThemeString()
     {
+        $this->expectException(\TypeError::class);
         $this->_object->setTheme('string');
     }
 
@@ -98,11 +100,11 @@ class ViewTest extends \BaseTestCase
     /**
      * testGetLayoutFileNotExist
      *
-     * @expectedException Greengrape\Exception\NotFoundException
      * @return void
      */
     public function testGetLayoutFileNotExist()
     {
+        $this->expectException(NotFoundException::class);
         $view = new View(new MockTheme('foo'));
 
         $layout = $view->getLayout();
@@ -127,11 +129,11 @@ class ViewTest extends \BaseTestCase
     /**
      * testSetNavigationItemsArray
      *
-     * @expectedException TypeError
      * @return void
      */
     public function testSetNavigationItemsArray()
     {
+        $this->expectException(\TypeError::class);
         $items = array('a', 'b');
         $this->_object->setNavigationItems($items);
     }
@@ -139,11 +141,11 @@ class ViewTest extends \BaseTestCase
     /**
      * testSetActiveNavigationItemString
      *
-     * @expectedException TypeError
      * @return void
      */
     public function testSetActiveNavigationItemString()
     {
+        $this->expectException(\TypeError::class);
         $this->_object->setActiveNavigationItem('aa');
     }
 
@@ -159,11 +161,11 @@ class ViewTest extends \BaseTestCase
     /**
      * testSetActiveSubNavigationItemString
      *
-     * @expectedException TypeError
      * @return void
      */
     public function testSetActiveSubNavigationItemString()
     {
+        $this->expectException(\TypeError::class);
         $this->_object->setActiveSubNavigationItem('foobar');
     }
 
@@ -179,11 +181,11 @@ class ViewTest extends \BaseTestCase
     /**
      * testSetSubNavigationItemsArray
      *
-     * @expectedException TypeError
      * @return void
      */
     public function testSetSubNavigationItemsArray()
     {
+        $this->expectException(\TypeError::class);
         $items = array('c', 'd', 'e');
         $this->_object->setSubNavigationItems($items);
     }
@@ -199,11 +201,11 @@ class ViewTest extends \BaseTestCase
     /**
      * testRenderFile
      *
-     * @expectedException Greengrape\Exception\NotFoundException
      * @return void
      */
     public function testRenderFileNoExists()
     {
+        $this->expectException(NotFoundException::class);
         $output = $this->_object->renderContentFile('fake.md');
     }
 
@@ -212,7 +214,7 @@ class ViewTest extends \BaseTestCase
         file_put_contents('foobar/templates/contentfile.md', '#hiya');
 
         $output = $this->_object->renderContentFile('foobar/templates/contentfile.md');
-        $this->assertContains('<h1>hiya</h1>', $output);
+        $this->assertStringContainsString('<h1>hiya</h1>', $output);
 
         unlink('foobar/templates/contentfile.md');
     }

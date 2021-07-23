@@ -33,20 +33,11 @@ class HandlerTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $config = new Config();
         $config['debug'] = true;
         $this->_kernel = new Kernel($config);
-    }
-
-    /**
-     * Tear down after tests
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
     }
 
     public function testInitHandlers()
@@ -75,7 +66,7 @@ class HandlerTest extends \BaseTestCase
         $contents = ob_get_contents();
         ob_end_clean();
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             "E_NOTICE: Test message in fakefile.php:33",
             $contents
         );
@@ -101,15 +92,15 @@ class HandlerTest extends \BaseTestCase
         $contents = ob_get_contents();
         ob_end_clean();
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             "<title>[Greengrape]</title>",
             $contents
         );
-        $this->assertContains(
+        $this->assertStringContainsString(
             "<h1>Error 500 Internal Server Error</h1>",
             $contents
         );
-        $this->assertContains(
+        $this->assertStringContainsString(
             "Things are broken",
             $contents
         );
@@ -124,15 +115,15 @@ class HandlerTest extends \BaseTestCase
         $contents = ob_get_contents();
         ob_end_clean();
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             "<title>[Greengrape]</title>",
             $contents
         );
-        $this->assertContains(
+        $this->assertStringContainsString(
             "<h1>Error 404 Page Not Found</h1>",
             $contents
         );
-        $this->assertContains(
+        $this->assertStringContainsString(
             "Things are broken",
             $contents
         );

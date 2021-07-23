@@ -8,7 +8,7 @@
 namespace Greengrape\Tests;
 
 use \Greengrape\Cache;
-//use \Greengrape\Exception\GreengrapeException;
+use \Greengrape\Exception\GreengrapeException;
 
 /**
  * CacheTest
@@ -24,7 +24,7 @@ class CacheTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         Cache::$allowExit = false;
 
@@ -40,7 +40,7 @@ class CacheTest extends \BaseTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         if ($this->_object instanceof Cache) {
             // clean up and hanging starts, just in case
@@ -54,22 +54,22 @@ class CacheTest extends \BaseTestCase
     /**
      * testConstructNoArgs
      *
-     * @expectedException \ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
     {
+        $this->expectException(\ArgumentCountError::class);
         $cache = new Cache();
     }
 
     /**
      * testConstructFakeDir
      *
-     * @expectedException Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testConstructFakeDir()
     {
+        $this->expectException(GreengrapeException::class);
         $cache = new Cache('fake');
     }
 
@@ -96,11 +96,11 @@ class CacheTest extends \BaseTestCase
     /**
      * testSetDirectoryWhenPathIsntWritable
      *
-     * @expectedException Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testSetDirectoryWhenPathIsntWritable()
     {
+        $this->expectException(GreengrapeException::class);
         $dir = '/';
         $this->_object->setDirectory($dir);
     }
@@ -145,9 +145,9 @@ class CacheTest extends \BaseTestCase
         $this->assertEquals('sometestcontent', $fileContents, 'filecontents');
         $this->assertEquals('sometestcontent', $contents, 'contents');
 
-        // Now that we have a cached file, let's run start again and ensure 
+        // Now that we have a cached file, let's run start again and ensure
         // that it reads the file, outputs it and stops
-        
+
         // Start the test output buffer capturerer
         ob_start();
 

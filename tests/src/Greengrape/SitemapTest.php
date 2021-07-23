@@ -9,6 +9,7 @@ namespace Greengrape\Tests;
 
 use Greengrape\Sitemap;
 use Greengrape\Location;
+use Greengrape\Exception\GreengrapeException;
 
 /**
  * Sitemap Test
@@ -24,7 +25,7 @@ class SitemapTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $contentDir = 'testcontent';
         mkdir($contentDir);
@@ -45,7 +46,7 @@ class SitemapTest extends \BaseTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         passthru('rm -rf testcontent');
     }
@@ -53,11 +54,11 @@ class SitemapTest extends \BaseTestCase
     /**
      * Test constructor
      *
-     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
     {
+        $this->expectException(\ArgumentCountError::class);
         $sitemap = new Sitemap();
     }
 
@@ -75,11 +76,11 @@ class SitemapTest extends \BaseTestCase
     /**
      * testConstructArray
      *
-     * @expectedException Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testConstructArray()
     {
+        $this->expectException(GreengrapeException::class);
         $sitemap = new Sitemap(array('foobar'));
     }
 

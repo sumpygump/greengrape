@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\View;
 
+use Greengrape\Exception\NotFoundException;
 use Greengrape\View\Template;
 use Greengrape\View\Theme;
 use Greengrape\View\AssetManager;
@@ -25,7 +26,7 @@ class TemplateTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         mkdir('foobar');
         mkdir('foobar' . DIRECTORY_SEPARATOR . 'templates');
@@ -45,7 +46,7 @@ class TemplateTest extends \BaseTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         passthru('rm template1.html');
         passthru('rm -rf foobar');
@@ -54,11 +55,11 @@ class TemplateTest extends \BaseTestCase
     /**
      * Test constructor
      *
-     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
     {
+        $this->expectException(\ArgumentCountError::class);
         $template = new Template();
     }
 
@@ -74,11 +75,11 @@ class TemplateTest extends \BaseTestCase
     /**
      * testSetFileNoExist
      *
-     * @expectedException Greengrape\Exception\NotFoundException
      * @return void
      */
     public function testSetFileNoExist()
     {
+        $this->expectException(NotFoundException::class);
         $this->_object->setFile('fakefile.html');
     }
 

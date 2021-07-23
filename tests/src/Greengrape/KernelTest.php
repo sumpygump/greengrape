@@ -9,6 +9,7 @@ namespace Greengrape\Tests;
 
 use Greengrape\Kernel;
 use Greengrape\Config;
+use Greengrape\Exception\GreengrapeException;
 
 /**
  * Kernel Test
@@ -24,7 +25,7 @@ class KernelTest extends \BaseTestCase
      *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::createConfigIni();
     }
@@ -34,7 +35,7 @@ class KernelTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $config = new Config('testconfig.ini');
 
@@ -42,20 +43,11 @@ class KernelTest extends \BaseTestCase
     }
 
     /**
-     * Tear down after tests
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-    }
-
-    /**
      * tearDownAfterClass
      *
      * @return void
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::deleteConfigIni();
     }
@@ -63,11 +55,11 @@ class KernelTest extends \BaseTestCase
     /**
      * Test constructor
      *
-     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
     {
+        $this->expectException(\ArgumentCountError::class);
         $kernel = new Kernel();
     }
 
@@ -114,18 +106,18 @@ class KernelTest extends \BaseTestCase
         $contents = ob_get_contents();
         ob_end_clean();
 
-        $this->assertContains('<title>', $contents);
-        $this->assertContains('</body>', $contents);
+        $this->assertStringContainsString('<title>', $contents);
+        $this->assertStringContainsString('</body>', $contents);
     }
 
     /**
      * testRedirect
      *
-     * @expectedException Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testRedirect()
     {
+        $this->expectException(GreengrapeException::class);
         $this->_object->redirect('0');
     }
 

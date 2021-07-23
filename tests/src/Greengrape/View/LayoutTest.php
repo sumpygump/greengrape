@@ -26,7 +26,7 @@ class LayoutTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         mkdir('testtheme');
 
@@ -55,7 +55,7 @@ class LayoutTest extends \BaseTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         passthru('rm -rf testtheme');
     }
@@ -63,11 +63,11 @@ class LayoutTest extends \BaseTestCase
     /**
      * Test constructor
      *
-     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
     {
+        $this->expectException(\ArgumentCountError::class);
         $layout = new Layout();
     }
 

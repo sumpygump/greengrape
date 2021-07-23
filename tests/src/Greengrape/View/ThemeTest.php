@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\View;
 
+use Greengrape\Exception\NotFoundException;
 use Greengrape\View\Theme;
 use Greengrape\View\AssetManager;
 
@@ -24,7 +25,7 @@ class ThemeTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         mkdir(APP_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'faketheme');
 
@@ -36,7 +37,7 @@ class ThemeTest extends \BaseTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         rmdir(APP_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'faketheme');
     }
@@ -44,33 +45,33 @@ class ThemeTest extends \BaseTestCase
     /**
      * Test constructor
      *
-     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
     {
+        $this->expectException(\ArgumentCountError::class);
         $theme = new Theme();
     }
 
     /**
      * testConstructDefaultDir
      *
-     * @expectedException Greengrape\Exception\NotFoundException
      * @return void
      */
     public function testConstructDefaultDir()
     {
+        $this->expectException(NotFoundException::class);
         $theme = new Theme('foobar', '/baseUrl');
     }
 
     /**
      * testConstructCustomDir
      *
-     * @expectedException Greengrape\Exception\NotFoundException
      * @return void
      */
     public function testConstructCustomDirNoExist()
     {
+        $this->expectException(NotFoundException::class);
         $theme = new Theme('foobar', '/baseUrl', APP_PATH . DIRECTORY_SEPARATOR . 'tests');
     }
 

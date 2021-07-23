@@ -23,18 +23,9 @@ class ContentPartialTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_object = new ContentPartial();
-    }
-
-    /**
-     * Tear down after tests
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
     }
 
     /**

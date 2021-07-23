@@ -23,7 +23,7 @@ class CollectionTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_createTestContentDir();
         //$this->_object = new Collection();
@@ -34,7 +34,7 @@ class CollectionTest extends \BaseTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         passthru('rm -rf _testContent');
     }
@@ -42,11 +42,11 @@ class CollectionTest extends \BaseTestCase
     /**
      * Test constructor
      *
-     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
     {
+        $this->expectException(\ArgumentCountError::class);
         $collection = new Collection();
     }
 

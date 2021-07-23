@@ -3,16 +3,17 @@
 namespace Greengrape\Tests;
 
 use Greengrape\Config;
+use Greengrape\Exception\GreengrapeException;
 
 class ConfigTest extends \BaseTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->createConfigIni();
         $this->_object = new Config('testconfig.ini');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->deleteConfigIni();
     }
@@ -32,11 +33,11 @@ class ConfigTest extends \BaseTestCase
     /**
      * testConstructFileNoExist
      *
-     * @expectedException Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testConstructFileNoExist()
     {
+        $this->expectException(GreengrapeException::class);
         $config = new Config('fake.ini');
     }
 

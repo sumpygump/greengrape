@@ -111,7 +111,7 @@ class Handler
     /**
      * Handle thrown exceptions
      *
-     * @param \Exception $exception The Exception object
+     * @param \Throwable $exception The Exception object
      * @return void
      */
     public static function handleException(\Throwable $exception)
@@ -172,7 +172,7 @@ class Handler
     /**
      * Get the message from the exception that includes the file and line number
      *
-     * @param \Exception $exception Exception object
+     * @param \Throwable $exception Exception object
      * @return string
      */
     public static function getInformativeMessage(\Throwable $exception)
@@ -185,7 +185,7 @@ class Handler
     /**
      * Display exception
      *
-     * @param \Exception $e Exception object
+     * @param \Throwable $e Exception object
      * @return string
      */
     public static function displayException(\Throwable $e)
@@ -205,6 +205,9 @@ class Handler
             . "<th style=\"text-align:left\">args</th></tr>";
 
         foreach ($trace as $i => $tl) {
+            if (!isset($tl['args'])) {
+                $tl['args'] = [];
+            }
             $file  = isset($tl['file']) ? $tl['file'] : '';
             $class = isset($tl['class']) ? $tl['class'] : 'main';
             $line  = isset($tl['line']) ? $tl['line'] : '0';

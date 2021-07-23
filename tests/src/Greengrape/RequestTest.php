@@ -23,7 +23,7 @@ class RequestTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $input = array(
             'REQUEST_URI' => '/all/the/things/about/',
@@ -32,15 +32,6 @@ class RequestTest extends \BaseTestCase
         );
 
         $this->_object = new Request($input);
-    }
-
-    /**
-     * Tear down after tests
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
     }
 
     /**

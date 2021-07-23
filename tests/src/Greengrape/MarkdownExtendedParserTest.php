@@ -23,18 +23,9 @@ class MarkdownExtendedParserTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_object = new MarkdownExtendedParser();
-    }
-
-    /**
-     * Tear down after tests
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
     }
 
     /**

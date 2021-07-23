@@ -7,6 +7,8 @@
 
 namespace Greengrape\Tests\View;
 
+use Greengrape\Exception\GreengrapeException;
+use Greengrape\Exception\NotFoundException;
 use Greengrape\View\Content;
 use Greengrape\View\Theme;
 use Greengrape\View;
@@ -25,7 +27,7 @@ class ContentTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         mkdir('foobar');
         mkdir('foobar' . DIRECTORY_SEPARATOR . 'templates');
@@ -47,7 +49,7 @@ class ContentTest extends \BaseTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         passthru('rm mycontentfile.md');
         passthru('rm -rf foobar');
@@ -68,22 +70,22 @@ class ContentTest extends \BaseTestCase
     /**
      * testConstructFileNoExist
      *
-     * @expectedException Greengrape\Exception\NotFoundException
      * @return void
      */
     public function testConstructFileNoExist()
     {
+        $this->expectException(NotFoundException::class);
         $content = new Content('missing.md');
     }
 
     /**
      * testGetThemeWhenNotSet
      *
-     * @expectedException Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testGetThemeWhenNotSet()
     {
+        $this->expectException(GreengrapeException::class);
         $content = new Content('mycontentfile.md');
 
         $theme = $content->getTheme();
@@ -116,7 +118,7 @@ class ContentTest extends \BaseTestCase
     {
         $output = $this->_object->render();
 
-        $this->assertContains('<h1>contents</h1>', $output);
+        $this->assertStringContainsString('<h1>contents</h1>', $output);
     }
 
     public function testFilterMarkdownLinks()
@@ -125,8 +127,8 @@ class ContentTest extends \BaseTestCase
 
         $reformatted = $this->_object->filterMarkdown($content);
 
-        $this->assertContains('[test1](/baseurl/foobarnews)', $reformatted);
-        $this->assertContains('[test2]: /baseurl/someplace', $reformatted);
+        $this->assertStringContainsString('[test1](/baseurl/foobarnews)', $reformatted);
+        $this->assertStringContainsString('[test2]: /baseurl/someplace', $reformatted);
     }
 
     public function testFilterMarkdownImages()
@@ -135,7 +137,7 @@ class ContentTest extends \BaseTestCase
 
         $reformatted = $this->_object->filterMarkdown($content);
 
-        $this->assertContains('![test3](/baseurl/assets/img/foobar.jpg)', $reformatted);
-        $this->assertContains('[test4]: /baseurl/assets/img/fanbar.png', $reformatted);
+        $this->assertStringContainsString('![test3](/baseurl/assets/img/foobar.jpg)', $reformatted);
+        $this->assertStringContainsString('[test4]: /baseurl/assets/img/fanbar.png', $reformatted);
     }
 }

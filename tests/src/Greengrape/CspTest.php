@@ -9,6 +9,7 @@ namespace Greengrape\Tests;
 
 use Greengrape\Config;
 use Greengrape\Csp;
+use Greengrape\Exception\GreengrapeException;
 
 /**
  * Handler Test
@@ -24,20 +25,11 @@ class CspTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $config = new Config();
         $config['csp'] = [];
         $this->_object = new Csp($config['csp']);
-    }
-
-    /**
-     * Tear down after tests
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
     }
 
     public function testConstruct()
@@ -93,18 +85,18 @@ class CspTest extends \BaseTestCase
     /**
      * testGenerateNonceMustBeGreaterThanZero
      *
-     * @expectedException RangeException
      * @return void
      */
     public function testGenerateNonceMustBeGreaterThanZero()
     {
+        $this->expectException(\RangeException::class);
         $nonce = $this->_object->generateNonce(0);
     }
 
     public function testGetAllPoliciesString()
     {
         $actual = $this->_object->getAllPoliciesString();
-        $expected = "base-uri 'self'; default-src 'self'; img-src 'self'; object-src 'none'; script-src 'self' http: https: 'strict-dynamic'; style-src 'self';";
+        $expected = "base-uri 'self'; default-src 'self'; img-src 'self'; object-src 'none'; script-src 'self' http: https: 'strict-dynamic'; style-src 'self' 'unsafe-inline';";
         $this->assertEquals($expected, $actual);
     }
 
@@ -113,7 +105,7 @@ class CspTest extends \BaseTestCase
         $config = ['script-src' => ['ab', 'cd']];
         $this->_object = new Csp($config);
         $actual = $this->_object->getAllPoliciesString();
-        $expected = "base-uri 'self'; default-src 'self'; img-src 'self'; object-src 'none'; script-src ab cd; style-src 'self';";
+        $expected = "base-uri 'self'; default-src 'self'; img-src 'self'; object-src 'none'; script-src ab cd; style-src 'self' 'unsafe-inline';";
         $this->assertEquals($expected, $actual);
     }
 
@@ -122,7 +114,7 @@ class CspTest extends \BaseTestCase
         $config = ['default-src' => "'none'"];
         $this->_object = new Csp($config);
         $actual = $this->_object->getAllPoliciesString();
-        $expected = "base-uri 'self'; default-src 'none'; img-src 'self'; object-src 'none'; script-src 'self' http: https: 'strict-dynamic'; style-src 'self';";
+        $expected = "base-uri 'self'; default-src 'none'; img-src 'self'; object-src 'none'; script-src 'self' http: https: 'strict-dynamic'; style-src 'self' 'unsafe-inline';";
         $this->assertEquals($expected, $actual);
     }
 
@@ -131,7 +123,7 @@ class CspTest extends \BaseTestCase
         $config = ['use-nonce' => true];
         $this->_object = new Csp($config);
         $actual = $this->_object->getAllPoliciesString();
-        $expected = "base-uri 'self'; default-src 'self'; img-src 'self'; object-src 'none'; script-src 'self' http: https: 'strict-dynamic' 'nonce-" . $this->_object->getNonce() . "' 'unsafe-inline'; style-src 'self';";
+        $expected = "base-uri 'self'; default-src 'self'; img-src 'self'; object-src 'none'; script-src 'self' http: https: 'strict-dynamic' 'nonce-" . $this->_object->getNonce() . "' 'unsafe-inline'; style-src 'self' 'unsafe-inline';";
         $this->assertEquals($expected, $actual);
     }
 
@@ -140,17 +132,17 @@ class CspTest extends \BaseTestCase
         $config = ['cheeseburger-toppings' => 'all'];
         $this->_object = new Csp($config);
         $actual = $this->_object->getAllPoliciesString();
-        $this->assertNotContains('cheeseburger-toppings', $actual);
+        $this->assertStringNotContainsString('cheeseburger-toppings', $actual);
     }
 
     /**
      * testRender
      *
-     * @expectedException \Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testRender()
     {
+        $this->expectException(GreengrapeException::class);
         $this->_object->render();
     }
 }

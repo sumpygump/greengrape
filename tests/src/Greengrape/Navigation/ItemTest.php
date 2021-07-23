@@ -8,6 +8,7 @@
 namespace Greengrape\Tests\Navigation;
 
 use Greengrape\Navigation\Item;
+use Greengrape\Exception\GreengrapeException;
 
 /**
  * Item Test
@@ -23,28 +24,19 @@ class ItemTest extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_object = new Item('foobar', 'foobar', '/mybase/');
     }
 
     /**
-     * Tear down after tests
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-    }
-
-    /**
      * Test constructor
      *
-     * @expectedException ArgumentCountError
      * @return void
      */
     public function testConstructNoArgs()
     {
+        $this->expectException(\ArgumentCountError::class);
         $item = new Item();
     }
 
@@ -95,22 +87,22 @@ class ItemTest extends \BaseTestCase
     /**
      * testSetTextArray
      *
-     * @expectedException Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testSetTextArray()
     {
+        $this->expectException(GreengrapeException::class);
         $this->_object->setText(array('foobar'));
     }
 
     /**
      * testSetTextNumberDotBlank
      *
-     * @expectedException Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testSetTextNumberDotBlank()
     {
+        $this->expectException(GreengrapeException::class);
         $this->_object->setText('1.');
     }
 
@@ -140,11 +132,11 @@ class ItemTest extends \BaseTestCase
     /**
      * testSetHrefArray
      *
-     * @expectedException Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testSetHrefArray()
     {
+        $this->expectException(GreengrapeException::class);
         $this->_object->setHref(array('foobar'));
 
         $this->assertEquals('foobar', $this->_object->getHref());
@@ -153,11 +145,11 @@ class ItemTest extends \BaseTestCase
     /**
      * testSetHrefInt
      *
-     * @expectedException Greengrape\Exception\GreengrapeException
      * @return void
      */
     public function testSetHrefInt()
     {
+        $this->expectException(GreengrapeException::class);
         $this->_object->setHref(1);
     }
 

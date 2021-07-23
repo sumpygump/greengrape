@@ -7,7 +7,7 @@
 
 namespace Greengrape;
 
-use dflydev\markdown\MarkdownExtraParser;
+#use dflydev\markdown\MarkdownExtraParser;
 
 /**
  * MarkdownExtendedParser
@@ -19,7 +19,7 @@ use dflydev\markdown\MarkdownExtraParser;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class MarkdownExtendedParser extends MarkdownExtraParser
+class MarkdownExtendedParser
 {
     /**
      * Tags that are always treated as block tags
@@ -40,7 +40,7 @@ class MarkdownExtendedParser extends MarkdownExtraParser
             "doFencedFigures" => 7,
         );
 
-        parent::__construct($configuration);
+        #parent::__construct($configuration);
     }
 
     /**
@@ -51,7 +51,7 @@ class MarkdownExtendedParser extends MarkdownExtraParser
      */
     public function transform($text)
     {
-        $text = parent::transform($text);
+        #$text = parent::transform($text);
         return $text;
     }
 
