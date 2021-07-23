@@ -7,7 +7,7 @@
 
 namespace Greengrape\View;
 
-use Michelf\Markdown;
+use Michelf\MarkdownExtra;
 use Greengrape\Exception\NotFoundException;
 use Greengrape\Exception\GreengrapeException;
 use Greengrape\Chronolog\Collection as EntryCollection;
@@ -447,12 +447,8 @@ class Content
      */
     public function transform($content)
     {
-        //$markdownParser = new MarkdownExtendedParser();
-
         $content = $this->filterMarkdown($content);
-
-        //$htmlContent = $markdownParser->transformMarkdown($content);
-        $htmlContent = Markdown::defaultTransform($content);
+        $htmlContent = MarkdownExtra::defaultTransform($content);
 
         return $htmlContent;
     }
