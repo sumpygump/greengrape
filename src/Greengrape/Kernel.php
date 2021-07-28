@@ -199,7 +199,7 @@ class Kernel
      * @param Request $request Request object
      * @param string $uri Current URI
      * @param View $view View object
-     * @return void
+     * @return bool
      */
     public function setupNavigationItems(Request $request, $uri, View $view)
     {
@@ -233,6 +233,8 @@ class Kernel
             }
         }
         $view->setSubNavigationItems($subNavigationCollection);
+
+        return true;
     }
 
     /**

@@ -325,7 +325,8 @@ class Content
      * Get metadata
      *
      * @param string $key A specific metadata item to return (optional)
-     * @return array
+     * @param mixed $default Default value to return if not exists
+     * @return array|string
      */
     public function getMetadata($key = null, $default = null)
     {
@@ -382,7 +383,7 @@ class Content
     /**
      * Get URL for this content
      *
-     * @return void
+     * @return string
      */
     public function getUrl()
     {

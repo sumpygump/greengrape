@@ -169,7 +169,7 @@ class Theme
      * Set the theme path
      *
      * @param string $path Full path to theme base directory
-     * @return \Greengrape\View
+     * @return Theme
      */
     public function setPath($path)
     {
@@ -199,7 +199,7 @@ class Theme
      * Set the default title
      *
      * @param string $title Title
-     * @return \Greengrape\View\Theme
+     * @return Theme
      */
     public function setDefaultTitle($title)
     {

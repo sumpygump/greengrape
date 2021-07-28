@@ -100,7 +100,7 @@ class Config implements ArrayAccess
      *
      * @param string $key Key
      * @param mixed $value Value
-     * @return void
+     * @return bool
      */
     public function set($key, $value)
     {
@@ -109,6 +109,7 @@ class Config implements ArrayAccess
         }
 
         $this->_data[$key] = $value;
+        return true;
     }
 
     /**

@@ -40,21 +40,21 @@ class Layout extends Template
      *
      * @var array
      */
-    protected $_navigationItems = array();
+    protected $_navigationItems = [];
 
     /**
      * Sub navigation items
      *
      * @var array
      */
-    protected $_subNavigationItems = array();
+    protected $_subNavigationItems = [];
 
     /**
      * Params
      *
      * @var array
      */
-    protected $_params = array();
+    protected $_params = [];
 
     /**
      * Constructor
@@ -180,7 +180,7 @@ class Layout extends Template
      *
      * @param string $method Name of method called
      * @param array $args Arguments with invocation
-     * @return void
+     * @return mixed
      */
     public function __call($method, $args)
     {
@@ -218,7 +218,7 @@ class Layout extends Template
      * @param Collection|array $navigationItems Array of navigation items
      * @return Layout
      */
-    public function setNavigationItems(Collection|array $navigationItems)
+    public function setNavigationItems(Collection|array|null $navigationItems)
     {
         $this->_navigationItems = $navigationItems;
         return $this;

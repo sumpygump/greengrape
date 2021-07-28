@@ -144,13 +144,13 @@ class Cache
     /**
      * Render the CSP headers
      *
-     * @return void
+     * @return bool
      */
     public function renderCsp()
     {
         if (!$this->csp) {
             // If there is no csp object, then ignore
-            return '';
+            return false;
         }
 
         return $this->csp->render();

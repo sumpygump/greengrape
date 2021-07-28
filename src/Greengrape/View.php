@@ -27,23 +27,23 @@ class View
     /**
      * Theme object
      *
-     * @var \Greengrape\View\Theme
+     * @var Theme
      */
     protected $_theme;
 
     /**
      * Navigation items
      *
-     * @var array
+     * @var Collection|array
      */
-    protected $_navigationItems = array();
+    protected $_navigationItems = [];
 
     /**
      * Sub navigation items
      *
-     * @var array
+     * @var Collection|array
      */
-    protected $_subNavigationItems = array();
+    protected $_subNavigationItems = [];
 
     /**
      * Active navigation item

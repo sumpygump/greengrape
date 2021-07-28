@@ -212,7 +212,7 @@ class Collection implements Iterator
      *
      * For Iterator interface
      *
-     * @return void
+     * @return bool
      */
     public function valid()
     {

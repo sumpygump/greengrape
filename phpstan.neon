@@ -1,3 +1,6 @@
 parameters:
     bootstrapFiles:
         - init.php
+    ignoreErrors:
+        - '#Access to an undefined property Greengrape\\Request::\$[a-z]+.#'
+        - '#Instantiated class __namespace__\\__className__ not found.#'
