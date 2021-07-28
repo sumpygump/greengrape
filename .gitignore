@@ -3,3 +3,4 @@ config.ini
 content
 .htaccess
 vendor
+tests/.phpunit.result.cache

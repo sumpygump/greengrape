@@ -5,23 +5,32 @@ if [ -d "vendor/sumpygump/greengrape" ]; then
     # Copy over the appropriate files so the current project can bootstrap itself
 
     # Copy bootstrap files and config
-    cp vendor/sumpygump/greengrape/index.php ./index.php
-    cp vendor/sumpygump/greengrape/init.php ./init.php
-    cp vendor/sumpygump/greengrape/config.ini-dist ./config.ini
-    cp vendor/sumpygump/greengrape/favicon.ico ./favicon.ico
+    echo "Copying greengrape bootstrap files"
+    cp -v vendor/sumpygump/greengrape/index.php ./index.php
+    cp -v vendor/sumpygump/greengrape/init.php ./init.php
+    cp -v vendor/sumpygump/greengrape/config.ini-dist ./config.ini
+    cp -v vendor/sumpygump/greengrape/.htaccess-dist ./.htaccess
+    cp -v vendor/sumpygump/greengrape/favicon.ico ./favicon.ico
 
     # Copy a default theme
+    echo "Creating theme directory from greengrape vendor"
     mkdir -v themes
-    cp -R vendor/sumpygump/greengrape/themes/grapeseed/ themes
+    cp -vR vendor/sumpygump/greengrape/themes/grapeseed/ themes
 
     # Create content directory
+    echo "Creating content directory from greengrape vendor"
     cp -vR vendor/sumpygump/greengrape/content/ content
 fi
 
 # Create cache directory and set permissions
+echo "Creating cache directory"
 mkdir -vp cache/content
-chmod -v a+w cache -R
+chmod -vR a+w cache
 
+echo "Creating .htaccess file from dist"
+cp -v .htaccess-dist .htaccess
+
+echo
 echo "Greengrape installed"
 echo "Be sure to check the config.ini file and update settings as needed"
 echo "Create your own theme directory and edit config.ini theme setting"

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Clear the cache files
+echo Clearing cache files...
+
+rm -rfv cache/content/*.cache

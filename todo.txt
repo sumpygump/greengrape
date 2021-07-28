@@ -1,7 +1,7 @@
 Features for greengrape
 --------
 [X] Request/router
-[X] Site map discovery 
+[X] Site map discovery
 [X] Navigation generation
 [X] Correct issue with difference in generating navigation urls (/)
 [X] Set title based on main navigation
@@ -22,13 +22,14 @@ Features for greengrape
 [X] Content meta data
 [X] Template partials
 [X] Add utility to check a theme for errors
-[ ] Clear cache command
+[X] Clear cache command
 [ ] Security Concerns - access to files, web root
 [ ] Don't expose real paths in error messages (add a setting to allow for this, like dev mode)
 [ ] Support HTML files as content
 [ ] Support Textile files as content
 [ ] Support Plain Text files as content
 [ ] Add a TOC for headings in the documents
+[ ] Update default and grapeseed to be mobile friendly
 
 # What features do sites usually have?
 

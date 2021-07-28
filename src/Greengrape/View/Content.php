@@ -74,6 +74,13 @@ class Content
     protected $_defaultTemplateFile = 'main.html';
 
     /**
+     * Template
+     *
+     * @var Template
+     */
+    protected $_template;
+
+    /**
      * Constructor
      *
      * @param string $file The file with the content to load
@@ -254,6 +261,12 @@ class Content
             throw new NotFoundException("Content file not found: '" . $this->getFile() . "'");
         }
 
+        if (is_dir($this->getFile())) {
+            $this->setMetadata(['title' => $this->getFile()]);
+            $this->setContent('');
+            return;
+        }
+
         $fileContents = trim(file_get_contents($this->getFile()));
 
         $metadata = $this->readMetadata($fileContents);
@@ -313,7 +326,7 @@ class Content
      * @param string $key A specific metadata item to return (optional)
      * @return array
      */
-    public function getMetadata($key = null)
+    public function getMetadata($key = null, $default = null)
     {
         if (null === $key) {
             return $this->_metadata;
@@ -322,6 +335,8 @@ class Content
         if (array_key_exists($key, $this->_metadata)) {
             return $this->_metadata[$key];
         }
+
+        return $default;
     }
 
     /**
@@ -421,7 +436,9 @@ class Content
             }
             $entries = new EntryCollection($root, $this->getView());
 
-            $entries->reverse();
+            if ($this->getMetadata('direction', 'desc') == 'desc') {
+                $entries->reverse();
+            }
 
             $vars['entries'] = $entries;
         }

@@ -73,11 +73,15 @@ class Collection implements Iterator
     {
         $paths = $this->getChildren();
 
+        $params = $this->getView()->getParams();
+        $glob_numeric = !isset($params['glob'])
+            || (isset($params['glob']) && $params['glob'] == 'numeric');
+
         foreach ($paths as $path) {
             // get 2013-04-01-foo from 2013-04-01-foo.md
             $name = pathinfo($path, PATHINFO_FILENAME);
 
-            if (false == preg_match('/^[0-9]/', $name)) {
+            if ($glob_numeric && false == preg_match('/^[0-9]/', $name)) {
                 // only include items that start with a number
                 continue;
             }
@@ -102,8 +106,10 @@ class Collection implements Iterator
     /**
      * Add items to collection
      *
-     * @param array $items Array of Navigation Items
-     * @return Greengrape\Navigation\Collection
+     * TODO: This should validate the items are correct types
+     *
+     * @param array $items Array of Chronolog Items
+     * @return Greengrape\Chronolog\Collection
      */
     public function addItems($items)
     {
