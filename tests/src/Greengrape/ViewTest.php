@@ -63,6 +63,7 @@ class ViewTest extends \BaseTestCase
     public function testConstructNoArgs()
     {
         $this->expectException(\ArgumentCountError::class);
+        // @phpstan-ignore-next-line
         $view = new View();
     }
 

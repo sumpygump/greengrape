@@ -47,6 +47,7 @@ class CollectionTest extends \BaseTestCase
     public function testConstructNoArgs()
     {
         $this->expectException(\ArgumentCountError::class);
+        // @phpstan-ignore-next-line
         $collection = new Collection();
     }
 
@@ -74,7 +75,7 @@ class CollectionTest extends \BaseTestCase
     {
         $rootItem = new \Greengrape\Navigation\Item('root', '/', '/momo/meme/');
 
-        // It should be empty array, because the root item is the root of the 
+        // It should be empty array, because the root item is the root of the
         // site, so the main navigation is the same as the sub navigation
         $collection = new Collection('_testContent', '/momo/meme/', $rootItem);
         $this->assertEquals(array(), $collection->toArray());
@@ -98,7 +99,7 @@ class CollectionTest extends \BaseTestCase
     {
         $collection = new Collection('_testContent', '/momo/meme/');
 
-        // We'll iterate through the collection and save it to an array, the 
+        // We'll iterate through the collection and save it to an array, the
         // contents of which we can test
         $items = array();
         foreach ($collection as $key => $item) {

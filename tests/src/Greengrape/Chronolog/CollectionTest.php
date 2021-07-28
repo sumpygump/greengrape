@@ -49,12 +49,14 @@ class CollectionTest extends \BaseTestCase
     public function testConstructNoArgs()
     {
         $this->expectException(\ArgumentCountError::class);
+        // @phpstan-ignore-next-line
         $collection = new Collection();
     }
 
     public function testConstructOneArgOnly()
     {
         $this->expectException(\ArgumentCountError::class);
+        // @phpstan-ignore-next-line
         $collection = new Collection('.');
     }
 

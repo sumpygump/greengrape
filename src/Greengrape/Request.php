@@ -64,15 +64,16 @@ class Request
      * Get a value from the request
      *
      * @param string $name Name of key to fetch
+     * @param mixed $default Default value to use if not exists
      * @return mixed
      */
-    public function get($name)
+    public function get($name, $default = null)
     {
         if (isset($this->_data[$name])) {
             return $this->_data[$name];
         }
 
-        return null;
+        return $default;
     }
 
     /**
@@ -137,10 +138,10 @@ class Request
      */
     protected function detectWwwRoot()
     {
-        $baseUrl        = '';
-        $filename       = $this->get('SCRIPT_FILENAME', '');
-        $scriptName     = $this->get('SCRIPT_NAME');
-        $phpSelf        = $this->get('PHP_SELF');
+        $baseUrl = '';
+        $filename = $this->get('SCRIPT_FILENAME', '');
+        $scriptName = $this->get('SCRIPT_NAME');
+        $phpSelf = $this->get('PHP_SELF');
         $origScriptName = $this->get('ORIG_SCRIPT_NAME');
 
         if ($scriptName !== null && basename($scriptName) === $filename) {

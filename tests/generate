@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-chdir('..');
+//chdir('..');
 
 $generator = new GenerateTestFiles($argv);
 $generator->createTests();
@@ -26,8 +26,8 @@ class GenerateTestFiles
 
     public function createTests()
     {
-        $root = 'lib/';
-        $files = self::rglob($root . '*.php');
+        $root = 'src/';
+        $files = self::rglob('*.php', 0, $root);
 
         printf("Found %s php files in '%s'\n\n", count($files), $root);
 
@@ -130,7 +130,7 @@ class GenerateTestFiles
 
     /**
      * Recursive Glob
-     * 
+     *
      * @param string $pattern Pattern
      * @param int $flags Flags to pass to glob
      * @param string $path Path to glob in

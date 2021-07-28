@@ -1,4 +1,9 @@
 <?php
+/**
+ * Csp class file
+ *
+ * @package Greengrape
+ */
 
 namespace Greengrape;
 
@@ -6,6 +11,8 @@ use Greengrape\Exception\GreengrapeException;
 
 /**
  * Content security policy class
+ *
+ * Provides support for adding CSP rules and directives.
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
@@ -56,13 +63,29 @@ class Csp
         "style-src" => "'self' 'unsafe-inline'",
     ];
 
+    /**
+     * Whether nonces should be used on this request
+     *
+     * @var bool
+     */
     private $use_nonce = false;
 
+    /**
+     * The nonce to use for this request
+     *
+     * @var string
+     */
     private $nonce = '';
 
+    /**
+     * Constructor
+     *
+     * @param array $csp_config
+     * @return void
+     */
     public function __construct($csp_config = [])
     {
-        if (!$csp_config instanceof ArrayAccess
+        if (!$csp_config instanceof \ArrayAccess
             && !is_array($csp_config)
         ) {
             $csp_config = [];
@@ -106,6 +129,11 @@ class Csp
         $this->removeInvalidDirectives();
     }
 
+    /**
+     * Clean up the policies and remove any invalid directives
+     *
+     * @return void
+     */
     public function removeInvalidDirectives()
     {
         $valid_policies = [];
@@ -182,7 +210,7 @@ class Csp
     /**
      * Render out the content security policy header
      *
-     * @return void
+     * @return bool
      */
     public function render()
     {
@@ -191,5 +219,6 @@ class Csp
         }
 
         header("Content-Security-Policy: " . $this->getAllPoliciesString());
+        return true;
     }
 }

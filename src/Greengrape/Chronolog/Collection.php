@@ -52,7 +52,7 @@ class Collection implements Iterator
      * Constructor
      *
      * @param string $rootPath Realpath to collection root
-     * @param string $baseUrl Base URL (in order to construct hrefs properly)
+     * @param View $view View object
      * @return void
      */
     public function __construct($rootPath, $view)
@@ -108,7 +108,7 @@ class Collection implements Iterator
      * TODO: This should validate the items are correct types
      *
      * @param array $items Array of Chronolog Items
-     * @return Greengrape\Chronolog\Collection
+     * @return Collection
      */
     public function addItems($items)
     {
@@ -154,7 +154,7 @@ class Collection implements Iterator
     /**
      * Return items array
      *
-     * @return void
+     * @return array
      */
     public function toArray()
     {
@@ -166,7 +166,7 @@ class Collection implements Iterator
      *
      * For Iterator interface
      *
-     * @return void
+     * @return mixed
      */
     public function current()
     {
@@ -219,4 +219,3 @@ class Collection implements Iterator
         return isset($this->_items[$this->_cursor]);
     }
 }
-

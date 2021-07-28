@@ -12,6 +12,7 @@ use Greengrape\Exception\NotFoundException;
 use Greengrape\Exception\GreengrapeException;
 use Greengrape\Chronolog\Collection as EntryCollection;
 use Greengrape\Navigation\Item as NavItem;
+use Greengrape\View;
 
 /**
  * Content
@@ -25,9 +26,9 @@ use Greengrape\Navigation\Item as NavItem;
  */
 class Content
 {
-    const TYPE_PAGE      = 'page';
-    const TYPE_ENTRY     = 'entry';
-    const TYPE_ENTRIES   = 'entries';
+    const TYPE_PAGE = 'page';
+    const TYPE_ENTRY = 'entry';
+    const TYPE_ENTRIES = 'entries';
     const TYPE_CHRONOLOG = 'chronolog';
 
     /**
@@ -83,7 +84,7 @@ class Content
      * Constructor
      *
      * @param string $file The file with the content to load
-     * @param Greengrape\View $view The view object
+     * @param View $view The view object
      * @return void
      */
     public function __construct($file = null, $view = null)
@@ -121,8 +122,8 @@ class Content
     /**
      * Set the view object
      *
-     * @param \Greengrape\View $theme Theme object
-     * @return \Greengrape\View\Content
+     * @param View $view View object
+     * @return Content
      */
     public function setView($view)
     {
@@ -207,11 +208,12 @@ class Content
      * Set the content in markdown format
      *
      * @param string $content The content
-     * @return \Greengrape\View\Content
+     * @return Content
      */
     public function setContent($content)
     {
         $this->_content = $content;
+        return $this;
     }
 
     /**
@@ -311,7 +313,7 @@ class Content
      * Set the meta data
      *
      * @param array $metadata
-     * @return Greengrape\View\Content
+     * @return Content
      */
     public function setMetadata($metadata)
     {
@@ -353,7 +355,7 @@ class Content
     /**
      * Get the name of this content, which is the filename sans extension
      *
-     * @return void
+     * @return string
      */
     public function getName()
     {
@@ -459,7 +461,7 @@ class Content
      * Transform (using markdown engine)
      *
      * @param string $content Content
-     * @return void
+     * @return string
      */
     public function transform($content)
     {
@@ -489,7 +491,7 @@ class Content
      *    [zzz]: assets/... becomes [zzz]: /baseurl/assets...
      *
      * @param mixed $content
-     * @return void
+     * @return string
      */
     public function filterMarkdown($content)
     {

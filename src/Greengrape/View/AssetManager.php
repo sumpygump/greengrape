@@ -82,11 +82,12 @@ class AssetManager
      * Set the web base url
      *
      * @param string $themeName Theme name
-     * @return \Greengrape\View\AssetManager
+     * @return AssetManager
      */
     public function setThemeBaseUrl($themeName)
     {
         $this->_themeBaseUrl = "$themeName/";
+        return $this;
     }
 
     /**

@@ -48,14 +48,14 @@ class View
     /**
      * Active navigation item
      *
-     * @var \Greengrape\NavigationItem
+     * @var Item
      */
     protected $_activeNavigationItem;
 
     /**
      * Active sub navigation item
      *
-     * @var mixed
+     * @var Item
      */
     protected $_activeSubNavigationItem;
 
@@ -76,7 +76,7 @@ class View
     /**
      * Constructor
      *
-     * @param string $themePath Base of theme path
+     * @param string $theme Theme object
      * @return void
      */
     public function __construct($theme)
@@ -191,8 +191,8 @@ class View
     /**
      * Set main navigation items
      *
-     * @param Greengrape\Navigation\Collection $navigationItems Navigation items
-     * @return \Greengrape\View
+     * @param Collection $navigationItems Navigation items
+     * @return View
      */
     public function setNavigationItems(Collection $navigationItems)
     {
@@ -203,7 +203,7 @@ class View
     /**
      * Get Main navigation items
      *
-     * @return Greengrape\Navigation\Collection
+     * @return Collection
      */
     public function getNavigationItems()
     {
@@ -216,8 +216,8 @@ class View
      * From here we'll be able to pull information about the current main level
      * navigation
      *
-     * @param \Greengrape\Navigation\Item $item Item
-     * @return \Greengrape\View
+     * @param Item $item Item
+     * @return View
      */
     public function setActiveNavigationItem(Item $item)
     {
@@ -228,7 +228,7 @@ class View
     /**
      * Get active navigation item (if any was set)
      *
-     * @return \Greengrape\Navigation\Item
+     * @return Item
      */
     public function getActiveNavigationItem()
     {
@@ -238,8 +238,8 @@ class View
     /**
      * Set the active subnavigation item
      *
-     * @param \Greengrape\Navigation\Item $item Navigation item
-     * @return \Greengrape\View
+     * @param Item $item Navigation item
+     * @return View
      */
     public function setActiveSubNavigationItem(Item $item)
     {
@@ -250,7 +250,7 @@ class View
     /**
      * Get active subnavigation item
      *
-     * @return \Greengrape\Navigation\Item
+     * @return Item
      */
     public function getActiveSubNavigationItem()
     {
@@ -260,8 +260,8 @@ class View
     /**
      * Set sub navigation items
      *
-     * @param Greengrape\Navigation\Collection $items Items
-     * @return \Greengrape\View
+     * @param Collection $items Items
+     * @return View
      */
     public function setSubNavigationItems(Collection $items)
     {
@@ -272,7 +272,7 @@ class View
     /**
      * Get subnavigation items
      *
-     * @return Greengrape\Navigation\Collection
+     * @return Collection
      */
     public function getSubNavigationItems()
     {
@@ -284,7 +284,7 @@ class View
      *
      * Look for the file in the content directory
      *
-     * @param string $content Content string
+     * @param string $file Filename
      * @return string
      */
     public function renderContentFile($file)
@@ -298,8 +298,8 @@ class View
     /**
      * Render partial
      *
-     * @param mixed $file
-     * @return void
+     * @param string $file
+     * @return string
      */
     public function renderPartial($file)
     {

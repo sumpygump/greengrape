@@ -59,6 +59,7 @@ class SitemapTest extends \BaseTestCase
     public function testConstructNoArgs()
     {
         $this->expectException(\ArgumentCountError::class);
+        // @phpstan-ignore-next-line
         $sitemap = new Sitemap();
     }
 

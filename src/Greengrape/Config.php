@@ -13,6 +13,17 @@ use Greengrape\Exception\GreengrapeException;
 /**
  * Config
  *
+ * Provides a simple config object where the params are accessible like an array.
+ *
+ * ```
+ * $config = new Config();
+ * $config->set('foo', 'bar');
+ *
+ * $value = $config['foo'];  // Result is 'bar'
+ * ```
+ *
+ * Can read values from an ini file as argument of constructor
+ *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
  */
@@ -23,7 +34,7 @@ class Config implements ArrayAccess
      *
      * @var array
      */
-    protected $_data = array();
+    protected $_data = [];
 
     /**
      * Default config settings

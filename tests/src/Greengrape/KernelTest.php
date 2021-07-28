@@ -60,6 +60,7 @@ class KernelTest extends \BaseTestCase
     public function testConstructNoArgs()
     {
         $this->expectException(\ArgumentCountError::class);
+        // @phpstan-ignore-next-line
         $kernel = new Kernel();
     }
 

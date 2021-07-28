@@ -19,6 +19,8 @@ use Greengrape\Exception\GreengrapeException;
 /**
  * Kernel class
  *
+ * The core kernel of the greengrape framework/application.
+ *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
  */
@@ -88,16 +90,17 @@ class Kernel
      * it will return the setting for the given option parameter
      *
      * @param string $param Param name
+     * @param mixed $default Default value to use if param not exists
      * @return mixed
      */
-    public function getConfig($param = null)
+    public function getConfig($param = null, $default = null)
     {
         if (null === $param) {
             return $this->_config;
         }
 
         if (!isset($this->_config[$param])) {
-            return null;
+            return $default;
         }
 
         return $this->_config[$param];
@@ -106,8 +109,8 @@ class Kernel
     /**
      * Set cache
      *
-     * @param \Greengrape\Cache $cache Cache object
-     * @return \Greengrame\Kernel
+     * @param Cache $cache Cache object
+     * @return Kernel
      */
     public function setCache($cache)
     {
@@ -144,7 +147,7 @@ class Kernel
         $this->getCache()->setCsp($csp);
         $this->getCache()->start($uri);
 
-        $sitemap = new Sitemap($this->getContentDir(), $request->getBaseUrl());
+        $sitemap = new Sitemap($this->getContentDir());
 
         $location = $sitemap->getLocationForUrl($uri);
 
@@ -173,8 +176,8 @@ class Kernel
     /**
      * Make the theme object
      *
-     * @param Greengrape\Request $request Request object
-     * @return Greengrape\View\Theme
+     * @param Request $request Request object
+     * @return Theme
      */
     public function makeTheme(Request $request)
     {
@@ -193,15 +196,17 @@ class Kernel
     /**
      * Set up the navigation items and assign them to the view
      *
-     * @param Greengrape\Request $sitemap Sitemap object
+     * @param Request $request Request object
      * @param string $uri Current URI
-     * @param Greengrape\View $view View object
+     * @param View $view View object
      * @return void
      */
     public function setupNavigationItems(Request $request, $uri, View $view)
     {
         $config = ['include_home_in_nav' => $this->getConfig('include_home_in_nav', true)];
-        $mainNavigationCollection = new NavigationCollection($this->getContentDir(), $request->getBaseUrl(), null, $config);
+        $mainNavigationCollection = new NavigationCollection(
+            $this->getContentDir(), $request->getBaseUrl(), null, $config
+        );
         foreach ($mainNavigationCollection as $item) {
             // If the first part of the URI matches this item's href then this
             // should be the active navigation item

@@ -23,7 +23,7 @@ class __testClassName__ extends \BaseTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_object = new __className__();
     }
@@ -33,7 +33,7 @@ class __testClassName__ extends \BaseTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
     }
 

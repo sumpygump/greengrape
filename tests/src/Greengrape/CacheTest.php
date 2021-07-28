@@ -59,6 +59,7 @@ class CacheTest extends \BaseTestCase
     public function testConstructNoArgs()
     {
         $this->expectException(\ArgumentCountError::class);
+        // @phpstan-ignore-next-line
         $cache = new Cache();
     }
 

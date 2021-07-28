@@ -24,7 +24,7 @@ class HandlerTest extends \BaseTestCase
     /**
      * Kernel object
      *
-     * @var Greengrape\Kernel
+     * @var Kernel
      */
     protected $_kernel;
 

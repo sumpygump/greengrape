@@ -77,7 +77,7 @@ class Sitemap
      * Get content location for given URL
      *
      * @param string $url Url
-     * @return string|null
+     * @return Location
      */
     public function getLocationForUrl($url)
     {

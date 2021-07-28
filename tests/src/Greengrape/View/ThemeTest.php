@@ -50,6 +50,7 @@ class ThemeTest extends \BaseTestCase
     public function testConstructNoArgs()
     {
         $this->expectException(\ArgumentCountError::class);
+        // @phpstan-ignore-next-line
         $theme = new Theme();
     }
 

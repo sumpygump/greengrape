@@ -67,7 +67,7 @@ class Collection implements Iterator,Countable
      *
      * @param string $contentDir Realpath to content directory
      * @param string $baseUrl Base URL (in order to construct hrefs properly)
-     * @param Greengrape\Navigation\Items $rootItem Root item
+     * @param Item $rootItem Root item
      * @return void
      */
     public function __construct($contentDir, $baseUrl, $rootItem = null, $config = [])
@@ -117,7 +117,7 @@ class Collection implements Iterator,Countable
      * Add items to collection
      *
      * @param array $items Array of Navigation Items
-     * @return Greengrape\Navigation\Collection
+     * @return Collection
      */
     public function addItems($items)
     {
@@ -165,7 +165,7 @@ class Collection implements Iterator,Countable
     /**
      * Return items array
      *
-     * @return void
+     * @return array
      */
     public function toArray()
     {
@@ -177,7 +177,7 @@ class Collection implements Iterator,Countable
      *
      * For Iterator interface
      *
-     * @return void
+     * @return mixed
      */
     public function current()
     {
@@ -223,7 +223,7 @@ class Collection implements Iterator,Countable
      *
      * For Iterator interface
      *
-     * @return void
+     * @return bool
      */
     public function valid()
     {

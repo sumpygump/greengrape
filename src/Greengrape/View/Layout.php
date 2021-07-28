@@ -7,6 +7,7 @@
 
 namespace Greengrape\View;
 
+use Greengrape\Navigation\Collection;
 use Greengrape\View\Template;
 use \Twig\Environment as Twig_Environment;
 use \Twig\Loader\ArrayLoader as Twig_Loader_ArrayLoader;
@@ -214,10 +215,10 @@ class Layout extends Template
     /**
      * Set navigation items
      *
-     * @param Greengrape\Navigation\Collection $navigationItems Array of navigation items
-     * @return \Greengrape\View\Layout
+     * @param Collection|array $navigationItems Array of navigation items
+     * @return Layout
      */
-    public function setNavigationItems($navigationItems)
+    public function setNavigationItems(Collection|array $navigationItems)
     {
         $this->_navigationItems = $navigationItems;
         return $this;

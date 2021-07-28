@@ -27,7 +27,7 @@ class Handler
     /**
      * Init the error handlers
      *
-     * @param Greengrape\Kernel $kernel Kernel object
+     * @param Kernel $kernel Kernel object
      * @return void
      */
     public static function initHandlers(Kernel $kernel)
@@ -97,7 +97,7 @@ class Handler
     /**
      * Handle a shutdown
      *
-     * @return void
+     * @return bool
      */
     public static function handleShutdown()
     {
@@ -112,6 +112,8 @@ class Handler
             $error['type'], $error['message'],
             $error['file'], $error['line']
         );
+
+        return true;
     }
 
     /**

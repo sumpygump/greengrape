@@ -10,7 +10,19 @@ namespace Greengrape;
 use Greengrape\Exception\GreengrapeException;
 
 /**
- * Cache
+ * Cache Manager
+ *
+ * Provides a simple caching layer for greengrape framework server. If setting
+ * in config.ini is set to `cache = true` then all requests will check if an
+ * existing cached file exists and if so it will use it. If not it will
+ * generate the file based on making an md5hash of the request input.
+ *
+ * The cache directory is in cache/content/
+ *
+ * The cache can be cleared for an individual request by adding the query
+ * parameter `?cache=clear` to the URL.
+ *
+ * The cache can be cleared locally by running the script `bin/clear-cache`
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
@@ -20,7 +32,7 @@ class Cache
     /**
      * Csp object
      *
-     * @var Greengrape\Csp
+     * @var Csp
      */
     public $csp;
 
@@ -120,10 +132,10 @@ class Cache
     /**
      * Set Csp object
      *
-     * @param Greengrape\Csp $csp
+     * @param Csp $csp
      * @return Cache
      */
-    public function setCsp($csp)
+    public function setCsp(Csp $csp)
     {
         $this->csp = $csp;
         return $this;
@@ -147,7 +159,7 @@ class Cache
     /**
      * Get CSP nonce
      *
-     * @return void
+     * @return string
      */
     public function getCspNonce()
     {

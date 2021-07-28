@@ -230,7 +230,7 @@ class Item
      * and the dot so it appears more normal in the listing
      *
      * @param string $text Folder name
-     * @return void
+     * @return string
      */
     public static function translateOrderedName($text)
     {

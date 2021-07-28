@@ -60,6 +60,7 @@ class TemplateTest extends \BaseTestCase
     public function testConstructNoArgs()
     {
         $this->expectException(\ArgumentCountError::class);
+        // @phpstan-ignore-next-line
         $template = new Template();
     }
 
