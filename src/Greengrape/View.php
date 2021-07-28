@@ -1,6 +1,6 @@
 <?php
 /**
- * Greengrame view class file
+ * Greengrape view class file
  *
  * @package Greengrape
  */
@@ -21,7 +21,6 @@ use Greengrape\Navigation\Item;
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class View
 {

@@ -16,7 +16,6 @@ use Greengrape\Exception\GreengrapeException;
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class Item
 {
@@ -26,7 +25,7 @@ class Item
      * @var string
      */
     protected $_text = '';
-    
+
     /**
      * The href of the navigation link
      *
@@ -203,7 +202,7 @@ class Item
      */
     public function setBaseUrl($url)
     {
-        // base url should not end in a slash, so we'll strip it off it it has 
+        // base url should not end in a slash, so we'll strip it off it it has
         // one on the end
         $this->_baseUrl = rtrim($url, '/');
 
@@ -227,7 +226,7 @@ class Item
     /**
      * Translate an ordered folder name
      *
-     * If the folder starts with number and a dot, we will strip off the number 
+     * If the folder starts with number and a dot, we will strip off the number
      * and the dot so it appears more normal in the listing
      *
      * @param string $text Folder name
@@ -235,7 +234,7 @@ class Item
      */
     public static function translateOrderedName($text)
     {
-        // You can affect the order of the items by naming the folders with 
+        // You can affect the order of the items by naming the folders with
         // n.<name>, where n is a number.
         // this: 01.services, 02.about-us
         if (preg_match('/[0-9]+\.(?:.*)/', $text, $matches)) {

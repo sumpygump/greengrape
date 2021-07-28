@@ -8,9 +8,8 @@ namespace Greengrape\Exception;
 /**
  * NotFoundException
  *
- * @package 
+ * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class NotFoundException extends \Exception
 {

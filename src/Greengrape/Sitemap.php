@@ -17,7 +17,6 @@ use Greengrape\Exception\GreengrapeException;
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class Sitemap
 {
@@ -110,7 +109,7 @@ class Sitemap
         $files = self::rglob($this->getContentDir() . DIRECTORY_SEPARATOR . '*');
 
         $map = array();
-        
+
         foreach ($files as $file) {
             if (is_dir($file)) {
                 $isDir = true;
@@ -157,7 +156,7 @@ class Sitemap
 
     /**
      * Recursive Glob
-     * 
+     *
      * @param string $pattern Pattern
      * @param int $flags Flags to pass to glob
      * @param string $path Path to glob in

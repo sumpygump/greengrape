@@ -4,6 +4,12 @@ namespace Greengrape;
 
 use Greengrape\Exception\GreengrapeException;
 
+/**
+ * Content security policy class
+ *
+ * @package Greengrape
+ * @author Jansen Price <jansen.price@gmail.com>
+ */
 class Csp
 {
     const DIRECTIVES = [

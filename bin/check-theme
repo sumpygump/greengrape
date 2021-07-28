@@ -6,7 +6,7 @@
  * @package Grapeseed
  */
 
-// This file is in bin directory. Let's move up a directory so that the paths 
+// This file is in bin directory. Let's move up a directory so that the paths
 // are always relative to the project root.
 $dir = realpath(dirname(dirname(__FILE__)));
 chdir($dir);
@@ -116,7 +116,7 @@ class CheckTheme
     }
 
     /**
-     * Determine whether a given theme name is available (theme exists in 
+     * Determine whether a given theme name is available (theme exists in
      * themes directory).
      *
      * @param string $themeName Name of theme

@@ -17,7 +17,6 @@ use \Twig\Extension\DebugExtension as Twig_DebugExtension;
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class Layout extends Template
 {

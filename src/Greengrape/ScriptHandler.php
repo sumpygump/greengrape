@@ -12,7 +12,6 @@ namespace Greengrape;
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class ScriptHandler
 {

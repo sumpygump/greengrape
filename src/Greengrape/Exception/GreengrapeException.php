@@ -12,7 +12,6 @@ namespace Greengrape\Exception;
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class GreengrapeException extends \Exception
 {

@@ -15,7 +15,6 @@ use Greengrape\Exception\NotFoundException;
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class Theme
 {
@@ -181,7 +180,7 @@ class Theme
     /**
      * Get theme path
      *
-     * Get the base theme path, or if an argument is passed in, get the full 
+     * Get the base theme path, or if an argument is passed in, get the full
      * path to that asset within the theme
      *
      * @param string $file Filepath to retrieve

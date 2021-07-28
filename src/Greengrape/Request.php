@@ -12,7 +12,6 @@ namespace Greengrape;
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class Request
 {
@@ -86,7 +85,7 @@ class Request
         $uriParts = parse_url($this->getRequestUri());
         $path     = $uriParts['path'];
 
-        // When the base Url is /, we need to strip off the leftmost slash from 
+        // When the base Url is /, we need to strip off the leftmost slash from
         // the path to correctly match an entry in the site map
         if ($this->getBaseUrl() == '/') {
             $file = ltrim($path, '/');

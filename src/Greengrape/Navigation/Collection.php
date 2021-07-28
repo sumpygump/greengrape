@@ -17,7 +17,6 @@ use Greengrape\Navigation\Item;
  * @uses Iterator
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class Collection implements Iterator,Countable
 {

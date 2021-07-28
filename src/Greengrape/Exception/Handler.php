@@ -9,6 +9,12 @@ use Greengrape\View;
 use Greengrape\View\Theme;
 use Greengrape\View\Content;
 
+/**
+ * Exception Handler
+ *
+ * @package Greengrape
+ * @author Jansen Price <jansen.price@gmail.com>
+ */
 class Handler
 {
     /**

@@ -12,7 +12,6 @@ namespace Greengrape\View;
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class AssetManager
 {
@@ -123,7 +122,7 @@ class AssetManager
         $extension = self::getExtension($file);
 
         if ($assetDir != '' && $extension == '') {
-            // Append the extension for an asset that doesn't have an 
+            // Append the extension for an asset that doesn't have an
             // extension based on the asset dir (js, css).
             $file .= '.' . $assetDir;
         }
