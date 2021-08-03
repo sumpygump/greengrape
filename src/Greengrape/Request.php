@@ -18,9 +18,9 @@ class Request
     /**
      * Data for request values
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $_data = array();
+    protected $_data = [];
 
     /**
      * Base URL
@@ -32,7 +32,7 @@ class Request
     /**
      * Constructor
      *
-     * @param array $requestInput Request values
+     * @param null|array<string, string>|string $requestInput Request values
      * @return void
      */
     public function __construct($requestInput = null)
@@ -42,7 +42,7 @@ class Request
         }
 
         if (!is_array($requestInput)) {
-            $requestInput = array($requestInput);
+            $requestInput = [$requestInput];
         }
 
         $this->_data = $requestInput;
@@ -63,7 +63,7 @@ class Request
     /**
      * Get a value from the request
      *
-     * @param string $name Name of key to fetch
+     * @param string|int $name Name of key to fetch
      * @param mixed $default Default value to use if not exists
      * @return mixed
      */
@@ -114,6 +114,7 @@ class Request
     /**
      * Get the base URL
      *
+     * @param string $file File to append to base
      * @return string
      */
     public function getBaseUrl($file = '')

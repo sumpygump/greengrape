@@ -32,14 +32,15 @@ class AssetManager
     /**
      * List of supported asset dirs in the themes
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected static $_supportedAssetDirs = array('js', 'css', 'img');
+    protected static $_supportedAssetDirs = ['js', 'css', 'img'];
 
     /**
      * Constructor
      *
      * @param string $themeName Name of theme
+     * @param string $baseUrl Base URL of site
      * @return void
      */
     public function __construct($themeName, $baseUrl = '/')
@@ -54,7 +55,7 @@ class AssetManager
      * Set base url
      *
      * @param string $url Base (web root) URL
-     * @return \Greengrape\View\AssetManager
+     * @return AssetManager
      */
     public function setBaseUrl($url)
     {
@@ -65,6 +66,7 @@ class AssetManager
     /**
      * Get the base URL
      *
+     * @param string $file File to append to base path
      * @return string
      */
     public function getBaseUrl($file = '')

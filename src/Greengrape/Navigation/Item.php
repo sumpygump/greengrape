@@ -59,6 +59,7 @@ class Item
      *
      * @param string $text Text of the link
      * @param string $href Href of the link
+     * @param string $baseUrl Base URL
      * @return void
      */
     public function __construct($text, $href, $baseUrl = '/')
@@ -72,7 +73,7 @@ class Item
      * Set the text
      *
      * @param string $text Link text
-     * @return \Greengrape\Navigation\Item
+     * @return Item
      */
     public function setText($text)
     {
@@ -110,7 +111,7 @@ class Item
      * Set the href of the link
      *
      * @param string $href Href
-     * @return \Greengrape\Navigation\Item
+     * @return Item
      */
     public function setHref($href)
     {
@@ -128,6 +129,7 @@ class Item
     /**
      * Get the link href
      *
+     * @param bool $includeBase Whether to include the base
      * @return string
      */
     public function getHref($includeBase = false)
@@ -154,7 +156,7 @@ class Item
      * Set the actual raw folder name
      *
      * @param string $href Folder name
-     * @return \Greengrape\Navigation\Item
+     * @return Item
      */
     public function setRawHref($href)
     {
@@ -176,7 +178,7 @@ class Item
      * Set whether this navigation is active
      *
      * @param bool $value active state
-     * @return \Greengrape\Navigation\Item
+     * @return Item
      */
     public function setActive($value = true)
     {
@@ -198,7 +200,7 @@ class Item
      * Set Base URL
      *
      * @param string $url URL
-     * @return \Greengrape\Navigation\Item
+     * @return Item
      */
     public function setBaseUrl($url)
     {
@@ -212,6 +214,7 @@ class Item
     /**
      * Get the base URL
      *
+     * @param string $file File to append to path
      * @return string
      */
     public function getBaseUrl($file = '')

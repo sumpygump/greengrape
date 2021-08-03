@@ -40,14 +40,14 @@ class HandlerTest extends \BaseTestCase
         $this->_kernel = new Kernel($config);
     }
 
-    public function testInitHandlers()
+    public function testInitHandlers(): void
     {
         Handler::initHandlers($this->_kernel);
         Handler::releaseHandlers();
         $this->assertTrue($this->_kernel instanceof Kernel);
     }
 
-    public function testGetKernel()
+    public function testGetKernel(): void
     {
         Handler::initHandlers($this->_kernel);
         Handler::releaseHandlers();
@@ -57,11 +57,11 @@ class HandlerTest extends \BaseTestCase
         $this->assertEquals($this->_kernel, $kernel);
     }
 
-    public function testHandleError()
+    public function testHandleError(): void
     {
         ob_start();
         Handler::handleError(
-            8, 'Test message', 'fakefile.php', '33'
+            8, 'Test message', 'fakefile.php', 33
         );
         $contents = ob_get_contents();
         ob_end_clean();
@@ -72,7 +72,7 @@ class HandlerTest extends \BaseTestCase
         );
     }
 
-    public function testHandleShutdown()
+    public function testHandleShutdown(): void
     {
         // I would have to trigger an error to test the rest of this method,
         // but I couldn't do it, even with output buffering and not have
@@ -83,7 +83,7 @@ class HandlerTest extends \BaseTestCase
         $this->assertFalse($result);
     }
 
-    public function testHandleException()
+    public function testHandleException(): void
     {
         $exception = new \Exception("Things are broken.", 121);
 
@@ -106,7 +106,7 @@ class HandlerTest extends \BaseTestCase
         );
     }
 
-    public function testHandleExceptionNotFound()
+    public function testHandleExceptionNotFound(): void
     {
         $exception = new NotFoundException("Things are broken.", 121);
 

@@ -34,17 +34,13 @@ class Handler
     {
         self::setKernel($kernel);
 
-        set_exception_handler(
-            array('\Greengrape\Exception\Handler', 'handleException')
-        );
+        set_exception_handler([self::class, 'handleException']);
 
-        set_error_handler(
-            array('\Greengrape\Exception\Handler', 'handleError')
-        );
+        // I can't figure out how to get phpstan to stop flagging this
+        // @phpstan-ignore-next-line
+        set_error_handler([self::class, 'handleError']);
 
-        register_shutdown_function(
-            array('\Greengrape\Exception\Handler', 'handleShutdown')
-        );
+        register_shutdown_function([self::class, 'handleShutdown']);
     }
 
     /**
@@ -82,11 +78,16 @@ class Handler
     /**
      * Handle an error
      *
+     * @param int $errno
+     * @param string $message
+     * @param string $file
+     * @param int $line
+     * @param array<string, mixed> $context
      * @return void
      */
-    public static function handleError()
+    public static function handleError($errno, $message, $file, $line, $context = [])
     {
-        list($errno, $message, $file, $line) = func_get_args();
+        //list($errno, $message, $file, $line) = func_get_args();
 
         $message = self::convertErrorCode($errno)
             . ": " . $message . " in " . $file . ":" . $line;
@@ -270,7 +271,7 @@ class Handler
      */
     protected static function convertErrorCode($code)
     {
-        $errorLevels = array(
+        $errorLevels = [
             1     => 'E_ERROR',
             2     => 'E_WARNING',
             4     => 'E_PARSE',
@@ -286,7 +287,7 @@ class Handler
             4096  => 'E_RECOVERABLE_ERROR',
             8192  => 'E_DEPRECATED',
             16384 => 'E_USER_DEPRECATED',
-        );
+        ];
 
         return $errorLevels[$code];
     }

@@ -52,7 +52,7 @@ class Csp
      *
      * These are policies suggested by https://csp-evaluator.withgoogle.com/
      *
-     * @var array
+     * @var array<string, string|array>
      */
     public $policies = [
         "base-uri" => "'self'",
@@ -80,7 +80,11 @@ class Csp
     /**
      * Constructor
      *
-     * @param array $csp_config
+     * The csp_config is an array with [policy_name => policy_value]
+     * And also the optional directive to generate and include a nonce using
+     * the key 'use-nonce', the value of which is a bool
+     *
+     * @param mixed $csp_config
      * @return void
      */
     public function __construct($csp_config = [])

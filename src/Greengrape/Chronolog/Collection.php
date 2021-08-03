@@ -14,7 +14,7 @@ use Greengrape\View\Content;
 /**
  * Collection
  *
- * @uses Iterator
+ * @implements Iterator<int, Content>
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
  */
@@ -30,9 +30,9 @@ class Collection implements Iterator
     /**
      * Items
      *
-     * @var array
+     * @var array<int, Content>
      */
-    protected $_items = array();
+    protected $_items = [];
 
     /**
      * Root dir for this collection
@@ -107,7 +107,7 @@ class Collection implements Iterator
      *
      * TODO: This should validate the items are correct types
      *
-     * @param array $items Array of Chronolog Items
+     * @param array<int, Content> $items Array of Chronolog Items
      * @return Collection
      */
     public function addItems($items)
@@ -132,7 +132,7 @@ class Collection implements Iterator
     /**
      * Get child chronlog entry files from specified root
      *
-     * @return array
+     * @return array<int, string>
      */
     protected function getChildren()
     {
@@ -154,7 +154,7 @@ class Collection implements Iterator
     /**
      * Return items array
      *
-     * @return array
+     * @return array<int, Content>
      */
     public function toArray()
     {
@@ -166,7 +166,7 @@ class Collection implements Iterator
      *
      * For Iterator interface
      *
-     * @return mixed
+     * @return Content
      */
     public function current()
     {

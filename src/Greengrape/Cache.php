@@ -148,7 +148,7 @@ class Cache
      */
     public function renderCsp()
     {
-        if (!$this->csp) {
+        if (null === $this->csp) {
             // If there is no csp object, then ignore
             return false;
         }
@@ -163,7 +163,7 @@ class Cache
      */
     public function getCspNonce()
     {
-        if (!$this->csp) {
+        if (null === $this->csp) {
             // If there is no csp object, then ignore
             return '';
         }

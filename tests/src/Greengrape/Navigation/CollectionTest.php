@@ -44,14 +44,14 @@ class CollectionTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructNoArgs()
+    public function testConstructNoArgs(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
         $collection = new Collection();
     }
 
-    public function testConstructDefault()
+    public function testConstructDefault(): void
     {
         $collection = new Collection('foo', 'bar');
 
@@ -59,7 +59,7 @@ class CollectionTest extends \BaseTestCase
         $this->assertEquals(array(), $collection->toArray());
     }
 
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $collection = new Collection('_testContent', '/momo/meme/');
 
@@ -71,7 +71,7 @@ class CollectionTest extends \BaseTestCase
         $this->assertEquals('Foo', $items[1]->getText());
     }
 
-    public function testPopulateWithRootItemRoot()
+    public function testPopulateWithRootItemRoot(): void
     {
         $rootItem = new \Greengrape\Navigation\Item('root', '/', '/momo/meme/');
 
@@ -81,7 +81,7 @@ class CollectionTest extends \BaseTestCase
         $this->assertEquals(array(), $collection->toArray());
     }
 
-    public function testPopulateWithRootItem()
+    public function testPopulateWithRootItem(): void
     {
         $rootItem = new \Greengrape\Navigation\Item('foo', 'foo/', '/momo/meme/');
 
@@ -95,7 +95,7 @@ class CollectionTest extends \BaseTestCase
         $this->assertEquals('Sub2', $items[1]->getText());
     }
 
-    public function testArrayIterate()
+    public function testArrayIterate(): void
     {
         $collection = new Collection('_testContent', '/momo/meme/');
 
@@ -112,7 +112,7 @@ class CollectionTest extends \BaseTestCase
         $this->assertEquals('Foo', $items[1]->getText());
     }
 
-    protected function _createTestContentDir()
+    protected function _createTestContentDir(): void
     {
         $contentDir = '_testContent';
         mkdir($contentDir);

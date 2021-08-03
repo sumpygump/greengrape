@@ -29,9 +29,9 @@ class Kernel
     /**
      * Configuration
      *
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $_config = array();
+    protected $_config = [];
 
     /**
      * Cache object
@@ -52,7 +52,7 @@ class Kernel
     /**
      * Constructor
      *
-     * @param array $config Configuration settings
+     * @param array<string, mixed>|Config $config Configuration settings
      * @return void
      */
     public function __construct($config)
@@ -69,7 +69,7 @@ class Kernel
     /**
      * Set the config
      *
-     * @param array $config Configuration settings
+     * @param array<string, mixed> $config Configuration settings
      * @return \Greengrape\Kernel
      */
     public function setConfig($config)
@@ -223,7 +223,9 @@ class Kernel
             return false;
         }
 
-        $subNavigationCollection = new NavigationCollection($this->getContentDir(), $request->getBaseUrl(), $view->getActiveNavigationItem());
+        $subNavigationCollection = new NavigationCollection(
+            $this->getContentDir(), $request->getBaseUrl(), $view->getActiveNavigationItem()
+        );
         foreach ($subNavigationCollection as $subItem) {
             // If the first part of the URI matches this item's href then this
             // should be the active navigation item

@@ -14,9 +14,9 @@ use Greengrape\Navigation\Item;
 /**
  * Collection
  *
- * @uses Iterator
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
+ * @implements Iterator<int, Item>
  */
 class Collection implements Iterator,Countable
 {
@@ -30,14 +30,14 @@ class Collection implements Iterator,Countable
     /**
      * Items
      *
-     * @var array
+     * @var array<int, Item>
      */
-    protected $_items = array();
+    protected $_items = [];
 
     /**
      * Root item
      *
-     * @var \Greengrape\Navigation\Item
+     * @var Item
      */
     protected $_rootItem;
 
@@ -67,13 +67,14 @@ class Collection implements Iterator,Countable
      *
      * @param string $contentDir Realpath to content directory
      * @param string $baseUrl Base URL (in order to construct hrefs properly)
-     * @param Item $rootItem Root item
+     * @param Item|null $rootItem Root item
+     * @param array<string, bool> $config
      * @return void
      */
     public function __construct($contentDir, $baseUrl, $rootItem = null, $config = [])
     {
         if (isset($config['include_home_in_nav'])) {
-            $this->includeHome = $config['include_home_in_nav'];
+            $this->includeHome = (bool) $config['include_home_in_nav'];
         }
 
         $this->_contentDir = $contentDir;
@@ -107,7 +108,7 @@ class Collection implements Iterator,Countable
         }
 
         // If we are at the actual site root, we need to add an item to Home
-        if ($this->includeHome && !$this->_rootItem && !empty($this->_items)) {
+        if ($this->includeHome && empty($this->_rootItem) && !empty($this->_items)) {
             $home = new Item('Home', '/', $this->_baseUrl);
             array_unshift($this->_items, $home);
         }
@@ -116,7 +117,7 @@ class Collection implements Iterator,Countable
     /**
      * Add items to collection
      *
-     * @param array $items Array of Navigation Items
+     * @param array<int, Item> $items Array of Navigation Items
      * @return Collection
      */
     public function addItems($items)
@@ -132,12 +133,12 @@ class Collection implements Iterator,Countable
     /**
      * Get child folders from specified root
      *
-     * @return array
+     * @return array<int, string>
      */
     protected function getChildren()
     {
         // If the root is the home, don't return any children
-        if ($this->_rootItem && $this->_rootItem->getHref() == '/') {
+        if (!empty($this->_rootItem) && $this->_rootItem->getHref() == '/') {
             return array();
         }
 
@@ -165,7 +166,7 @@ class Collection implements Iterator,Countable
     /**
      * Return items array
      *
-     * @return array
+     * @return array<int, Item>
      */
     public function toArray()
     {
@@ -177,7 +178,7 @@ class Collection implements Iterator,Countable
      *
      * For Iterator interface
      *
-     * @return mixed
+     * @return Item
      */
     public function current()
     {

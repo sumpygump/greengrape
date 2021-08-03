@@ -34,14 +34,14 @@ class ItemTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructNoArgs()
+    public function testConstructNoArgs(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
         $item = new Item();
     }
 
-    public function testConstructDefault()
+    public function testConstructDefault(): void
     {
         $item = new Item('foobar', 'foobar/');
 
@@ -50,35 +50,35 @@ class ItemTest extends \BaseTestCase
         $this->assertEquals('foobar/', $item->getHref());
     }
 
-    public function testSetText()
+    public function testSetText(): void
     {
         $this->_object->setText('xyz');
 
         $this->assertEquals('Xyz', $this->_object->getText());
     }
 
-    public function testSetTextWithNumberDot()
+    public function testSetTextWithNumberDot(): void
     {
         $this->_object->setText('01.xyz');
 
         $this->assertEquals('Xyz', $this->_object->getText());
     }
 
-    public function testSetTextWithHyphen()
+    public function testSetTextWithHyphen(): void
     {
         $this->_object->setText('abc-xyz');
 
         $this->assertEquals('Abc Xyz', $this->_object->getText());
     }
 
-    public function testSetTextWithHyphenAndUppercase()
+    public function testSetTextWithHyphenAndUppercase(): void
     {
         $this->_object->setText('abc-Xyz');
 
         $this->assertEquals('Abc-Xyz', $this->_object->getText());
     }
 
-    public function testSetTextWithWords()
+    public function testSetTextWithWords(): void
     {
         $this->_object->setText('When a strong man armed keepeth his palace, his goods are in peace');
 
@@ -90,7 +90,7 @@ class ItemTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testSetTextArray()
+    public function testSetTextArray(): void
     {
         $this->expectException(GreengrapeException::class);
         $this->_object->setText(array('foobar'));
@@ -101,20 +101,20 @@ class ItemTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testSetTextNumberDotBlank()
+    public function testSetTextNumberDotBlank(): void
     {
         $this->expectException(GreengrapeException::class);
         $this->_object->setText('1.');
     }
 
-    public function testSetTextNumberDotNumber()
+    public function testSetTextNumberDotNumber(): void
     {
         $this->_object->setText('18.1');
 
         $this->assertEquals('1', $this->_object->getText());
     }
 
-    public function testSetHref()
+    public function testSetHref(): void
     {
         $this->_object->setHref('application/');
 
@@ -122,7 +122,7 @@ class ItemTest extends \BaseTestCase
         $this->assertEquals('application/', $this->_object->getRawHref());
     }
 
-    public function testSetHrefWithNumberDot()
+    public function testSetHrefWithNumberDot(): void
     {
         $this->_object->setHref('18.application/');
 
@@ -135,7 +135,7 @@ class ItemTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testSetHrefArray()
+    public function testSetHrefArray(): void
     {
         $this->expectException(GreengrapeException::class);
         $this->_object->setHref(array('foobar'));
@@ -148,41 +148,41 @@ class ItemTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testSetHrefInt()
+    public function testSetHrefInt(): void
     {
         $this->expectException(GreengrapeException::class);
         $this->_object->setHref(1);
     }
 
-    public function testGetHrefWithIncludeBase()
+    public function testGetHrefWithIncludeBase(): void
     {
         $this->_object->setHref('happy-day/');
 
         $this->assertEquals('/mybase/happy-day/', $this->_object->getHref(true));
     }
 
-    public function testGetHrefRootWithIncludeBase()
+    public function testGetHrefRootWithIncludeBase(): void
     {
         $this->_object->setHref('/');
 
         $this->assertEquals('/mybase/', $this->_object->getHref(true));
     }
 
-    public function testSetActiveEmpty()
+    public function testSetActiveEmpty(): void
     {
         $this->_object->setActive();
 
         $this->assertTrue($this->_object->getActive());
     }
 
-    public function testSetActiveFalse()
+    public function testSetActiveFalse(): void
     {
         $this->_object->setActive(false);
 
         $this->assertFalse($this->_object->getActive());
     }
 
-    public function testGetBaseUrlEmpty()
+    public function testGetBaseUrlEmpty(): void
     {
         $this->assertEquals('/mybase', $this->_object->getBaseUrl());
     }

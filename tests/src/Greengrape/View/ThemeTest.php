@@ -47,7 +47,7 @@ class ThemeTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructNoArgs()
+    public function testConstructNoArgs(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
@@ -59,7 +59,7 @@ class ThemeTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructDefaultDir()
+    public function testConstructDefaultDir(): void
     {
         $this->expectException(NotFoundException::class);
         $theme = new Theme('foobar', '/baseUrl');
@@ -70,13 +70,13 @@ class ThemeTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructCustomDirNoExist()
+    public function testConstructCustomDirNoExist(): void
     {
         $this->expectException(NotFoundException::class);
         $theme = new Theme('foobar', '/baseUrl', APP_PATH . DIRECTORY_SEPARATOR . 'tests');
     }
 
-    public function testConstructCustomDirExist()
+    public function testConstructCustomDirExist(): void
     {
         $themePath = APP_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'newfaketheme';
         mkdir($themePath);
@@ -87,14 +87,14 @@ class ThemeTest extends \BaseTestCase
         rmdir($themePath);
     }
 
-    public function testGetAssetManager()
+    public function testGetAssetManager(): void
     {
         $assetManager = $this->_object->getAssetManager();
 
         $this->assertTrue($assetManager instanceof AssetManager);
     }
 
-    public function testGetPathBlank()
+    public function testGetPathBlank(): void
     {
         $path = $this->_object->getPath();
 
@@ -102,7 +102,7 @@ class ThemeTest extends \BaseTestCase
         $this->assertEquals($expected, $path);
     }
 
-    public function testGetPathFile()
+    public function testGetPathFile(): void
     {
         $path = $this->_object->getPath('foobar');
 
@@ -112,14 +112,14 @@ class ThemeTest extends \BaseTestCase
         $this->assertEquals($expected, $path);
     }
 
-    public function testSetDefaultTitle()
+    public function testSetDefaultTitle(): void
     {
         $this->_object->setDefaultTitle('wonky wonk');
 
         $this->assertEquals('wonky wonk', $this->_object->getDefaultTitle());
     }
 
-    public function testGetDefaultTitleWhenNotSet()
+    public function testGetDefaultTitleWhenNotSet(): void
     {
         $this->assertEquals('[Greengrape]', $this->_object->getDefaultTitle());
     }

@@ -33,21 +33,21 @@ class AssetManagerTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructNoArgs()
+    public function testConstructNoArgs(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
         $assetManager = new AssetManager();
     }
 
-    public function testConstructDefault()
+    public function testConstructDefault(): void
     {
         $assetManager = new AssetManager('foobar1');
 
         $this->assertTrue($assetManager instanceof AssetManager);
     }
 
-    public function testSetBaseUrl()
+    public function testSetBaseUrl(): void
     {
         $this->_object->setBaseUrl('/anotherBase');
 
@@ -55,7 +55,7 @@ class AssetManagerTest extends \BaseTestCase
         $this->assertEquals('/anotherBase/a', $this->_object->getBaseUrl('a'));
     }
 
-    public function testSetBaseUrlSlashAtEnd()
+    public function testSetBaseUrlSlashAtEnd(): void
     {
         $this->_object->setBaseUrl('/anotherBase/');
 
@@ -63,38 +63,38 @@ class AssetManagerTest extends \BaseTestCase
         $this->assertEquals('/anotherBase/test1', $this->_object->getBaseUrl('test1'));
     }
 
-    public function testGetThemeBaseUrl()
+    public function testGetThemeBaseUrl(): void
     {
         $this->assertEquals('/themes/testtheme/', $this->_object->getThemeBaseUrl());
     }
 
-    public function testFile()
+    public function testFile(): void
     {
         $this->assertEquals('/themes/testtheme/css/a1.css', $this->_object->file('css/a1'));
     }
 
-    public function testGetFilePathNoAssetRoot()
+    public function testGetFilePathNoAssetRoot(): void
     {
         $file = $this->_object->getFilePath('a1');
 
         $this->assertEquals('/themes/testtheme/a1', $file);
     }
 
-    public function testGetFilePathWithExtension()
+    public function testGetFilePathWithExtension(): void
     {
         $file = $this->_object->getFilePath('a1.css');
 
         $this->assertEquals('/themes/testtheme/a1.css', $file);
     }
 
-    public function testGetFilePathWithUnknownExtension()
+    public function testGetFilePathWithUnknownExtension(): void
     {
         $file = $this->_object->getFilePath('a1.partytime');
 
         $this->assertEquals('/themes/testtheme/a1.partytime', $file);
     }
 
-    public function testGetFilePathWithUnsupportedAssetRoot()
+    public function testGetFilePathWithUnsupportedAssetRoot(): void
     {
         $file = $this->_object->getFilePath('ggg/a2');
 

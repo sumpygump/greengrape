@@ -34,14 +34,14 @@ class View
     /**
      * Navigation items
      *
-     * @var Collection|array
+     * @var Collection|array<string, string>
      */
     protected $_navigationItems = [];
 
     /**
      * Sub navigation items
      *
-     * @var Collection|array
+     * @var Collection|array<string, string>
      */
     protected $_subNavigationItems = [];
 
@@ -62,9 +62,9 @@ class View
     /**
      * View params that should be passed to the layout
      *
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $_params = array();
+    protected $_params = [];
 
     /**
      * Content dir
@@ -76,7 +76,7 @@ class View
     /**
      * Constructor
      *
-     * @param string $theme Theme object
+     * @param Theme $theme Theme object
      * @return void
      */
     public function __construct($theme)
@@ -156,8 +156,8 @@ class View
     /**
      * Set params
      *
-     * @param array $params Params
-     * @return \Greengrape\View
+     * @param array<string, mixed> $params Params
+     * @return View
      */
     public function setParams($params)
     {
@@ -170,7 +170,7 @@ class View
      *
      * @param string $key
      * @param mixed $value
-     * @return \Greengrape\View
+     * @return View
      */
     public function setParam($key, $value)
     {
@@ -181,7 +181,7 @@ class View
     /**
      * Get params
      *
-     * @return array
+     * @return array<string, mixed>|Config
      */
     public function getParams()
     {
@@ -228,7 +228,7 @@ class View
     /**
      * Get active navigation item (if any was set)
      *
-     * @return Item
+     * @return Item|null
      */
     public function getActiveNavigationItem()
     {
@@ -250,7 +250,7 @@ class View
     /**
      * Get active subnavigation item
      *
-     * @return Item
+     * @return Item|null
      */
     public function getActiveSubNavigationItem()
     {
@@ -312,9 +312,10 @@ class View
      * Render content inside layout
      *
      * @param Content $content Content object
+     * @param array<string, mixed> $vars Context vars to pass along
      * @return string
      */
-    public function render(Content $content, $vars = array())
+    public function render(Content $content, $vars = [])
     {
         $layout = $this->getLayout();
 
@@ -342,6 +343,6 @@ class View
         }
         $params = $params + $vars;
 
-        return $layout->render($content->render(null, array('site' => $params)), $params);
+        return $layout->render($content->render(null, ['site' => $params]), $params);
     }
 }

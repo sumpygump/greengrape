@@ -74,7 +74,7 @@ class CacheTest extends \BaseTestCase
         $cache = new Cache('fake');
     }
 
-    public function testDisable()
+    public function testDisable(): void
     {
         $object = $this->_object->disable();
 
@@ -82,7 +82,7 @@ class CacheTest extends \BaseTestCase
         $this->assertFalse($this->_object->start('ff'));
     }
 
-    public function testEnable()
+    public function testEnable(): void
     {
         $object = $this->_object->enable();
 
@@ -106,7 +106,7 @@ class CacheTest extends \BaseTestCase
         $this->_object->setDirectory($dir);
     }
 
-    public function testGetDirectory()
+    public function testGetDirectory(): void
     {
         // This was set in setUp
         $dir = $this->_object->getDirectory();
@@ -114,7 +114,7 @@ class CacheTest extends \BaseTestCase
         $this->assertEquals('testCache', $dir);
     }
 
-    public function testStartWithCachedFile()
+    public function testStartWithCachedFile(): void
     {
         // File is testCache/62738ce64df4624255f73c97123b596f.cache
 
@@ -164,7 +164,7 @@ class CacheTest extends \BaseTestCase
         $this->assertEquals($expected, $contents);
     }
 
-    public function testEndWhenDisabled()
+    public function testEndWhenDisabled(): void
     {
         $this->_object->disable();
 
@@ -172,13 +172,13 @@ class CacheTest extends \BaseTestCase
         $this->assertFalse($result);
     }
 
-    public function testEndWhenNoFileToCache()
+    public function testEndWhenNoFileToCache(): void
     {
         $result = $this->_object->end();
         $this->assertFalse($result);
     }
 
-    public function testClear()
+    public function testClear(): void
     {
         // First populate the cache with some content
         ob_start();
@@ -205,7 +205,7 @@ class CacheTest extends \BaseTestCase
         $this->assertTrue((count($files) == 0));
     }
 
-    public function testClearSingleFile()
+    public function testClearSingleFile(): void
     {
         // First populate the cache with some content
         ob_start();

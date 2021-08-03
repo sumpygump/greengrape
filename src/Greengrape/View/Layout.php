@@ -38,21 +38,21 @@ class Layout extends Template
     /**
      * Navigation items
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $_navigationItems = [];
 
     /**
      * Sub navigation items
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $_subNavigationItems = [];
 
     /**
      * Params
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $_params = [];
 
@@ -138,8 +138,8 @@ class Layout extends Template
     /**
      * Set Params
      *
-     * @param array $params Params
-     * @return \Greengrape\View\Layout
+     * @param array<string, mixed> $params Params
+     * @return Layout
      */
     public function setParams($params)
     {
@@ -179,7 +179,7 @@ class Layout extends Template
      * Magic call method to handle fetching from params
      *
      * @param string $method Name of method called
-     * @param array $args Arguments with invocation
+     * @param array<int, mixed> $args Arguments with invocation
      * @return mixed
      */
     public function __call($method, $args)
@@ -192,10 +192,10 @@ class Layout extends Template
      * Render the content in layout
      *
      * @param string $content The main content area to be rendered
-     * @param array $vars Variables to pass to be rendered by the layout
+     * @param array<string, mixed> $vars Variables to pass to be rendered by the layout
      * @return string Rendered HTML
      */
-    public function render($content, $vars = array())
+    public function render($content, $vars = [])
     {
         $this->setContent($content);
 
@@ -215,7 +215,7 @@ class Layout extends Template
     /**
      * Set navigation items
      *
-     * @param Collection|array $navigationItems Array of navigation items
+     * @param Collection|array<string, string> $navigationItems Array of navigation items
      * @return Layout
      */
     public function setNavigationItems(Collection|array|null $navigationItems)
@@ -227,7 +227,7 @@ class Layout extends Template
     /**
      * Get navigation items
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getNavigationItems()
     {
@@ -237,7 +237,7 @@ class Layout extends Template
     /**
      * Set sub navigation items
      *
-     * @param array $navigationItems Array of navigation items
+     * @param Collection|array<string, string> $navigationItems Array of navigation items
      * @return \Greengrape\View\Layout
      */
     public function setSubNavigationItems($navigationItems)
@@ -249,7 +249,7 @@ class Layout extends Template
     /**
      * Get sub navigation items
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getSubNavigationItems()
     {
@@ -270,9 +270,9 @@ class Layout extends Template
         $templateFile = $this->getTheme()->getPath('templates/_navigation.html');
         $template = new Template($templateFile, $this->getTheme());
 
-        $vars = array(
+        $vars = [
             'navigation' => $this->getNavigationItems(),
-        );
+        ];
 
         return $template->render('', $vars);
     }
@@ -291,9 +291,9 @@ class Layout extends Template
         $templateFile = $this->getTheme()->getPath('templates/_subnavigation.html');
         $template = new Template($templateFile, $this->getTheme());
 
-        $vars = array(
+        $vars = [
             'navigation' => $this->getSubNavigationItems(),
-        );
+        ];
 
         return $template->render('', $vars);
     }
@@ -309,9 +309,9 @@ class Layout extends Template
         $templateFile = $this->getTheme()->getPath('templates/' . $filename);
         $template = new Template($templateFile, $this->getTheme());
 
-        $vars = array(
+        $vars = [
             'layout' => $this,
-        );
+        ];
 
         return $template->render('', $vars);
     }

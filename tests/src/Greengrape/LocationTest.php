@@ -33,42 +33,42 @@ class LocationTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructNoArgs()
+    public function testConstructNoArgs(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
         $location = new Location();
     }
 
-    public function testConstructEmptyArray()
+    public function testConstructEmptyArray(): void
     {
         $location = new Location(array());
 
         $this->assertEquals('', $location->getFile());
     }
 
-    public function testConstructArrayWithValue()
+    public function testConstructArrayWithValue(): void
     {
         $location = new Location(array('foo' => 'bar'));
 
         $this->assertEquals('bar', $location->getFile());
     }
 
-    public function testConstructInteger()
+    public function testConstructInteger(): void
     {
         $location = new Location(2);
 
         $this->assertEquals('2', $location->getFile());
     }
 
-    public function testConstructString()
+    public function testConstructString(): void
     {
         $location = new Location('foobar');
 
         $this->assertEquals('foobar', $location->getFile());
     }
 
-    public function testConstructArrayWithCanonical()
+    public function testConstructArrayWithCanonical(): void
     {
         $location = new Location(array('canonical' => 'maka'));
 
@@ -76,7 +76,7 @@ class LocationTest extends \BaseTestCase
         $this->assertEquals('maka', $location->getCanonical());
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $location = new Location('foobar');
 

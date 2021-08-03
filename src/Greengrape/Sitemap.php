@@ -30,9 +30,9 @@ class Sitemap
     /**
      * Map of URLs to files
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $_map = array();
+    protected $_map = [];
 
     /**
      * Constructor
@@ -102,13 +102,13 @@ class Sitemap
     /**
      * Create map of available folders and files in the content directory
      *
-     * @return array
+     * @return array<string, string>
      */
     public function createMap()
     {
         $files = self::rglob($this->getContentDir() . DIRECTORY_SEPARATOR . '*');
 
-        $map = array();
+        $map = [];
 
         foreach ($files as $file) {
             if (is_dir($file)) {
@@ -131,7 +131,7 @@ class Sitemap
 
             if ($isDir) {
                 $map[$url . '/'] = $file;
-                $map[$url] = array('canonical' => $url . '/');
+                $map[$url] = ['canonical' => $url . '/'];
                 continue;
             }
 
@@ -144,7 +144,7 @@ class Sitemap
 
                 $map[$url] = $file;
 
-                $map[rtrim($url, '/')] = array('canonical' => $url);
+                $map[rtrim($url, '/')] = ['canonical' => $url];
                 continue;
             }
 
@@ -160,14 +160,14 @@ class Sitemap
      * @param string $pattern Pattern
      * @param int $flags Flags to pass to glob
      * @param string $path Path to glob in
-     * @return array
+     * @return array<int, string>
      */
     public static function rglob($pattern, $flags = 0, $path = '')
     {
         if (!$path && ($dir = dirname($pattern)) != '.') {
             if ($dir == '\\' || $dir == '/') {
                 // This gets into infinite loop
-                return array();
+                return [];
             }
             return self::rglob(
                 basename($pattern),

@@ -21,6 +21,11 @@ use Greengrape\View\Theme;
  */
 class CollectionTest extends \BaseTestCase
 {
+    /**
+     * view
+     *
+     * @var View
+     */
     public $view;
 
     /**
@@ -46,27 +51,27 @@ class CollectionTest extends \BaseTestCase
         passthru('rm -rf foobarx');
     }
 
-    public function testConstructNoArgs()
+    public function testConstructNoArgs(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
         $collection = new Collection();
     }
 
-    public function testConstructOneArgOnly()
+    public function testConstructOneArgOnly(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
         $collection = new Collection('.');
     }
 
-    public function testConstructOkay()
+    public function testConstructOkay(): void
     {
         $collection = new Collection('.', $this->view);
         $this->assertInstanceOf(Collection::class, $collection);
     }
 
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $example_files = [
             '01-foo.txt',
@@ -90,7 +95,7 @@ class CollectionTest extends \BaseTestCase
         }
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $example_files = [
             '01-foo.txt',
@@ -112,18 +117,19 @@ class CollectionTest extends \BaseTestCase
         }
     }
 
-    public function testAddItems()
+    public function testAddItems(): void
     {
         $collection = new Collection('.', $this->view);
         $items = $collection->toArray();
         $this->assertEquals([], $items);
 
+        // @phpstan-ignore-next-line
         $collection->addItems(['x']);
         $items = $collection->toArray();
         $this->assertEquals(['x'], $items);
     }
 
-    public function testIterate()
+    public function testIterate(): void
     {
         $example_files = [
             '01-foo.txt',

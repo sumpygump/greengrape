@@ -50,7 +50,7 @@ class Location
      * Set canonical
      *
      * @param string $canonical Canonical URL
-     * @return \Greengrape\Location
+     * @return Location
      */
     public function setCanonical($canonical)
     {
@@ -71,8 +71,8 @@ class Location
     /**
      * Set file
      *
-     * @param string $file Filename for content
-     * @return \Greengrape\Location
+     * @param string|array<int, string> $file Filename for content
+     * @return Location
      */
     public function setFile($file)
     {

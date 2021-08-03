@@ -60,7 +60,7 @@ class ViewTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructNoArgs()
+    public function testConstructNoArgs(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
@@ -72,7 +72,7 @@ class ViewTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructThemeNotExist()
+    public function testConstructThemeNotExist(): void
     {
         $this->expectException(NotFoundException::class);
         $view = new View(new MockTheme('foo'));
@@ -86,13 +86,13 @@ class ViewTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testSetThemeString()
+    public function testSetThemeString(): void
     {
         $this->expectException(\TypeError::class);
         $this->_object->setTheme('string');
     }
 
-    public function testGetLayout()
+    public function testGetLayout(): void
     {
         $layout = $this->_object->getLayout();
         $this->assertTrue($layout instanceof Layout);
@@ -103,7 +103,7 @@ class ViewTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testGetLayoutFileNotExist()
+    public function testGetLayoutFileNotExist(): void
     {
         $this->expectException(NotFoundException::class);
         $view = new View(new MockTheme('foo'));
@@ -111,7 +111,7 @@ class ViewTest extends \BaseTestCase
         $layout = $view->getLayout();
     }
 
-    public function testSetParams()
+    public function testSetParams(): void
     {
         $this->_object->setParams(array('a' => '1', 'b' => '2'));
 
@@ -119,7 +119,7 @@ class ViewTest extends \BaseTestCase
         $this->assertEquals($expected, $this->_object->getParams());
     }
 
-    public function testSetNavigationItems()
+    public function testSetNavigationItems(): void
     {
         $collection = new Collection('t1', '/baseurl');
 
@@ -132,7 +132,7 @@ class ViewTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testSetNavigationItemsArray()
+    public function testSetNavigationItemsArray(): void
     {
         $this->expectException(\TypeError::class);
         $items = array('a', 'b');
@@ -144,13 +144,13 @@ class ViewTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testSetActiveNavigationItemString()
+    public function testSetActiveNavigationItemString(): void
     {
         $this->expectException(\TypeError::class);
         $this->_object->setActiveNavigationItem('aa');
     }
 
-    public function testSetActiveNavigationItem()
+    public function testSetActiveNavigationItem(): void
     {
         $item = new Item('text1', 'text1/');
 
@@ -164,13 +164,13 @@ class ViewTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testSetActiveSubNavigationItemString()
+    public function testSetActiveSubNavigationItemString(): void
     {
         $this->expectException(\TypeError::class);
         $this->_object->setActiveSubNavigationItem('foobar');
     }
 
-    public function testSetActiveSubNavigationItem()
+    public function testSetActiveSubNavigationItem(): void
     {
         $item = new Item('text2', 'text2/');
 
@@ -184,14 +184,14 @@ class ViewTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testSetSubNavigationItemsArray()
+    public function testSetSubNavigationItemsArray(): void
     {
         $this->expectException(\TypeError::class);
         $items = array('c', 'd', 'e');
         $this->_object->setSubNavigationItems($items);
     }
 
-    public function testSetSubNavigationItems()
+    public function testSetSubNavigationItems(): void
     {
         $collection = new Collection('t1', '/baseurl');
 
@@ -204,13 +204,13 @@ class ViewTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testRenderFileNoExists()
+    public function testRenderFileNoExists(): void
     {
         $this->expectException(NotFoundException::class);
         $output = $this->_object->renderContentFile('fake.md');
     }
 
-    public function testRenderFile()
+    public function testRenderFile(): void
     {
         file_put_contents('foobar/templates/contentfile.md', '#hiya');
 

@@ -57,14 +57,14 @@ class TemplateTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructNoArgs()
+    public function testConstructNoArgs(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
         $template = new Template();
     }
 
-    public function testConstructDefault()
+    public function testConstructDefault(): void
     {
         $testThemesDir = APP_PATH . DIRECTORY_SEPARATOR . 'tests';
         $theme = new Theme('foobar', '/baseurl', $testThemesDir);
@@ -78,20 +78,20 @@ class TemplateTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testSetFileNoExist()
+    public function testSetFileNoExist(): void
     {
         $this->expectException(NotFoundException::class);
         $this->_object->setFile('fakefile.html');
     }
 
-    public function testGetFile()
+    public function testGetFile(): void
     {
         $this->_object->setFile('template1.html');
 
         $this->assertEquals('template1.html', $this->_object->getFile());
     }
 
-    public function testGetTheme()
+    public function testGetTheme(): void
     {
         $theme = $this->_object->getTheme();
 
@@ -99,7 +99,7 @@ class TemplateTest extends \BaseTestCase
         $this->assertEquals('foobar', $theme->getName());
     }
 
-    public function testGetAssetManager()
+    public function testGetAssetManager(): void
     {
         $assetManager = $this->_object->getAssetManager();
 
@@ -107,7 +107,7 @@ class TemplateTest extends \BaseTestCase
         $this->assertEquals('/baseurl/', $assetManager->getBaseUrl());
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $content = 'My goodness';
 

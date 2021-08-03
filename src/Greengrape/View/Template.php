@@ -111,17 +111,17 @@ class Template
      * Render content in template
      *
      * @param string $content Main content to render
-     * @param array $vars Variables to pass to Twig template
+     * @param array<string, mixed> $vars Variables to pass to Twig template
      * @return string Rendered HTML
      */
-    public function render($content, $vars = array())
+    public function render($content, $vars = [])
     {
         $vars['content'] = $content;
 
         $loader = new Twig_Loader_ArrayLoader();
-        $twig   = new Twig_Environment($loader, array(
+        $twig   = new Twig_Environment($loader, [
             'debug' => true,
-        ));
+        ]);
         $twig->addExtension(new Twig_DebugExtension());
 
         $twig->addGlobal('asset', $this->getAssetManager());

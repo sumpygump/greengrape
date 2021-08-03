@@ -39,7 +39,7 @@ class RequestTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $request = new Request(array('foo' => 'bar'));
 
@@ -47,16 +47,16 @@ class RequestTest extends \BaseTestCase
         $this->assertEquals('bar', $request->foo);
     }
 
-    public function testConstructString()
+    public function testConstructString(): void
     {
         $request = new Request('foobar');
 
-        // This is a weird case, because you have to fetch it by the offset 0 
+        // This is a weird case, because you have to fetch it by the offset 0
         // instead of a key, but whatever, users can do it this way if they want
         $this->assertEquals('foobar', $request->get(0));
     }
 
-    public function testConstructDefaultCorrectlyCombinesServerAndGet()
+    public function testConstructDefaultCorrectlyCombinesServerAndGet(): void
     {
         $_SERVER['foo1'] = 'test1';
         $_GET['foobar'] = 'xyz';
@@ -69,12 +69,12 @@ class RequestTest extends \BaseTestCase
         $this->assertEquals('save', $request->action);
     }
 
-    public function testGetRequestedFile()
+    public function testGetRequestedFile(): void
     {
         $this->assertEquals('about/', $this->_object->getRequestedFile());
     }
 
-    public function testGetRequestedFileRoot()
+    public function testGetRequestedFileRoot(): void
     {
         $input = array(
             'REQUEST_URI' => '/all/the/things/',
@@ -87,7 +87,7 @@ class RequestTest extends \BaseTestCase
         $this->assertEquals('/', $this->_object->getRequestedFile());
     }
 
-    public function testGetBaseUrlBlank()
+    public function testGetBaseUrlBlank(): void
     {
         $this->assertEquals('/all/the/things', $this->_object->getBaseUrl());
     }

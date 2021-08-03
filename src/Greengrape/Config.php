@@ -26,26 +26,27 @@ use Greengrape\Exception\GreengrapeException;
  *
  * @package Greengrape
  * @author Jansen Price <jansen.price@gmail.com>
+ * @implements ArrayAccess<string, mixed>
  */
 class Config implements ArrayAccess
 {
     /**
      * Data storage for config settings
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $_data = [];
 
     /**
      * Default config settings
      *
-     * @var array
+     * @var array<string, string|bool>
      */
     protected $_defaults = array(
-        'sitename'     => '[Greengrape]',
-        'theme'        => 'grapeseed',
+        'sitename' => '[Greengrape]',
+        'theme' => 'grapeseed',
         'enable_cache' => true,
-        'debug'        => false,
+        'debug' => false,
     );
 
     /**
@@ -98,7 +99,7 @@ class Config implements ArrayAccess
     /**
      * Set a config value
      *
-     * @param string $key Key
+     * @param mixed $key Key
      * @param mixed $value Value
      * @return bool
      */
@@ -170,7 +171,7 @@ class Config implements ArrayAccess
     /**
      * Convert to array
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray()
     {

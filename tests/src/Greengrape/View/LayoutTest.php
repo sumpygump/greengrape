@@ -65,14 +65,14 @@ class LayoutTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructNoArgs()
+    public function testConstructNoArgs(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
         $layout = new Layout();
     }
 
-    public function testConstructDefault()
+    public function testConstructDefault(): void
     {
         $theme = new Theme('testtheme', '/', APP_PATH . DIRECTORY_SEPARATOR . 'tests');
         $layout = new Layout('layout.html', $theme);
@@ -80,42 +80,42 @@ class LayoutTest extends \BaseTestCase
         $this->assertTrue($layout instanceof Layout);
     }
 
-    public function testGetTitle()
+    public function testGetTitle(): void
     {
         $this->_object->setTitle('foobar2');
 
         $this->assertEquals('foobar2 | [testing]', $this->_object->getTitle());
     }
 
-    public function testSetTitleReset()
+    public function testSetTitleReset(): void
     {
         $this->_object->setTitle('foobar2', true);
 
         $this->assertEquals('foobar2', $this->_object->getTitle());
     }
 
-    public function testSetTitleBlank()
+    public function testSetTitleBlank(): void
     {
         $this->_object->setTitle('');
 
         $this->assertEquals('[testing]', $this->_object->getTitle());
     }
 
-    public function testSetTitleWhitespace()
+    public function testSetTitleWhitespace(): void
     {
         $this->_object->setTitle('   ');
 
         $this->assertEquals('[testing]', $this->_object->getTitle());
     }
 
-    public function testSetContent()
+    public function testSetContent(): void
     {
         $this->_object->setContent('this is the content');
 
         $this->assertEquals('this is the content', $this->_object->getContent());
     }
 
-    public function testSetParams()
+    public function testSetParams(): void
     {
         $params = array(
             'face' => 'palm',
@@ -126,7 +126,7 @@ class LayoutTest extends \BaseTestCase
         $this->assertEquals('palm', $this->_object->getParam('face'));
     }
 
-    public function testGetParamNotSet()
+    public function testGetParamNotSet(): void
     {
         $params = array(
             'face' => 'palm',
@@ -137,7 +137,7 @@ class LayoutTest extends \BaseTestCase
         $this->assertNull($this->_object->getParam('nada'));
     }
 
-    public function testGetParamMagicMethod()
+    public function testGetParamMagicMethod(): void
     {
         $params = array(
             'face' => 'palm',
@@ -148,7 +148,7 @@ class LayoutTest extends \BaseTestCase
         $this->assertEquals('palm', $this->_object->face());
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $content = '<h1>Radical</h1>';
         $vars = array(
@@ -164,7 +164,7 @@ class LayoutTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testSetNavigationItemsArray()
+    public function testSetNavigationItemsArray(): void
     {
         $this->_object->setNavigationItems(array('foobar'));
 
@@ -172,7 +172,7 @@ class LayoutTest extends \BaseTestCase
         $this->assertEquals(array('foobar'), $this->_object->getNavigationItems());
     }
 
-    public function testSetNavigationItems()
+    public function testSetNavigationItems(): void
     {
         $collection = new Collection('t1', '/baseurl');
 
@@ -180,7 +180,7 @@ class LayoutTest extends \BaseTestCase
         $this->assertEquals($collection, $this->_object->getNavigationItems());
     }
 
-    public function testSetSubNavigationItems()
+    public function testSetSubNavigationItems(): void
     {
         $collection = new Collection('t2', '/baseurl');
 
@@ -188,7 +188,7 @@ class LayoutTest extends \BaseTestCase
         $this->assertEquals($collection, $this->_object->getSubNavigationItems());
     }
 
-    public function testGetNavigationNoItems()
+    public function testGetNavigationNoItems(): void
     {
         $output = $this->_object->getNavigation();
 
@@ -200,7 +200,7 @@ class LayoutTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testGetNavigationCollectionTemplateNotFound()
+    public function testGetNavigationCollectionTemplateNotFound(): void
     {
         $collection = new Collection('t1', '/baseurl');
 
@@ -210,7 +210,7 @@ class LayoutTest extends \BaseTestCase
         $this->assertEquals('', $output);
     }
 
-    public function testGetNavigation()
+    public function testGetNavigation(): void
     {
         $collection = new Collection('t1', '/baseurl');
 
@@ -225,14 +225,14 @@ class LayoutTest extends \BaseTestCase
         $this->assertEquals('/baseurl/text1//baseurl/text2/', $this->_object->getNavigation());
     }
 
-    public function testGetSubNavigationNoItems()
+    public function testGetSubNavigationNoItems(): void
     {
         $output = $this->_object->getSubNavigation();
 
         $this->assertEquals('', $output);
     }
 
-    public function testGetSubNavigation()
+    public function testGetSubNavigation(): void
     {
         $collection = new Collection('t1', '/baseurl');
 

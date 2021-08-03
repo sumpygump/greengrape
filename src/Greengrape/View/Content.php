@@ -62,9 +62,9 @@ class Content
     /**
      * Metadata
      *
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $_metadata = array();
+    protected $_metadata = [];
 
     /**
      * Template filename
@@ -285,14 +285,14 @@ class Content
      * Read the meta data from the contents
      *
      * @param string $contents Contents from content file
-     * @return array Array of meta data
+     * @return array<string, string> Array of meta data
      */
     public function readMetadata(&$contents)
     {
-        $defaults = array(
+        $defaults = [
             'template' => $this->_defaultTemplateFile,
-            'type'     => self::TYPE_PAGE,
-        );
+            'type' => self::TYPE_PAGE,
+        ];
 
         // The U modifier makes the regex ungreedy so it will only capture the
         // first front-matter that appears in the file
@@ -312,7 +312,7 @@ class Content
     /**
      * Set the meta data
      *
-     * @param array $metadata
+     * @param array<string, mixed> $metadata
      * @return Content
      */
     public function setMetadata($metadata)
@@ -326,7 +326,7 @@ class Content
      *
      * @param string $key A specific metadata item to return (optional)
      * @param mixed $default Default value to return if not exists
-     * @return array|string
+     * @return array<string, mixed>|string
      */
     public function getMetadata($key = null, $default = null)
     {
@@ -414,9 +414,10 @@ class Content
      * This parses the content via markdown
      *
      * @param string $content Optional content to render instead
+     * @param array<string, mixed> $params Context params to pass to view engine
      * @return string Rendered HTML (via markdown)
      */
-    public function render($content = null, $params = array())
+    public function render($content = null, $params = [])
     {
         if ($content === null) {
             $content = $this->getContent();
@@ -425,7 +426,12 @@ class Content
         $pageType = $this->getMetadata('type');
 
         $htmlContent = $this->transform($content);
-        $vars = $this->getMetadata() + $params;
+        $vars = $params;
+
+        $metadata = $this->getMetadata();
+        if (!is_string($metadata)) {
+            $vars = $metadata + $params;
+        }
 
         // Chronolog page type is a listing of entries
         if ($pageType == self::TYPE_CHRONOLOG
@@ -433,7 +439,7 @@ class Content
             || $pageType == self::TYPE_ENTRY
         ) {
             $root = dirname($this->_file);
-            if ($this->getMetadata('entriesroot')) {
+            if (is_string($this->getMetadata('entriesroot'))) {
                 $root = $root . '/' . $this->getMetadata('entriesroot');
             }
             $entries = new EntryCollection($root, $this->getView());
@@ -449,7 +455,7 @@ class Content
         $asides = $this->getMetadata('aside');
         if (is_array($asides)) {
             unset($vars['aside']);
-            $vars['aside'] = array();
+            $vars['aside'] = [];
             foreach ($asides as $aside) {
                 $vars['aside'][$aside] = $this->getView()->renderPartial($aside);
             }
@@ -498,19 +504,19 @@ class Content
     {
         $baseUrl = $this->getTheme()->getAssetManager()->getBaseUrl();
 
-        $patterns = array(
+        $patterns = [
             '/\[(.*)\]\(((?!http|#)[^\)]+)\)/', // links inline
             '/\[((?!\^)[^\]]+)\]\W*:\W*((?!http|#)[^\W]+)/', // links referenced
             '/!\[(.*)\]\(assets/', // images inline
             '/\[(.*)\]\W*:\W*assets/', // images reference
-        );
+        ];
 
-        $replacements = array(
+        $replacements = [
             '[$1](' . $baseUrl . '$2)', // links inline
             '[$1]: ' . $baseUrl . '$2', // links referenced
             '![$1](' . $baseUrl . 'assets', // image inline
             '[$1]: ' . $baseUrl . 'assets', // images reference
-        );
+        ];
 
         $content = preg_replace($patterns, $replacements, $content);
 

@@ -60,7 +60,7 @@ class ContentTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $content = new Content();
 
@@ -72,7 +72,7 @@ class ContentTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructFileNoExist()
+    public function testConstructFileNoExist(): void
     {
         $this->expectException(NotFoundException::class);
         $content = new Content('missing.md');
@@ -83,7 +83,7 @@ class ContentTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testGetThemeWhenNotSet()
+    public function testGetThemeWhenNotSet(): void
     {
         $this->expectException(GreengrapeException::class);
         $content = new Content('mycontentfile.md');
@@ -91,7 +91,7 @@ class ContentTest extends \BaseTestCase
         $theme = $content->getTheme();
     }
 
-    public function testGetTemplate()
+    public function testGetTemplate(): void
     {
         $this->_object->setTemplate(null);
 
@@ -100,28 +100,28 @@ class ContentTest extends \BaseTestCase
         );
     }
 
-    public function testReadFile()
+    public function testReadFile(): void
     {
         $this->_object->readFile();
 
         $this->assertEquals('#contents', $this->_object->getContent());
     }
 
-    public function testGetTitle()
+    public function testGetTitle(): void
     {
         $this->_object->setTitle('The new title');
 
         $this->assertEquals('The new title', $this->_object->getTitle());
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $output = $this->_object->render();
 
         $this->assertStringContainsString('<h1>contents</h1>', $output);
     }
 
-    public function testFilterMarkdownLinks()
+    public function testFilterMarkdownLinks(): void
     {
         $content = "[test1](foobarnews) - [test2]: someplace";
 
@@ -131,7 +131,7 @@ class ContentTest extends \BaseTestCase
         $this->assertStringContainsString('[test2]: /baseurl/someplace', $reformatted);
     }
 
-    public function testFilterMarkdownImages()
+    public function testFilterMarkdownImages(): void
     {
         $content = "![test3](assets/img/foobar.jpg) - [test4]: assets/img/fanbar.png";
 

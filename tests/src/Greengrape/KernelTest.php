@@ -57,14 +57,14 @@ class KernelTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructNoArgs()
+    public function testConstructNoArgs(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
         $kernel = new Kernel();
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $config = new Config('testconfig.ini');
 
@@ -73,7 +73,7 @@ class KernelTest extends \BaseTestCase
         $this->assertTrue($kernel instanceof Kernel);
     }
 
-    public function testSetConfig()
+    public function testSetConfig(): void
     {
         $config = array(
             'a' => 'b',
@@ -85,7 +85,7 @@ class KernelTest extends \BaseTestCase
         $this->assertEquals('grapeseed', $this->_object->getConfig('theme'));
     }
 
-    public function testGetConfig()
+    public function testGetConfig(): void
     {
         $config = array(
             'a' => 'b',
@@ -99,7 +99,7 @@ class KernelTest extends \BaseTestCase
         $this->assertNull($this->_object->getConfig('notsetvalue'));
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         Kernel::$allowExit = false;
         ob_start();
@@ -116,13 +116,13 @@ class KernelTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testRedirect()
+    public function testRedirect(): void
     {
         $this->expectException(GreengrapeException::class);
         $this->_object->redirect('0');
     }
 
-    public function testSafeExit()
+    public function testSafeExit(): void
     {
         Kernel::$allowExit = false;
         Kernel::safeExit();
@@ -136,7 +136,7 @@ class KernelTest extends \BaseTestCase
      * @param string $contents
      * @return void
      */
-    public static function createConfigIni($contents = '')
+    public static function createConfigIni($contents = ''): void
     {
         $filename = 'testconfig.ini';
 
@@ -152,7 +152,7 @@ class KernelTest extends \BaseTestCase
      *
      * @return void
      */
-    public static function deleteConfigIni()
+    public static function deleteConfigIni(): void
     {
         $filename = 'testconfig.ini';
         unlink($filename);

@@ -56,14 +56,14 @@ class SitemapTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructNoArgs()
+    public function testConstructNoArgs(): void
     {
         $this->expectException(\ArgumentCountError::class);
         // @phpstan-ignore-next-line
         $sitemap = new Sitemap();
     }
 
-    public function testConstructEmptyDir()
+    public function testConstructEmptyDir(): void
     {
         mkdir('emptydir');
 
@@ -79,25 +79,26 @@ class SitemapTest extends \BaseTestCase
      *
      * @return void
      */
-    public function testConstructArray()
+    public function testConstructArray(): void
     {
         $this->expectException(GreengrapeException::class);
+        // @phpstan-ignore-next-line
         $sitemap = new Sitemap(array('foobar'));
     }
 
-    public function testConstructFileNoExist()
+    public function testConstructFileNoExist(): void
     {
         $sitemap = new Sitemap('fakedir');
         $this->assertEquals(0, $sitemap->getCountMapItems());
     }
 
-    public function testSetContentDir()
+    public function testSetContentDir(): void
     {
         $this->_object->setContentDir('mycontent');
         $this->assertEquals('mycontent', $this->_object->getContentDir());
     }
 
-    public function testGetLocationForUrl()
+    public function testGetLocationForUrl(): void
     {
         $location = $this->_object->getLocationForUrl('/');
 
@@ -106,7 +107,7 @@ class SitemapTest extends \BaseTestCase
         $this->assertEquals('', $location->getCanonical());
     }
 
-    public function testGetLocationForUrlNoExist()
+    public function testGetLocationForUrlNoExist(): void
     {
         $location = $this->_object->getLocationForUrl('floorbar');
 
@@ -115,7 +116,7 @@ class SitemapTest extends \BaseTestCase
         $this->assertEquals('', $location->getCanonical());
     }
 
-    public function testGetLocationCanonical()
+    public function testGetLocationCanonical(): void
     {
         $location = $this->_object->getLocationForUrl('f1');
 
@@ -123,7 +124,7 @@ class SitemapTest extends \BaseTestCase
         $this->assertEquals('f1/', $location->getCanonical());
     }
 
-    public function testGetLocationDir()
+    public function testGetLocationDir(): void
     {
         $location = $this->_object->getLocationForUrl('f1/');
 

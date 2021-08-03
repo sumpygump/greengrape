@@ -51,27 +51,29 @@ class Theme
     /**
      * A list of required theme files
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected $_requiredThemeFiles = array(
+    protected $_requiredThemeFiles = [
         'layout.html',
         'templates/main.html',
         'templates/default.html',
         'templates/404.html',
         'templates/error.html',
-    );
+    ];
 
     /**
      * Storage for required theme files missing from this theme
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected $_missingThemeFiles = array();
+    protected $_missingThemeFiles = [];
 
     /**
      * Constructor
      *
      * @param string $name Theme name
+     * @param string $baseUrl The base URL of site
+     * @param null|string $themesDir Directory where themes live
      * @return void
      */
     public function __construct($name, $baseUrl = '/', $themesDir = null)
@@ -114,7 +116,7 @@ class Theme
     /**
      * Get missing theme files list
      *
-     * @return array
+     * @return array<int, string>
      */
     public function getMissingThemeFiles()
     {
