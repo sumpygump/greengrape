@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\View;
 
+use Greengrape\Tests\BaseTestCase;
 use Greengrape\Exception\GreengrapeException;
 use Greengrape\Exception\NotFoundException;
 use Greengrape\View\Content;
@@ -20,7 +21,7 @@ use Greengrape\View;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class ContentTest extends \BaseTestCase
+class ContentTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -31,8 +32,14 @@ class ContentTest extends \BaseTestCase
     {
         mkdir('foobar');
         mkdir('foobar' . DIRECTORY_SEPARATOR . 'templates');
-        file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'layout.html', '{{ layout.content|raw }}');
-        file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'main.html', '{{ content | raw }}');
+        file_put_contents(
+            'foobar' . DIRECTORY_SEPARATOR . 'layout.html',
+            '{{ layout.content|raw }}'
+        );
+        file_put_contents(
+            'foobar' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'main.html',
+            '{{ content | raw }}'
+        );
 
         $testThemesDir = APP_PATH . DIRECTORY_SEPARATOR . 'tests';
         $theme = new Theme('foobar', '/baseurl', $testThemesDir);
@@ -41,7 +48,7 @@ class ContentTest extends \BaseTestCase
         $view->setContentDir(realpath('.'));
 
         file_put_contents('mycontentfile.md', '#contents');
-        $this->_object = new Content('mycontentfile.md', $view);
+        $this->object = new Content('mycontentfile.md', $view);
     }
 
     /**
@@ -93,30 +100,31 @@ class ContentTest extends \BaseTestCase
 
     public function testGetTemplate(): void
     {
-        $this->_object->setTemplate(null);
+        $this->object->setTemplate(null);
 
         $this->assertEquals(
-            'main.html', basename($this->_object->getTemplate()->getFile())
+            'main.html',
+            basename($this->object->getTemplate()->getFile())
         );
     }
 
     public function testReadFile(): void
     {
-        $this->_object->readFile();
+        $this->object->readFile();
 
-        $this->assertEquals('#contents', $this->_object->getContent());
+        $this->assertEquals('#contents', $this->object->getContent());
     }
 
     public function testGetTitle(): void
     {
-        $this->_object->setTitle('The new title');
+        $this->object->setTitle('The new title');
 
-        $this->assertEquals('The new title', $this->_object->getTitle());
+        $this->assertEquals('The new title', $this->object->getTitle());
     }
 
     public function testRender(): void
     {
-        $output = $this->_object->render();
+        $output = $this->object->render();
 
         $this->assertStringContainsString('<h1>contents</h1>', $output);
     }
@@ -125,7 +133,7 @@ class ContentTest extends \BaseTestCase
     {
         $content = "[test1](foobarnews) - [test2]: someplace";
 
-        $reformatted = $this->_object->filterMarkdown($content);
+        $reformatted = $this->object->filterMarkdown($content);
 
         $this->assertStringContainsString('[test1](/baseurl/foobarnews)', $reformatted);
         $this->assertStringContainsString('[test2]: /baseurl/someplace', $reformatted);
@@ -135,7 +143,7 @@ class ContentTest extends \BaseTestCase
     {
         $content = "![test3](assets/img/foobar.jpg) - [test4]: assets/img/fanbar.png";
 
-        $reformatted = $this->_object->filterMarkdown($content);
+        $reformatted = $this->object->filterMarkdown($content);
 
         $this->assertStringContainsString('![test3](/baseurl/assets/img/foobar.jpg)', $reformatted);
         $this->assertStringContainsString('[test4]: /baseurl/assets/img/fanbar.png', $reformatted);

@@ -35,19 +35,19 @@ class Config implements ArrayAccess
      *
      * @var array<string, mixed>
      */
-    protected $_data = [];
+    protected $data = [];
 
     /**
      * Default config settings
      *
      * @var array<string, string|bool>
      */
-    protected $_defaults = array(
+    protected $defaults = [
         'sitename' => '[Greengrape]',
         'theme' => 'grapeseed',
         'enable_cache' => true,
         'debug' => false,
-    );
+    ];
 
     /**
      * Constructor
@@ -57,7 +57,7 @@ class Config implements ArrayAccess
      */
     public function __construct($configFile = '')
     {
-        $this->_data = $this->_defaults;
+        $this->data = $this->defaults;
         if ($configFile != '') {
             $this->loadFile($configFile);
         }
@@ -77,7 +77,7 @@ class Config implements ArrayAccess
 
         $raw = parse_ini_file($filename, true);
 
-        $this->_data = array_merge($this->_data, $raw);
+        $this->data = array_merge($this->data, $raw);
         return $this;
     }
 
@@ -93,7 +93,7 @@ class Config implements ArrayAccess
             return null;
         }
 
-        return $this->_data[$key];
+        return $this->data[$key];
     }
 
     /**
@@ -109,7 +109,7 @@ class Config implements ArrayAccess
             return false;
         }
 
-        $this->_data[$key] = $value;
+        $this->data[$key] = $value;
         return true;
     }
 
@@ -141,7 +141,7 @@ class Config implements ArrayAccess
             return false;
         }
 
-        return isset($this->_data[$offset]);
+        return isset($this->data[$offset]);
     }
 
     /**
@@ -154,7 +154,7 @@ class Config implements ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        unset($this->_data[$offset]);
+        unset($this->data[$offset]);
     }
 
     /**
@@ -175,6 +175,6 @@ class Config implements ArrayAccess
      */
     public function toArray()
     {
-        return $this->_data;
+        return $this->data;
     }
 }

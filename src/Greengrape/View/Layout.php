@@ -26,35 +26,35 @@ class Layout extends Template
      *
      * @var mixed
      */
-    protected $_content;
+    protected $content;
 
     /**
      * Title of page
      *
      * @var string
      */
-    protected $_title = '';
+    protected $title = '';
 
     /**
      * Navigation items
      *
      * @var array<string, string>
      */
-    protected $_navigationItems = [];
+    protected $navigationItems = [];
 
     /**
      * Sub navigation items
      *
      * @var array<string, string>
      */
-    protected $_subNavigationItems = [];
+    protected $subNavigationItems = [];
 
     /**
      * Params
      *
      * @var array<string, mixed>
      */
-    protected $_params = [];
+    protected $params = [];
 
     /**
      * Constructor
@@ -77,7 +77,7 @@ class Layout extends Template
      */
     public function getTitle()
     {
-        return $this->_title;
+        return $this->title;
     }
 
     /**
@@ -93,7 +93,7 @@ class Layout extends Template
 
         // Allow to completely reset the title
         if ($reset) {
-            $this->_title = $title;
+            $this->title = $title;
             return $this;
         }
 
@@ -102,12 +102,12 @@ class Layout extends Template
             return $this;
         }
 
-        if (trim($this->_title) == '') {
+        if (trim($this->title) == '') {
             // If the current title is blank, we're replacing
-            $this->_title = $title;
+            $this->title = $title;
         } else {
             // Otherwise prepend with separator
-            $this->_title = $title . ' | ' . $this->_title;
+            $this->title = $title . ' | ' . $this->title;
         }
 
         return $this;
@@ -121,7 +121,7 @@ class Layout extends Template
      */
     public function setContent($content)
     {
-        $this->_content = $content;
+        $this->content = $content;
         return $this;
     }
 
@@ -132,7 +132,7 @@ class Layout extends Template
      */
     public function getContent()
     {
-        return $this->_content;
+        return $this->content;
     }
 
     /**
@@ -143,7 +143,7 @@ class Layout extends Template
      */
     public function setParams($params)
     {
-        $this->_params = $params;
+        $this->params = $params;
         return $this;
     }
 
@@ -156,7 +156,7 @@ class Layout extends Template
      */
     public function setParam($paramName, $value)
     {
-        $this->_params[$paramName] = $value;
+        $this->params[$paramName] = $value;
         return $this;
     }
 
@@ -168,11 +168,11 @@ class Layout extends Template
      */
     public function getParam($key)
     {
-        if (!isset($this->_params[$key])) {
+        if (!isset($this->params[$key])) {
             return null;
         }
 
-        return $this->_params[$key];
+        return $this->params[$key];
     }
 
     /**
@@ -220,7 +220,7 @@ class Layout extends Template
      */
     public function setNavigationItems(Collection|array|null $navigationItems)
     {
-        $this->_navigationItems = $navigationItems;
+        $this->navigationItems = $navigationItems;
         return $this;
     }
 
@@ -231,7 +231,7 @@ class Layout extends Template
      */
     public function getNavigationItems()
     {
-        return $this->_navigationItems;
+        return $this->navigationItems;
     }
 
     /**
@@ -242,7 +242,7 @@ class Layout extends Template
      */
     public function setSubNavigationItems($navigationItems)
     {
-        $this->_subNavigationItems = $navigationItems;
+        $this->subNavigationItems = $navigationItems;
         return $this;
     }
 
@@ -253,7 +253,7 @@ class Layout extends Template
      */
     public function getSubNavigationItems()
     {
-        return $this->_subNavigationItems;
+        return $this->subNavigationItems;
     }
 
     /**

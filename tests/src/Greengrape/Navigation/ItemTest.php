@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\Navigation;
 
+use Greengrape\Tests\BaseTestCase;
 use Greengrape\Navigation\Item;
 use Greengrape\Exception\GreengrapeException;
 
@@ -17,7 +18,7 @@ use Greengrape\Exception\GreengrapeException;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class ItemTest extends \BaseTestCase
+class ItemTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -26,7 +27,7 @@ class ItemTest extends \BaseTestCase
      */
     public function setUp(): void
     {
-        $this->_object = new Item('foobar', 'foobar', '/mybase/');
+        $this->object = new Item('foobar', 'foobar', '/mybase/');
     }
 
     /**
@@ -52,37 +53,42 @@ class ItemTest extends \BaseTestCase
 
     public function testSetText(): void
     {
-        $this->_object->setText('xyz');
+        $this->object->setText('xyz');
 
-        $this->assertEquals('Xyz', $this->_object->getText());
+        $this->assertEquals('Xyz', $this->object->getText());
     }
 
     public function testSetTextWithNumberDot(): void
     {
-        $this->_object->setText('01.xyz');
+        $this->object->setText('01.xyz');
 
-        $this->assertEquals('Xyz', $this->_object->getText());
+        $this->assertEquals('Xyz', $this->object->getText());
     }
 
     public function testSetTextWithHyphen(): void
     {
-        $this->_object->setText('abc-xyz');
+        $this->object->setText('abc-xyz');
 
-        $this->assertEquals('Abc Xyz', $this->_object->getText());
+        $this->assertEquals('Abc Xyz', $this->object->getText());
     }
 
     public function testSetTextWithHyphenAndUppercase(): void
     {
-        $this->_object->setText('abc-Xyz');
+        $this->object->setText('abc-Xyz');
 
-        $this->assertEquals('Abc-Xyz', $this->_object->getText());
+        $this->assertEquals('Abc-Xyz', $this->object->getText());
     }
 
     public function testSetTextWithWords(): void
     {
-        $this->_object->setText('When a strong man armed keepeth his palace, his goods are in peace');
+        $this->object->setText(
+            'When a strong man armed keepeth his palace, his goods are in peace'
+        );
 
-        $this->assertEquals('When A Strong Man Armed Keepeth His Palace, His Goods Are In Peace', $this->_object->getText());
+        $this->assertEquals(
+            'When A Strong Man Armed Keepeth His Palace, His Goods Are In Peace',
+            $this->object->getText()
+        );
     }
 
     /**
@@ -93,7 +99,7 @@ class ItemTest extends \BaseTestCase
     public function testSetTextArray(): void
     {
         $this->expectException(GreengrapeException::class);
-        $this->_object->setText(array('foobar'));
+        $this->object->setText(array('foobar'));
     }
 
     /**
@@ -104,30 +110,30 @@ class ItemTest extends \BaseTestCase
     public function testSetTextNumberDotBlank(): void
     {
         $this->expectException(GreengrapeException::class);
-        $this->_object->setText('1.');
+        $this->object->setText('1.');
     }
 
     public function testSetTextNumberDotNumber(): void
     {
-        $this->_object->setText('18.1');
+        $this->object->setText('18.1');
 
-        $this->assertEquals('1', $this->_object->getText());
+        $this->assertEquals('1', $this->object->getText());
     }
 
     public function testSetHref(): void
     {
-        $this->_object->setHref('application/');
+        $this->object->setHref('application/');
 
-        $this->assertEquals('application/', $this->_object->getHref());
-        $this->assertEquals('application/', $this->_object->getRawHref());
+        $this->assertEquals('application/', $this->object->getHref());
+        $this->assertEquals('application/', $this->object->getRawHref());
     }
 
     public function testSetHrefWithNumberDot(): void
     {
-        $this->_object->setHref('18.application/');
+        $this->object->setHref('18.application/');
 
-        $this->assertEquals('application/', $this->_object->getHref());
-        $this->assertEquals('18.application/', $this->_object->getRawHref());
+        $this->assertEquals('application/', $this->object->getHref());
+        $this->assertEquals('18.application/', $this->object->getRawHref());
     }
 
     /**
@@ -138,9 +144,9 @@ class ItemTest extends \BaseTestCase
     public function testSetHrefArray(): void
     {
         $this->expectException(GreengrapeException::class);
-        $this->_object->setHref(array('foobar'));
+        $this->object->setHref(array('foobar'));
 
-        $this->assertEquals('foobar', $this->_object->getHref());
+        $this->assertEquals('foobar', $this->object->getHref());
     }
 
     /**
@@ -151,39 +157,39 @@ class ItemTest extends \BaseTestCase
     public function testSetHrefInt(): void
     {
         $this->expectException(GreengrapeException::class);
-        $this->_object->setHref(1);
+        $this->object->setHref(1);
     }
 
     public function testGetHrefWithIncludeBase(): void
     {
-        $this->_object->setHref('happy-day/');
+        $this->object->setHref('happy-day/');
 
-        $this->assertEquals('/mybase/happy-day/', $this->_object->getHref(true));
+        $this->assertEquals('/mybase/happy-day/', $this->object->getHref(true));
     }
 
     public function testGetHrefRootWithIncludeBase(): void
     {
-        $this->_object->setHref('/');
+        $this->object->setHref('/');
 
-        $this->assertEquals('/mybase/', $this->_object->getHref(true));
+        $this->assertEquals('/mybase/', $this->object->getHref(true));
     }
 
     public function testSetActiveEmpty(): void
     {
-        $this->_object->setActive();
+        $this->object->setActive();
 
-        $this->assertTrue($this->_object->getActive());
+        $this->assertTrue($this->object->getActive());
     }
 
     public function testSetActiveFalse(): void
     {
-        $this->_object->setActive(false);
+        $this->object->setActive(false);
 
-        $this->assertFalse($this->_object->getActive());
+        $this->assertFalse($this->object->getActive());
     }
 
     public function testGetBaseUrlEmpty(): void
     {
-        $this->assertEquals('/mybase', $this->_object->getBaseUrl());
+        $this->assertEquals('/mybase', $this->object->getBaseUrl());
     }
 }

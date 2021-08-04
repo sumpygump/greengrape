@@ -16,7 +16,7 @@ use Greengrape\Request;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class RequestTest extends \BaseTestCase
+class RequestTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -31,7 +31,7 @@ class RequestTest extends \BaseTestCase
             'PHP_SELF' => '/all/the/things/index.php',
         );
 
-        $this->_object = new Request($input);
+        $this->object = new Request($input);
     }
 
     /**
@@ -71,7 +71,7 @@ class RequestTest extends \BaseTestCase
 
     public function testGetRequestedFile(): void
     {
-        $this->assertEquals('about/', $this->_object->getRequestedFile());
+        $this->assertEquals('about/', $this->object->getRequestedFile());
     }
 
     public function testGetRequestedFileRoot(): void
@@ -82,13 +82,13 @@ class RequestTest extends \BaseTestCase
             'PHP_SELF' => '/all/the/things/index.php',
         );
 
-        $this->_object = new Request($input);
+        $this->object = new Request($input);
 
-        $this->assertEquals('/', $this->_object->getRequestedFile());
+        $this->assertEquals('/', $this->object->getRequestedFile());
     }
 
     public function testGetBaseUrlBlank(): void
     {
-        $this->assertEquals('/all/the/things', $this->_object->getBaseUrl());
+        $this->assertEquals('/all/the/things', $this->object->getBaseUrl());
     }
 }

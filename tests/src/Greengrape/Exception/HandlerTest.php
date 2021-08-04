@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\Exception;
 
+use Greengrape\Tests\BaseTestCase;
 use Greengrape\Config;
 use Greengrape\Exception\Handler;
 use Greengrape\Exception\NotFoundException;
@@ -19,14 +20,14 @@ use Greengrape\Kernel;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class HandlerTest extends \BaseTestCase
+class HandlerTest extends BaseTestCase
 {
     /**
      * Kernel object
      *
      * @var Kernel
      */
-    protected $_kernel;
+    protected $kernel;
 
     /**
      * Setup before tests
@@ -37,31 +38,34 @@ class HandlerTest extends \BaseTestCase
     {
         $config = new Config();
         $config['debug'] = true;
-        $this->_kernel = new Kernel($config);
+        $this->kernel = new Kernel($config);
     }
 
     public function testInitHandlers(): void
     {
-        Handler::initHandlers($this->_kernel);
+        Handler::initHandlers($this->kernel);
         Handler::releaseHandlers();
-        $this->assertTrue($this->_kernel instanceof Kernel);
+        $this->assertTrue($this->kernel instanceof Kernel);
     }
 
     public function testGetKernel(): void
     {
-        Handler::initHandlers($this->_kernel);
+        Handler::initHandlers($this->kernel);
         Handler::releaseHandlers();
 
         $kernel = Handler::getKernel();
 
-        $this->assertEquals($this->_kernel, $kernel);
+        $this->assertEquals($this->kernel, $kernel);
     }
 
     public function testHandleError(): void
     {
         ob_start();
         Handler::handleError(
-            8, 'Test message', 'fakefile.php', 33
+            8,
+            'Test message',
+            'fakefile.php',
+            33
         );
         $contents = ob_get_contents();
         ob_end_clean();

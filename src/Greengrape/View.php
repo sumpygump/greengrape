@@ -29,49 +29,49 @@ class View
      *
      * @var Theme
      */
-    protected $_theme;
+    protected $theme;
 
     /**
      * Navigation items
      *
      * @var Collection|array<string, string>
      */
-    protected $_navigationItems = [];
+    protected $navigationItems = [];
 
     /**
      * Sub navigation items
      *
      * @var Collection|array<string, string>
      */
-    protected $_subNavigationItems = [];
+    protected $subNavigationItems = [];
 
     /**
      * Active navigation item
      *
      * @var Item
      */
-    protected $_activeNavigationItem;
+    protected $activeNavigationItem;
 
     /**
      * Active sub navigation item
      *
      * @var Item
      */
-    protected $_activeSubNavigationItem;
+    protected $activeSubNavigationItem;
 
     /**
      * View params that should be passed to the layout
      *
      * @var array<string, mixed>
      */
-    protected $_params = [];
+    protected $params = [];
 
     /**
      * Content dir
      *
      * @var string
      */
-    protected $_contentDir = '';
+    protected $contentDir = '';
 
     /**
      * Constructor
@@ -92,7 +92,7 @@ class View
      */
     public function setTheme(Theme $theme)
     {
-        $this->_theme = $theme;
+        $this->theme = $theme;
         return $this;
     }
 
@@ -103,7 +103,7 @@ class View
      */
     public function getTheme()
     {
-        return $this->_theme;
+        return $this->theme;
     }
 
     /**
@@ -135,7 +135,7 @@ class View
      */
     public function setContentDir($dir)
     {
-        $this->_contentDir = $dir;
+        $this->contentDir = $dir;
         return $this;
     }
 
@@ -146,11 +146,11 @@ class View
      */
     public function getContentDir()
     {
-        if ($this->_contentDir == '') {
+        if ($this->contentDir == '') {
             return APP_PATH . DIRECTORY_SEPARATOR . 'content';
         }
 
-        return $this->_contentDir;
+        return $this->contentDir;
     }
 
     /**
@@ -161,7 +161,7 @@ class View
      */
     public function setParams($params)
     {
-        $this->_params = $params;
+        $this->params = $params;
         return $this;
     }
 
@@ -174,7 +174,7 @@ class View
      */
     public function setParam($key, $value)
     {
-        $this->_params[$key] = $value;
+        $this->params[$key] = $value;
         return $this;
     }
 
@@ -185,7 +185,7 @@ class View
      */
     public function getParams()
     {
-        return $this->_params;
+        return $this->params;
     }
 
     /**
@@ -196,7 +196,7 @@ class View
      */
     public function setNavigationItems(Collection $navigationItems)
     {
-        $this->_navigationItems = $navigationItems;
+        $this->navigationItems = $navigationItems;
         return $this;
     }
 
@@ -207,7 +207,7 @@ class View
      */
     public function getNavigationItems()
     {
-        return $this->_navigationItems;
+        return $this->navigationItems;
     }
 
     /**
@@ -221,7 +221,7 @@ class View
      */
     public function setActiveNavigationItem(Item $item)
     {
-        $this->_activeNavigationItem = $item;
+        $this->activeNavigationItem = $item;
         return $this;
     }
 
@@ -232,7 +232,7 @@ class View
      */
     public function getActiveNavigationItem()
     {
-        return $this->_activeNavigationItem;
+        return $this->activeNavigationItem;
     }
 
     /**
@@ -243,7 +243,7 @@ class View
      */
     public function setActiveSubNavigationItem(Item $item)
     {
-        $this->_activeSubNavigationItem = $item;
+        $this->activeSubNavigationItem = $item;
         return $this;
     }
 
@@ -254,7 +254,7 @@ class View
      */
     public function getActiveSubNavigationItem()
     {
-        return $this->_activeSubNavigationItem;
+        return $this->activeSubNavigationItem;
     }
 
     /**
@@ -265,7 +265,7 @@ class View
      */
     public function setSubNavigationItems(Collection $items)
     {
-        $this->_subNavigationItems = $items;
+        $this->subNavigationItems = $items;
         return $this;
     }
 
@@ -276,7 +276,7 @@ class View
      */
     public function getSubNavigationItems()
     {
-        return $this->_subNavigationItems;
+        return $this->subNavigationItems;
     }
 
     /**

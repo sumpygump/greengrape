@@ -18,7 +18,7 @@ use Greengrape\Exception\GreengrapeException;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class KernelTest extends \BaseTestCase
+class KernelTest extends BaseTestCase
 {
     /**
      * setUpBeforeClass
@@ -39,7 +39,7 @@ class KernelTest extends \BaseTestCase
     {
         $config = new Config('testconfig.ini');
 
-        $this->_object = new Kernel($config);
+        $this->object = new Kernel($config);
     }
 
     /**
@@ -79,10 +79,10 @@ class KernelTest extends \BaseTestCase
             'a' => 'b',
         );
 
-        $this->_object->setConfig($config);
+        $this->object->setConfig($config);
 
-        $this->assertEquals('b', $this->_object->getConfig('a'));
-        $this->assertEquals('grapeseed', $this->_object->getConfig('theme'));
+        $this->assertEquals('b', $this->object->getConfig('a'));
+        $this->assertEquals('grapeseed', $this->object->getConfig('theme'));
     }
 
     public function testGetConfig(): void
@@ -91,19 +91,19 @@ class KernelTest extends \BaseTestCase
             'a' => 'b',
         );
 
-        $this->_object->setConfig($config);
+        $this->object->setConfig($config);
 
         $config['theme'] = 'grapeseed';
 
-        $this->assertEquals($config, $this->_object->getConfig());
-        $this->assertNull($this->_object->getConfig('notsetvalue'));
+        $this->assertEquals($config, $this->object->getConfig());
+        $this->assertNull($this->object->getConfig('notsetvalue'));
     }
 
     public function testExecute(): void
     {
         Kernel::$allowExit = false;
         ob_start();
-        $this->_object->execute();
+        $this->object->execute();
         $contents = ob_get_contents();
         ob_end_clean();
 
@@ -119,7 +119,7 @@ class KernelTest extends \BaseTestCase
     public function testRedirect(): void
     {
         $this->expectException(GreengrapeException::class);
-        $this->_object->redirect('0');
+        $this->object->redirect('0');
     }
 
     public function testSafeExit(): void

@@ -126,7 +126,6 @@ class Csp
                     $csp_config['script-src'] .= " 'unsafe-inline'";
                 }
             }
-
         }
 
         $this->policies = array_merge($this->policies, $csp_config);

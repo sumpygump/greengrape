@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\View;
 
+use Greengrape\Tests\BaseTestCase;
 use Greengrape\View\AssetManager;
 
 /**
@@ -16,7 +17,7 @@ use Greengrape\View\AssetManager;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class AssetManagerTest extends \BaseTestCase
+class AssetManagerTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -25,7 +26,7 @@ class AssetManagerTest extends \BaseTestCase
      */
     public function setUp(): void
     {
-        $this->_object = new AssetManager('testtheme');
+        $this->object = new AssetManager('testtheme');
     }
 
     /**
@@ -49,54 +50,54 @@ class AssetManagerTest extends \BaseTestCase
 
     public function testSetBaseUrl(): void
     {
-        $this->_object->setBaseUrl('/anotherBase');
+        $this->object->setBaseUrl('/anotherBase');
 
-        $this->assertEquals('/anotherBase/', $this->_object->getBaseUrl());
-        $this->assertEquals('/anotherBase/a', $this->_object->getBaseUrl('a'));
+        $this->assertEquals('/anotherBase/', $this->object->getBaseUrl());
+        $this->assertEquals('/anotherBase/a', $this->object->getBaseUrl('a'));
     }
 
     public function testSetBaseUrlSlashAtEnd(): void
     {
-        $this->_object->setBaseUrl('/anotherBase/');
+        $this->object->setBaseUrl('/anotherBase/');
 
-        $this->assertEquals('/anotherBase/', $this->_object->getBaseUrl());
-        $this->assertEquals('/anotherBase/test1', $this->_object->getBaseUrl('test1'));
+        $this->assertEquals('/anotherBase/', $this->object->getBaseUrl());
+        $this->assertEquals('/anotherBase/test1', $this->object->getBaseUrl('test1'));
     }
 
     public function testGetThemeBaseUrl(): void
     {
-        $this->assertEquals('/themes/testtheme/', $this->_object->getThemeBaseUrl());
+        $this->assertEquals('/themes/testtheme/', $this->object->getThemeBaseUrl());
     }
 
     public function testFile(): void
     {
-        $this->assertEquals('/themes/testtheme/css/a1.css', $this->_object->file('css/a1'));
+        $this->assertEquals('/themes/testtheme/css/a1.css', $this->object->file('css/a1'));
     }
 
     public function testGetFilePathNoAssetRoot(): void
     {
-        $file = $this->_object->getFilePath('a1');
+        $file = $this->object->getFilePath('a1');
 
         $this->assertEquals('/themes/testtheme/a1', $file);
     }
 
     public function testGetFilePathWithExtension(): void
     {
-        $file = $this->_object->getFilePath('a1.css');
+        $file = $this->object->getFilePath('a1.css');
 
         $this->assertEquals('/themes/testtheme/a1.css', $file);
     }
 
     public function testGetFilePathWithUnknownExtension(): void
     {
-        $file = $this->_object->getFilePath('a1.partytime');
+        $file = $this->object->getFilePath('a1.partytime');
 
         $this->assertEquals('/themes/testtheme/a1.partytime', $file);
     }
 
     public function testGetFilePathWithUnsupportedAssetRoot(): void
     {
-        $file = $this->_object->getFilePath('ggg/a2');
+        $file = $this->object->getFilePath('ggg/a2');
 
         $this->assertEquals('/themes/testtheme/ggg/a2', $file);
     }

@@ -36,49 +36,49 @@ class Content
      *
      * @var string
      */
-    protected $_file = '';
+    protected $file = '';
 
     /**
      * The content (in markdown format)
      *
      * @var string
      */
-    protected $_content = '';
+    protected $content = '';
 
     /**
      * View object
      *
      * @var \Greengrape\View
      */
-    protected $_view;
+    protected $view;
 
     /**
      * Title
      *
      * @var string
      */
-    protected $_title = '';
+    protected $title = '';
 
     /**
      * Metadata
      *
      * @var array<string, mixed>
      */
-    protected $_metadata = [];
+    protected $metadata = [];
 
     /**
      * Template filename
      *
      * @var string
      */
-    protected $_defaultTemplateFile = 'main.html';
+    protected $defaultTemplateFile = 'main.html';
 
     /**
      * Template
      *
      * @var Template
      */
-    protected $_template;
+    protected $template;
 
     /**
      * Constructor
@@ -105,7 +105,7 @@ class Content
      */
     public function setFile($file)
     {
-        $this->_file = $file;
+        $this->file = $file;
         return $this;
     }
 
@@ -116,7 +116,7 @@ class Content
      */
     public function getFile()
     {
-        return $this->_file;
+        return $this->file;
     }
 
     /**
@@ -127,7 +127,7 @@ class Content
      */
     public function setView($view)
     {
-        $this->_view = $view;
+        $this->view = $view;
         return $this;
     }
 
@@ -138,11 +138,11 @@ class Content
      */
     public function getView()
     {
-        if (null === $this->_view) {
+        if (null === $this->view) {
             throw new GreengrapeException('View not set.');
         }
 
-        return $this->_view;
+        return $this->view;
     }
 
     /**
@@ -163,7 +163,7 @@ class Content
      */
     public function setTemplate($template)
     {
-        $this->_template = $template;
+        $this->template = $template;
         return $this;
     }
 
@@ -174,11 +174,11 @@ class Content
      */
     public function getTemplate()
     {
-        if (null == $this->_template) {
-            $this->setTemplateFile($this->_defaultTemplateFile);
+        if (null == $this->template) {
+            $this->setTemplateFile($this->defaultTemplateFile);
         }
 
-        return $this->_template;
+        return $this->template;
     }
 
     /**
@@ -212,7 +212,7 @@ class Content
      */
     public function setContent($content)
     {
-        $this->_content = $content;
+        $this->content = $content;
         return $this;
     }
 
@@ -223,7 +223,7 @@ class Content
      */
     public function getContent()
     {
-        return $this->_content;
+        return $this->content;
     }
 
     /**
@@ -290,7 +290,7 @@ class Content
     public function readMetadata(&$contents)
     {
         $defaults = [
-            'template' => $this->_defaultTemplateFile,
+            'template' => $this->defaultTemplateFile,
             'type' => self::TYPE_PAGE,
         ];
 
@@ -317,7 +317,7 @@ class Content
      */
     public function setMetadata($metadata)
     {
-        $this->_metadata = $metadata;
+        $this->metadata = $metadata;
         return $this;
     }
 
@@ -331,11 +331,11 @@ class Content
     public function getMetadata($key = null, $default = null)
     {
         if (null === $key) {
-            return $this->_metadata;
+            return $this->metadata;
         }
 
-        if (array_key_exists($key, $this->_metadata)) {
-            return $this->_metadata[$key];
+        if (array_key_exists($key, $this->metadata)) {
+            return $this->metadata[$key];
         }
 
         return $default;
@@ -349,7 +349,7 @@ class Content
      */
     public function setTitle($title)
     {
-        $this->_title = $title;
+        $this->title = $title;
         return $this;
     }
 
@@ -373,11 +373,11 @@ class Content
      */
     public function getTitle()
     {
-        if (!$this->_title) {
+        if (!$this->title) {
             return $this->getName();
         }
 
-        return $this->_title;
+        return $this->title;
     }
 
     /**
@@ -438,7 +438,7 @@ class Content
             || $pageType == self::TYPE_ENTRIES
             || $pageType == self::TYPE_ENTRY
         ) {
-            $root = dirname($this->_file);
+            $root = dirname($this->file);
             if (is_string($this->getMetadata('entriesroot'))) {
                 $root = $root . '/' . $this->getMetadata('entriesroot');
             }

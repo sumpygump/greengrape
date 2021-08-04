@@ -25,28 +25,28 @@ class Collection implements Iterator
      *
      * @var int
      */
-    private $_cursor = 0;
+    private $cursor = 0;
 
     /**
      * Items
      *
      * @var array<int, Content>
      */
-    protected $_items = [];
+    protected $items = [];
 
     /**
      * Root dir for this collection
      *
      * @var string
      */
-    protected $_rootPath = '';
+    protected $rootPath = '';
 
     /**
      * View object
      *
      * @var View
      */
-    protected $_view;
+    protected $view;
 
     /**
      * Constructor
@@ -57,8 +57,8 @@ class Collection implements Iterator
      */
     public function __construct($rootPath, $view)
     {
-        $this->_rootPath = $rootPath;
-        $this->_view = $view;
+        $this->rootPath = $rootPath;
+        $this->view = $view;
 
         $this->populate();
     }
@@ -87,7 +87,7 @@ class Collection implements Iterator
 
             $entry = new Content($path, $this->getView());
 
-            $this->_items[] = $entry;
+            $this->items[] = $entry;
         }
     }
 
@@ -99,7 +99,7 @@ class Collection implements Iterator
     public function reverse()
     {
         // Reverse chronological sort order
-        $this->_items = array_reverse($this->_items);
+        $this->items = array_reverse($this->items);
     }
 
     /**
@@ -113,7 +113,7 @@ class Collection implements Iterator
     public function addItems($items)
     {
         foreach ($items as $item) {
-            $this->_items[] = $item;
+            $this->items[] = $item;
         }
 
         return $this;
@@ -126,7 +126,7 @@ class Collection implements Iterator
      */
     public function getView()
     {
-        return $this->_view;
+        return $this->view;
     }
 
     /**
@@ -148,7 +148,7 @@ class Collection implements Iterator
      */
     protected function getRootPath()
     {
-        return $this->_rootPath;
+        return $this->rootPath;
     }
 
     /**
@@ -158,7 +158,7 @@ class Collection implements Iterator
      */
     public function toArray()
     {
-        return $this->_items;
+        return $this->items;
     }
 
     /**
@@ -170,7 +170,7 @@ class Collection implements Iterator
      */
     public function current()
     {
-        return $this->_items[$this->_cursor];
+        return $this->items[$this->cursor];
     }
 
     /**
@@ -182,7 +182,7 @@ class Collection implements Iterator
      */
     public function key()
     {
-        return $this->_cursor;
+        return $this->cursor;
     }
 
     /**
@@ -194,7 +194,7 @@ class Collection implements Iterator
      */
     public function next()
     {
-        ++$this->_cursor;
+        ++$this->cursor;
     }
 
     /**
@@ -204,7 +204,7 @@ class Collection implements Iterator
      */
     public function rewind()
     {
-        $this->_cursor = 0;
+        $this->cursor = 0;
     }
 
     /**
@@ -216,6 +216,6 @@ class Collection implements Iterator
      */
     public function valid()
     {
-        return isset($this->_items[$this->_cursor]);
+        return isset($this->items[$this->cursor]);
     }
 }

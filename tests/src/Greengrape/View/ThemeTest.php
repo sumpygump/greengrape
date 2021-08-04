@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\View;
 
+use Greengrape\Tests\BaseTestCase;
 use Greengrape\Exception\NotFoundException;
 use Greengrape\View\Theme;
 use Greengrape\View\AssetManager;
@@ -18,7 +19,7 @@ use Greengrape\View\AssetManager;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class ThemeTest extends \BaseTestCase
+class ThemeTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -29,7 +30,7 @@ class ThemeTest extends \BaseTestCase
     {
         mkdir(APP_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'faketheme');
 
-        $this->_object = new Theme('faketheme', '/baseUrl', APP_PATH . DIRECTORY_SEPARATOR . 'tests');
+        $this->object = new Theme('faketheme', '/baseUrl', APP_PATH . DIRECTORY_SEPARATOR . 'tests');
     }
 
     /**
@@ -89,14 +90,14 @@ class ThemeTest extends \BaseTestCase
 
     public function testGetAssetManager(): void
     {
-        $assetManager = $this->_object->getAssetManager();
+        $assetManager = $this->object->getAssetManager();
 
         $this->assertTrue($assetManager instanceof AssetManager);
     }
 
     public function testGetPathBlank(): void
     {
-        $path = $this->_object->getPath();
+        $path = $this->object->getPath();
 
         $expected = APP_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'faketheme';
         $this->assertEquals($expected, $path);
@@ -104,7 +105,7 @@ class ThemeTest extends \BaseTestCase
 
     public function testGetPathFile(): void
     {
-        $path = $this->_object->getPath('foobar');
+        $path = $this->object->getPath('foobar');
 
         $expected = APP_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'faketheme'
             . DIRECTORY_SEPARATOR . 'foobar';
@@ -114,13 +115,13 @@ class ThemeTest extends \BaseTestCase
 
     public function testSetDefaultTitle(): void
     {
-        $this->_object->setDefaultTitle('wonky wonk');
+        $this->object->setDefaultTitle('wonky wonk');
 
-        $this->assertEquals('wonky wonk', $this->_object->getDefaultTitle());
+        $this->assertEquals('wonky wonk', $this->object->getDefaultTitle());
     }
 
     public function testGetDefaultTitleWhenNotSet(): void
     {
-        $this->assertEquals('[Greengrape]', $this->_object->getDefaultTitle());
+        $this->assertEquals('[Greengrape]', $this->object->getDefaultTitle());
     }
 }

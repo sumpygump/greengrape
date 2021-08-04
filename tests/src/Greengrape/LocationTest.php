@@ -16,7 +16,7 @@ use Greengrape\Location;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class LocationTest extends \BaseTestCase
+class LocationTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -25,7 +25,7 @@ class LocationTest extends \BaseTestCase
      */
     public function setUp(): void
     {
-        //$this->_object = new Location();
+        //$this->object = new Location();
     }
 
     /**

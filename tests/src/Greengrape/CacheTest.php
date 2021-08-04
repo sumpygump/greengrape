@@ -17,7 +17,7 @@ use \Greengrape\Exception\GreengrapeException;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class CacheTest extends \BaseTestCase
+class CacheTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -32,7 +32,7 @@ class CacheTest extends \BaseTestCase
             mkdir('testCache');
         }
 
-        $this->_object = new Cache('testCache');
+        $this->object = new Cache('testCache');
     }
 
     /**
@@ -42,9 +42,9 @@ class CacheTest extends \BaseTestCase
      */
     public function tearDown(): void
     {
-        if ($this->_object instanceof Cache) {
+        if ($this->object instanceof Cache) {
             // clean up and hanging starts, just in case
-            //$this->_object->end();
+            //$this->object->end();
         }
 
         $cmd = 'rm -rf testCache';
@@ -76,22 +76,22 @@ class CacheTest extends \BaseTestCase
 
     public function testDisable(): void
     {
-        $object = $this->_object->disable();
+        $object = $this->object->disable();
 
-        $this->assertEquals($this->_object, $object);
-        $this->assertFalse($this->_object->start('ff'));
+        $this->assertEquals($this->object, $object);
+        $this->assertFalse($this->object->start('ff'));
     }
 
     public function testEnable(): void
     {
-        $object = $this->_object->enable();
+        $object = $this->object->enable();
 
         ob_start();
-        $this->assertEquals($this->_object, $object);
-        $this->assertTrue($this->_object->start('ff'));
+        $this->assertEquals($this->object, $object);
+        $this->assertTrue($this->object->start('ff'));
         ob_end_flush();
 
-        $this->_object->end();
+        $this->object->end();
     }
 
     /**
@@ -103,13 +103,13 @@ class CacheTest extends \BaseTestCase
     {
         $this->expectException(GreengrapeException::class);
         $dir = '/';
-        $this->_object->setDirectory($dir);
+        $this->object->setDirectory($dir);
     }
 
     public function testGetDirectory(): void
     {
         // This was set in setUp
-        $dir = $this->_object->getDirectory();
+        $dir = $this->object->getDirectory();
 
         $this->assertEquals('testCache', $dir);
     }
@@ -122,13 +122,13 @@ class CacheTest extends \BaseTestCase
         ob_start();
 
         // Start cache capture
-        $this->_object->start('test1');
+        $this->object->start('test1');
 
         // This content will be captured by the cache buffer
         echo 'sometestcontent';
 
         // End the cache capture
-        $r = $this->_object->end();
+        $r = $this->object->end();
 
         // Retrieve contents from the output buffer
         $contents = ob_get_contents();
@@ -153,7 +153,7 @@ class CacheTest extends \BaseTestCase
         ob_start();
 
         // Start cache capture
-        $this->_object->start('test1');
+        $this->object->start('test1');
 
         // Retrieve contents from the output buffer
         $contents = ob_get_contents();
@@ -166,15 +166,15 @@ class CacheTest extends \BaseTestCase
 
     public function testEndWhenDisabled(): void
     {
-        $this->_object->disable();
+        $this->object->disable();
 
-        $result = $this->_object->end();
+        $result = $this->object->end();
         $this->assertFalse($result);
     }
 
     public function testEndWhenNoFileToCache(): void
     {
-        $result = $this->_object->end();
+        $result = $this->object->end();
         $this->assertFalse($result);
     }
 
@@ -182,15 +182,15 @@ class CacheTest extends \BaseTestCase
     {
         // First populate the cache with some content
         ob_start();
-        $this->_object->start('t1');
+        $this->object->start('t1');
         echo 'sometestcontent';
-        $r = $this->_object->end();
+        $r = $this->object->end();
         ob_end_clean();
 
         ob_start();
-        $this->_object->start('t2');
+        $this->object->start('t2');
         echo 'sometestcontent';
-        $r = $this->_object->end();
+        $r = $this->object->end();
         ob_end_clean();
 
         // Now check that there are files in cache dir
@@ -198,7 +198,7 @@ class CacheTest extends \BaseTestCase
         $this->assertTrue((count($files) > 0));
 
         // Clear the cache
-        $this->_object->clear();
+        $this->object->clear();
 
         // Now assert that there are no files in cache dir
         $files = glob('testCache/*.cache');
@@ -209,22 +209,22 @@ class CacheTest extends \BaseTestCase
     {
         // First populate the cache with some content
         ob_start();
-        $this->_object->start('t1');
+        $this->object->start('t1');
         echo 'sometestcontent';
-        $r = $this->_object->end();
+        $r = $this->object->end();
         ob_end_clean();
 
         ob_start();
-        $this->_object->start('t2');
+        $this->object->start('t2');
         echo 'sometestcontent';
-        $r = $this->_object->end();
+        $r = $this->object->end();
         ob_end_clean();
 
         // Ensure cache file for t2 request exists
         $this->assertTrue(file_exists('testCache/afe8d66c5d85259b61ed1b762f8b6a75.cache'));
 
         // Clear cache for t2
-        $this->_object->clear('t2');
+        $this->object->clear('t2');
 
         // Assert cache file for t2 request doesn't exist
         $this->assertFalse(file_exists('testCache/afe8d66c5d85259b61ed1b762f8b6a75.cache'));

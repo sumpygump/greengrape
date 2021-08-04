@@ -22,7 +22,7 @@ class Handler
      *
      * @var \Greengrape\Kernel
      */
-    protected static $_kernel;
+    protected static $kernel;
 
     /**
      * Init the error handlers
@@ -62,7 +62,7 @@ class Handler
      */
     public static function setKernel($kernel)
     {
-        self::$_kernel = $kernel;
+        self::$kernel = $kernel;
     }
 
     /**
@@ -72,7 +72,7 @@ class Handler
      */
     public static function getKernel()
     {
-        return self::$_kernel;
+        return self::$kernel;
     }
 
     /**
@@ -110,8 +110,10 @@ class Handler
 
         // This way fatal errors will get handled as well.
         self::handleError(
-            $error['type'], $error['message'],
-            $error['file'], $error['line']
+            $error['type'],
+            $error['message'],
+            $error['file'],
+            $error['line']
         );
 
         return true;
@@ -240,7 +242,7 @@ class Handler
      * @param string $glue The glue used to implode() the args if array
      * @return string
      */
-    public static function renderTraceArgs($args, $glue="\n")
+    public static function renderTraceArgs($args, $glue = "\n")
     {
         $out = '';
 
@@ -292,5 +294,8 @@ class Handler
         return $errorLevels[$code];
     }
 
-    const EXCEPTION_MESSAGE_CAPSULE = '<div style="margin:4px;padding:8px;color:#b94a48;background-color:#f2dede;border:1px solid #eed3d7;border-radius:4px;"><p style="margin:0;font-size:24px;font-weight:bold;">Error: %s</p><pre>%s</pre></div>';
+    const EXCEPTION_MESSAGE_CAPSULE = '<div style="margin:4px;padding:8px;color:#b94a48;'
+        . 'background-color:#f2dede;border:1px solid #eed3d7;border-radius:4px;">'
+        . '<p style="margin:0;font-size:24px;font-weight:bold;">'
+        . 'Error: %s</p><pre>%s</pre></div>';
 }

@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\Navigation;
 
+use Greengrape\Tests\BaseTestCase;
 use Greengrape\Navigation\Collection;
 
 /**
@@ -16,7 +17,7 @@ use Greengrape\Navigation\Collection;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class CollectionTest extends \BaseTestCase
+class CollectionTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -25,8 +26,7 @@ class CollectionTest extends \BaseTestCase
      */
     public function setUp(): void
     {
-        $this->_createTestContentDir();
-        //$this->_object = new Collection();
+        $this->createTestContentDir();
     }
 
     /**
@@ -112,7 +112,7 @@ class CollectionTest extends \BaseTestCase
         $this->assertEquals('Foo', $items[1]->getText());
     }
 
-    protected function _createTestContentDir(): void
+    protected function createTestContentDir(): void
     {
         $contentDir = '_testContent';
         mkdir($contentDir);

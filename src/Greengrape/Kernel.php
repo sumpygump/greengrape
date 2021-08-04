@@ -31,14 +31,14 @@ class Kernel
      *
      * @var array<string, mixed>
      */
-    protected $_config = [];
+    protected $config = [];
 
     /**
      * Cache object
      *
      * @var \Greengrape\Cache
      */
-    protected $_cache;
+    protected $cache;
 
     /**
      * Whether to allow this script to exit
@@ -78,7 +78,7 @@ class Kernel
             $config['theme'] = 'grapeseed';
         }
 
-        $this->_config = $config;
+        $this->config = $config;
 
         return $this;
     }
@@ -96,14 +96,14 @@ class Kernel
     public function getConfig($param = null, $default = null)
     {
         if (null === $param) {
-            return $this->_config;
+            return $this->config;
         }
 
-        if (!isset($this->_config[$param])) {
+        if (!isset($this->config[$param])) {
             return $default;
         }
 
-        return $this->_config[$param];
+        return $this->config[$param];
     }
 
     /**
@@ -114,7 +114,7 @@ class Kernel
      */
     public function setCache($cache)
     {
-        $this->_cache = $cache;
+        $this->cache = $cache;
         return $this;
     }
 
@@ -125,7 +125,7 @@ class Kernel
      */
     public function getCache()
     {
-        return $this->_cache;
+        return $this->cache;
     }
 
     /**
@@ -205,7 +205,10 @@ class Kernel
     {
         $config = ['include_home_in_nav' => $this->getConfig('include_home_in_nav', true)];
         $mainNavigationCollection = new NavigationCollection(
-            $this->getContentDir(), $request->getBaseUrl(), null, $config
+            $this->getContentDir(),
+            $request->getBaseUrl(),
+            null,
+            $config
         );
         foreach ($mainNavigationCollection as $item) {
             // If the first part of the URI matches this item's href then this
@@ -224,7 +227,9 @@ class Kernel
         }
 
         $subNavigationCollection = new NavigationCollection(
-            $this->getContentDir(), $request->getBaseUrl(), $view->getActiveNavigationItem()
+            $this->getContentDir(),
+            $request->getBaseUrl(),
+            $view->getActiveNavigationItem()
         );
         foreach ($subNavigationCollection as $subItem) {
             // If the first part of the URI matches this item's href then this

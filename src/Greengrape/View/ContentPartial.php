@@ -24,5 +24,5 @@ class ContentPartial extends Content
      *
      * @var string
      */
-    protected $_defaultTemplateFile = 'default.html';
+    protected $defaultTemplateFile = 'default.html';
 }

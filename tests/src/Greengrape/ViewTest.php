@@ -15,10 +15,6 @@ use Greengrape\View\Theme;
 use Greengrape\Navigation\Collection;
 use Greengrape\Navigation\Item;
 
-class MockTheme extends Theme
-{
-}
-
 /**
  * View Test
  *
@@ -26,7 +22,7 @@ class MockTheme extends Theme
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class ViewTest extends \BaseTestCase
+class ViewTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -37,12 +33,18 @@ class ViewTest extends \BaseTestCase
     {
         mkdir('foobar');
         mkdir('foobar' . DIRECTORY_SEPARATOR . 'templates');
-        file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'layout.html', '{{ layout.content|raw }}');
-        file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'main.html', '{{ content | raw }}');
+        file_put_contents(
+            'foobar' . DIRECTORY_SEPARATOR . 'layout.html',
+            '{{ layout.content|raw }}'
+        );
+        file_put_contents(
+            'foobar' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'main.html',
+            '{{ content | raw }}'
+        );
 
         $testThemesDir = APP_PATH . DIRECTORY_SEPARATOR . 'tests';
-        $this->_object = new View(new MockTheme('foobar', '/', $testThemesDir));
-        $this->_object->setContentDir(realpath('.'));
+        $this->object = new View(new MockTheme('foobar', '/', $testThemesDir));
+        $this->object->setContentDir(realpath('.'));
     }
 
     /**
@@ -89,12 +91,12 @@ class ViewTest extends \BaseTestCase
     public function testSetThemeString(): void
     {
         $this->expectException(\TypeError::class);
-        $this->_object->setTheme('string');
+        $this->object->setTheme('string');
     }
 
     public function testGetLayout(): void
     {
-        $layout = $this->_object->getLayout();
+        $layout = $this->object->getLayout();
         $this->assertTrue($layout instanceof Layout);
     }
 
@@ -113,18 +115,18 @@ class ViewTest extends \BaseTestCase
 
     public function testSetParams(): void
     {
-        $this->_object->setParams(array('a' => '1', 'b' => '2'));
+        $this->object->setParams(array('a' => '1', 'b' => '2'));
 
         $expected = array('a' => '1', 'b' => '2');
-        $this->assertEquals($expected, $this->_object->getParams());
+        $this->assertEquals($expected, $this->object->getParams());
     }
 
     public function testSetNavigationItems(): void
     {
         $collection = new Collection('t1', '/baseurl');
 
-        $this->_object->setNavigationItems($collection);
-        $this->assertEquals($collection, $this->_object->getNavigationItems());
+        $this->object->setNavigationItems($collection);
+        $this->assertEquals($collection, $this->object->getNavigationItems());
     }
 
     /**
@@ -136,7 +138,7 @@ class ViewTest extends \BaseTestCase
     {
         $this->expectException(\TypeError::class);
         $items = array('a', 'b');
-        $this->_object->setNavigationItems($items);
+        $this->object->setNavigationItems($items);
     }
 
     /**
@@ -147,16 +149,16 @@ class ViewTest extends \BaseTestCase
     public function testSetActiveNavigationItemString(): void
     {
         $this->expectException(\TypeError::class);
-        $this->_object->setActiveNavigationItem('aa');
+        $this->object->setActiveNavigationItem('aa');
     }
 
     public function testSetActiveNavigationItem(): void
     {
         $item = new Item('text1', 'text1/');
 
-        $this->_object->setActiveNavigationItem($item);
+        $this->object->setActiveNavigationItem($item);
 
-        $this->assertEquals($item, $this->_object->getActiveNavigationItem());
+        $this->assertEquals($item, $this->object->getActiveNavigationItem());
     }
 
     /**
@@ -167,16 +169,16 @@ class ViewTest extends \BaseTestCase
     public function testSetActiveSubNavigationItemString(): void
     {
         $this->expectException(\TypeError::class);
-        $this->_object->setActiveSubNavigationItem('foobar');
+        $this->object->setActiveSubNavigationItem('foobar');
     }
 
     public function testSetActiveSubNavigationItem(): void
     {
         $item = new Item('text2', 'text2/');
 
-        $this->_object->setActiveSubNavigationItem($item);
+        $this->object->setActiveSubNavigationItem($item);
 
-        $this->assertEquals($item, $this->_object->getActiveSubNavigationItem());
+        $this->assertEquals($item, $this->object->getActiveSubNavigationItem());
     }
 
     /**
@@ -188,15 +190,15 @@ class ViewTest extends \BaseTestCase
     {
         $this->expectException(\TypeError::class);
         $items = array('c', 'd', 'e');
-        $this->_object->setSubNavigationItems($items);
+        $this->object->setSubNavigationItems($items);
     }
 
     public function testSetSubNavigationItems(): void
     {
         $collection = new Collection('t1', '/baseurl');
 
-        $this->_object->setSubNavigationItems($collection);
-        $this->assertEquals($collection, $this->_object->getSubNavigationItems());
+        $this->object->setSubNavigationItems($collection);
+        $this->assertEquals($collection, $this->object->getSubNavigationItems());
     }
 
     /**
@@ -207,14 +209,14 @@ class ViewTest extends \BaseTestCase
     public function testRenderFileNoExists(): void
     {
         $this->expectException(NotFoundException::class);
-        $output = $this->_object->renderContentFile('fake.md');
+        $output = $this->object->renderContentFile('fake.md');
     }
 
     public function testRenderFile(): void
     {
         file_put_contents('foobar/templates/contentfile.md', '#hiya');
 
-        $output = $this->_object->renderContentFile('foobar/templates/contentfile.md');
+        $output = $this->object->renderContentFile('foobar/templates/contentfile.md');
         $this->assertStringContainsString('<h1>hiya</h1>', $output);
 
         unlink('foobar/templates/contentfile.md');

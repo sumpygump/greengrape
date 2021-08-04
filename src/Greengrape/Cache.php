@@ -50,21 +50,21 @@ class Cache
      *
      * @var bool
      */
-    protected $_enabled = true;
+    protected $enabled = true;
 
     /**
      * Location of cache directory
      *
      * @var string
      */
-    protected $_cacheDir = '';
+    protected $cacheDir = '';
 
     /**
      * Current cache capturing filename
      *
      * @var string
      */
-    protected $_cacheFilename = '';
+    protected $cacheFilename = '';
 
     /**
      * Constructor
@@ -84,7 +84,7 @@ class Cache
      */
     public function disable()
     {
-        $this->_enabled = false;
+        $this->enabled = false;
         return $this;
     }
 
@@ -95,7 +95,7 @@ class Cache
      */
     public function enable()
     {
-        $this->_enabled = true;
+        $this->enabled = true;
         return $this;
     }
 
@@ -115,7 +115,7 @@ class Cache
             throw new GreengrapeException("Cannot set cache dir. Path not writable: '$cacheDir'.");
         }
 
-        $this->_cacheDir = $cacheDir;
+        $this->cacheDir = $cacheDir;
         return $this;
     }
 
@@ -126,7 +126,7 @@ class Cache
      */
     public function getDirectory()
     {
-        return $this->_cacheDir;
+        return $this->cacheDir;
     }
 
     /**
@@ -180,17 +180,17 @@ class Cache
     public function start($uri)
     {
         // If not enabled, do nothing
-        if (!$this->_enabled) {
+        if (!$this->enabled) {
             return false;
         }
 
         // Save cacheFilename indicating we are going to capture output
-        $this->_cacheFilename = $this->getCacheFilename($uri);
+        $this->cacheFilename = $this->getCacheFilename($uri);
 
-        if (file_exists($this->_cacheFilename)) {
+        if (file_exists($this->cacheFilename)) {
             $this->renderCsp();
 
-            $contents = file_get_contents($this->_cacheFilename);
+            $contents = file_get_contents($this->cacheFilename);
 
             // We need the nonces to still work from cached files so replace nonce placeholder
             $contents = str_replace('REPLACE_WITH_NONCE', $this->getCspNonce(), $contents);
@@ -214,7 +214,7 @@ class Cache
         // If not enabled, do nothing
         // If cacheFilename is not set, we are not actively capturing output to
         // save to the cache file, so do nothing.
-        if (!$this->_enabled || !$this->_cacheFilename) {
+        if (!$this->enabled || !$this->cacheFilename) {
             return false;
         }
 
@@ -224,7 +224,7 @@ class Cache
         // replace the current nonce
         $contents = str_replace($this->getCspNonce(), 'REPLACE_WITH_NONCE', $contents);
 
-        file_put_contents($this->_cacheFilename, $contents);
+        file_put_contents($this->cacheFilename, $contents);
         ob_end_flush();
 
         return true;

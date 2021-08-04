@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\Exception;
 
+use Greengrape\Tests\BaseTestCase;
 use Greengrape\Exception\NotFoundException;
 
 /**
@@ -16,7 +17,7 @@ use Greengrape\Exception\NotFoundException;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class NotFoundExceptionTest extends \BaseTestCase
+class NotFoundExceptionTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -25,7 +26,7 @@ class NotFoundExceptionTest extends \BaseTestCase
      */
     public function setUp(): void
     {
-        $this->_object = new NotFoundException();
+        $this->object = new NotFoundException();
     }
 
     /**
@@ -35,6 +36,6 @@ class NotFoundExceptionTest extends \BaseTestCase
      */
     public function testConstruct()
     {
-        $this->assertTrue($this->_object instanceof NotFoundException);
+        $this->assertTrue($this->object instanceof NotFoundException);
     }
 }

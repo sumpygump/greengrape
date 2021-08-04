@@ -19,7 +19,7 @@ use Greengrape\View\Theme;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class CollectionTest extends \BaseTestCase
+class CollectionTest extends BaseTestCase
 {
     /**
      * view

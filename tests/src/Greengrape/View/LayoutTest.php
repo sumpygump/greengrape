@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\View;
 
+use Greengrape\Tests\BaseTestCase;
 use Greengrape\View\Layout;
 use Greengrape\View\Theme;
 use Greengrape\Navigation\Collection;
@@ -19,7 +20,7 @@ use Greengrape\Navigation\Item;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class LayoutTest extends \BaseTestCase
+class LayoutTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -47,7 +48,7 @@ class LayoutTest extends \BaseTestCase
         $theme = new Theme('testtheme', '/', APP_PATH . DIRECTORY_SEPARATOR . 'tests');
         $theme->setDefaultTitle('[testing]');
 
-        $this->_object = new Layout('layout.html', $theme);
+        $this->object = new Layout('layout.html', $theme);
     }
 
     /**
@@ -82,37 +83,37 @@ class LayoutTest extends \BaseTestCase
 
     public function testGetTitle(): void
     {
-        $this->_object->setTitle('foobar2');
+        $this->object->setTitle('foobar2');
 
-        $this->assertEquals('foobar2 | [testing]', $this->_object->getTitle());
+        $this->assertEquals('foobar2 | [testing]', $this->object->getTitle());
     }
 
     public function testSetTitleReset(): void
     {
-        $this->_object->setTitle('foobar2', true);
+        $this->object->setTitle('foobar2', true);
 
-        $this->assertEquals('foobar2', $this->_object->getTitle());
+        $this->assertEquals('foobar2', $this->object->getTitle());
     }
 
     public function testSetTitleBlank(): void
     {
-        $this->_object->setTitle('');
+        $this->object->setTitle('');
 
-        $this->assertEquals('[testing]', $this->_object->getTitle());
+        $this->assertEquals('[testing]', $this->object->getTitle());
     }
 
     public function testSetTitleWhitespace(): void
     {
-        $this->_object->setTitle('   ');
+        $this->object->setTitle('   ');
 
-        $this->assertEquals('[testing]', $this->_object->getTitle());
+        $this->assertEquals('[testing]', $this->object->getTitle());
     }
 
     public function testSetContent(): void
     {
-        $this->_object->setContent('this is the content');
+        $this->object->setContent('this is the content');
 
-        $this->assertEquals('this is the content', $this->_object->getContent());
+        $this->assertEquals('this is the content', $this->object->getContent());
     }
 
     public function testSetParams(): void
@@ -121,9 +122,9 @@ class LayoutTest extends \BaseTestCase
             'face' => 'palm',
             'total' => '81.22',
         );
-        $this->_object->setParams($params);
+        $this->object->setParams($params);
 
-        $this->assertEquals('palm', $this->_object->getParam('face'));
+        $this->assertEquals('palm', $this->object->getParam('face'));
     }
 
     public function testGetParamNotSet(): void
@@ -132,9 +133,9 @@ class LayoutTest extends \BaseTestCase
             'face' => 'palm',
             'total' => '81.22',
         );
-        $this->_object->setParams($params);
+        $this->object->setParams($params);
 
-        $this->assertNull($this->_object->getParam('nada'));
+        $this->assertNull($this->object->getParam('nada'));
     }
 
     public function testGetParamMagicMethod(): void
@@ -143,9 +144,9 @@ class LayoutTest extends \BaseTestCase
             'face' => 'palm',
             'total' => '81.22',
         );
-        $this->_object->setParams($params);
+        $this->object->setParams($params);
 
-        $this->assertEquals('palm', $this->_object->face());
+        $this->assertEquals('palm', $this->object->face());
     }
 
     public function testRender(): void
@@ -154,7 +155,7 @@ class LayoutTest extends \BaseTestCase
         $vars = array(
             'something' => 'awesome',
         );
-        $output = $this->_object->render($content, $vars);
+        $output = $this->object->render($content, $vars);
 
         $this->assertEquals('<h1>Radical</h1>awesome', $output);
     }
@@ -166,31 +167,31 @@ class LayoutTest extends \BaseTestCase
      */
     public function testSetNavigationItemsArray(): void
     {
-        $this->_object->setNavigationItems(array('foobar'));
+        $this->object->setNavigationItems(array('foobar'));
 
         // An empty array is acceptable
-        $this->assertEquals(array('foobar'), $this->_object->getNavigationItems());
+        $this->assertEquals(array('foobar'), $this->object->getNavigationItems());
     }
 
     public function testSetNavigationItems(): void
     {
         $collection = new Collection('t1', '/baseurl');
 
-        $this->_object->setNavigationItems($collection);
-        $this->assertEquals($collection, $this->_object->getNavigationItems());
+        $this->object->setNavigationItems($collection);
+        $this->assertEquals($collection, $this->object->getNavigationItems());
     }
 
     public function testSetSubNavigationItems(): void
     {
         $collection = new Collection('t2', '/baseurl');
 
-        $this->_object->setSubNavigationItems($collection);
-        $this->assertEquals($collection, $this->_object->getSubNavigationItems());
+        $this->object->setSubNavigationItems($collection);
+        $this->assertEquals($collection, $this->object->getSubNavigationItems());
     }
 
     public function testGetNavigationNoItems(): void
     {
-        $output = $this->_object->getNavigation();
+        $output = $this->object->getNavigation();
 
         $this->assertEquals('', $output);
     }
@@ -204,8 +205,8 @@ class LayoutTest extends \BaseTestCase
     {
         $collection = new Collection('t1', '/baseurl');
 
-        $this->_object->setNavigationItems($collection);
-        $output = $this->_object->getNavigation();
+        $this->object->setNavigationItems($collection);
+        $output = $this->object->getNavigation();
 
         $this->assertEquals('', $output);
     }
@@ -220,14 +221,14 @@ class LayoutTest extends \BaseTestCase
 
         $collection->addItems($items);
 
-        $this->_object->setNavigationItems($collection);
+        $this->object->setNavigationItems($collection);
 
-        $this->assertEquals('/baseurl/text1//baseurl/text2/', $this->_object->getNavigation());
+        $this->assertEquals('/baseurl/text1//baseurl/text2/', $this->object->getNavigation());
     }
 
     public function testGetSubNavigationNoItems(): void
     {
-        $output = $this->_object->getSubNavigation();
+        $output = $this->object->getSubNavigation();
 
         $this->assertEquals('', $output);
     }
@@ -242,8 +243,8 @@ class LayoutTest extends \BaseTestCase
 
         $collection->addItems($items);
 
-        $this->_object->setSubNavigationItems($collection);
+        $this->object->setSubNavigationItems($collection);
 
-        $this->assertEquals('/baseurl/text1//baseurl/text2/', $this->_object->getSubNavigation());
+        $this->assertEquals('/baseurl/text1//baseurl/text2/', $this->object->getSubNavigation());
     }
 }

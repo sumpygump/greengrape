@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\View;
 
+use Greengrape\Tests\BaseTestCase;
 use Greengrape\View\ContentPartial;
 
 /**
@@ -16,7 +17,7 @@ use Greengrape\View\ContentPartial;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class ContentPartialTest extends \BaseTestCase
+class ContentPartialTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -25,7 +26,7 @@ class ContentPartialTest extends \BaseTestCase
      */
     public function setUp(): void
     {
-        $this->_object = new ContentPartial();
+        $this->object = new ContentPartial();
     }
 
     /**
@@ -35,6 +36,6 @@ class ContentPartialTest extends \BaseTestCase
      */
     public function testConstruct()
     {
-        $this->assertTrue($this->_object instanceof ContentPartial);
+        $this->assertTrue($this->object instanceof ContentPartial);
     }
 }

@@ -18,42 +18,42 @@ use Greengrape\Navigation\Item;
  * @author Jansen Price <jansen.price@gmail.com>
  * @implements Iterator<int, Item>
  */
-class Collection implements Iterator,Countable
+class Collection implements Iterator, Countable
 {
     /**
      * Cursor position in items array
      *
      * @var int
      */
-    private $_cursor = 0;
+    private $cursor = 0;
 
     /**
      * Items
      *
      * @var array<int, Item>
      */
-    protected $_items = [];
+    protected $items = [];
 
     /**
      * Root item
      *
      * @var Item
      */
-    protected $_rootItem;
+    protected $rootItem;
 
     /**
      * Content directory (root dir for all content files)
      *
      * @var string
      */
-    protected $_contentDir = '';
+    protected $contentDir = '';
 
     /**
      * Base URL (web root - for generating links to navigation items)
      *
      * @var string
      */
-    protected $_baseUrl = '';
+    protected $baseUrl = '';
 
     /**
      * Whether to include the home link in the nav
@@ -77,9 +77,9 @@ class Collection implements Iterator,Countable
             $this->includeHome = (bool) $config['include_home_in_nav'];
         }
 
-        $this->_contentDir = $contentDir;
-        $this->_baseUrl = $baseUrl;
-        $this->_rootItem = $rootItem;
+        $this->contentDir = $contentDir;
+        $this->baseUrl = $baseUrl;
+        $this->rootItem = $rootItem;
 
         $this->populate();
     }
@@ -94,7 +94,7 @@ class Collection implements Iterator,Countable
         $paths = $this->getChildren();
 
         foreach ($paths as $path) {
-            $path = str_replace($this->_contentDir . DIRECTORY_SEPARATOR, '', $path);
+            $path = str_replace($this->contentDir . DIRECTORY_SEPARATOR, '', $path);
 
             $basename = basename($path);
 
@@ -103,14 +103,14 @@ class Collection implements Iterator,Countable
                 continue;
             }
 
-            $item = new Item($basename, $path . '/', $this->_baseUrl);
-            $this->_items[] = $item;
+            $item = new Item($basename, $path . '/', $this->baseUrl);
+            $this->items[] = $item;
         }
 
         // If we are at the actual site root, we need to add an item to Home
-        if ($this->includeHome && empty($this->_rootItem) && !empty($this->_items)) {
-            $home = new Item('Home', '/', $this->_baseUrl);
-            array_unshift($this->_items, $home);
+        if ($this->includeHome && empty($this->rootItem) && !empty($this->items)) {
+            $home = new Item('Home', '/', $this->baseUrl);
+            array_unshift($this->items, $home);
         }
     }
 
@@ -123,8 +123,8 @@ class Collection implements Iterator,Countable
     public function addItems($items)
     {
         foreach ($items as $item) {
-            $item->setBaseUrl($this->_baseUrl);
-            $this->_items[] = $item;
+            $item->setBaseUrl($this->baseUrl);
+            $this->items[] = $item;
         }
 
         return $this;
@@ -138,8 +138,8 @@ class Collection implements Iterator,Countable
     protected function getChildren()
     {
         // If the root is the home, don't return any children
-        if (!empty($this->_rootItem) && $this->_rootItem->getHref() == '/') {
-            return array();
+        if (!empty($this->rootItem) && $this->rootItem->getHref() == '/') {
+            return [];
         }
 
         $rootPath = $this->getRootPath();
@@ -155,12 +155,12 @@ class Collection implements Iterator,Countable
     protected function getRootPath()
     {
         // If there is no root item, the root is the content dir
-        if (null === $this->_rootItem) {
-            return $this->_contentDir;
+        if (null === $this->rootItem) {
+            return $this->contentDir;
         }
 
-        return $this->_contentDir . DIRECTORY_SEPARATOR
-            . $this->_rootItem->getRawHref();
+        return $this->contentDir . DIRECTORY_SEPARATOR
+            . $this->rootItem->getRawHref();
     }
 
     /**
@@ -170,7 +170,7 @@ class Collection implements Iterator,Countable
      */
     public function toArray()
     {
-        return $this->_items;
+        return $this->items;
     }
 
     /**
@@ -182,7 +182,7 @@ class Collection implements Iterator,Countable
      */
     public function current()
     {
-        return $this->_items[$this->_cursor];
+        return $this->items[$this->cursor];
     }
 
     /**
@@ -194,7 +194,7 @@ class Collection implements Iterator,Countable
      */
     public function key()
     {
-        return $this->_cursor;
+        return $this->cursor;
     }
 
     /**
@@ -206,7 +206,7 @@ class Collection implements Iterator,Countable
      */
     public function next()
     {
-        ++$this->_cursor;
+        ++$this->cursor;
     }
 
     /**
@@ -216,7 +216,7 @@ class Collection implements Iterator,Countable
      */
     public function rewind()
     {
-        $this->_cursor = 0;
+        $this->cursor = 0;
     }
 
     /**
@@ -228,7 +228,7 @@ class Collection implements Iterator,Countable
      */
     public function valid()
     {
-        return isset($this->_items[$this->_cursor]);
+        return isset($this->items[$this->cursor]);
     }
 
     /**
@@ -240,6 +240,6 @@ class Collection implements Iterator,Countable
      */
     public function count()
     {
-        return count($this->_items);
+        return count($this->items);
     }
 }

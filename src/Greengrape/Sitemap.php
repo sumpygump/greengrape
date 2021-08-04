@@ -25,14 +25,14 @@ class Sitemap
      *
      * @var string
      */
-    protected $_contentDir = '';
+    protected $contentDir = '';
 
     /**
      * Map of URLs to files
      *
      * @var array<string, string>
      */
-    protected $_map = [];
+    protected $map = [];
 
     /**
      * Constructor
@@ -44,7 +44,7 @@ class Sitemap
     {
         $this->setContentDir($contentDir);
 
-        $this->_map = $this->createMap();
+        $this->map = $this->createMap();
     }
 
     /**
@@ -59,7 +59,7 @@ class Sitemap
             throw new GreengrapeException('Content dir must be a string');
         }
 
-        $this->_contentDir = $contentDir;
+        $this->contentDir = $contentDir;
         return $this;
     }
 
@@ -70,7 +70,7 @@ class Sitemap
      */
     public function getContentDir()
     {
-        return $this->_contentDir;
+        return $this->contentDir;
     }
 
     /**
@@ -81,8 +81,8 @@ class Sitemap
      */
     public function getLocationForUrl($url)
     {
-        if (array_key_exists($url, $this->_map)) {
-            $location = new Location($this->_map[$url]);
+        if (array_key_exists($url, $this->map)) {
+            $location = new Location($this->map[$url]);
             return $location;
         }
 
@@ -96,7 +96,7 @@ class Sitemap
      */
     public function getCountMapItems()
     {
-        return count($this->_map);
+        return count($this->map);
     }
 
     /**
@@ -171,7 +171,8 @@ class Sitemap
             }
             return self::rglob(
                 basename($pattern),
-                $flags, $dir . DIRECTORY_SEPARATOR
+                $flags,
+                $dir . DIRECTORY_SEPARATOR
             );
         }
 
@@ -180,7 +181,8 @@ class Sitemap
 
         foreach ($paths as $p) {
             $files = array_merge(
-                $files, self::rglob($pattern, $flags, $p . DIRECTORY_SEPARATOR)
+                $files,
+                self::rglob($pattern, $flags, $p . DIRECTORY_SEPARATOR)
             );
         }
 

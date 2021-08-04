@@ -22,14 +22,14 @@ class Location
      *
      * @var string
      */
-    protected $_file = '';
+    protected $file = '';
 
     /**
      * Canonical URL
      *
      * @var string
      */
-    protected $_canonical = '';
+    protected $canonical = '';
 
     /**
      * Constructor
@@ -54,7 +54,7 @@ class Location
      */
     public function setCanonical($canonical)
     {
-        $this->_canonical = $canonical;
+        $this->canonical = $canonical;
         return $this;
     }
 
@@ -65,7 +65,7 @@ class Location
      */
     public function getCanonical()
     {
-        return $this->_canonical;
+        return $this->canonical;
     }
 
     /**
@@ -79,7 +79,7 @@ class Location
         if (is_array($file)) {
             $file = reset($file);
         }
-        $this->_file = (string) $file;
+        $this->file = (string) $file;
         return $this;
     }
 
@@ -91,7 +91,7 @@ class Location
     public function getFile()
     {
         // Don't return the leading slash
-        return ltrim($this->_file, '/');
+        return ltrim($this->file, '/');
     }
 
     /**

@@ -24,35 +24,35 @@ class Item
      *
      * @var string
      */
-    protected $_text = '';
+    protected $text = '';
 
     /**
      * The href of the navigation link
      *
      * @var string
      */
-    protected $_href = '';
+    protected $href = '';
 
     /**
      * The raw path name
      *
      * @var string
      */
-    protected $_rawHref = '';
+    protected $rawHref = '';
 
     /**
      * Whether the link is currently active
      *
      * @var bool
      */
-    protected $_isActive = false;
+    protected $isActive = false;
 
     /**
      * Base URL
      *
      * @var string
      */
-    protected $_baseUrl = '';
+    protected $baseUrl = '';
 
     /**
      * Constructor
@@ -93,7 +93,7 @@ class Item
             throw new GreengrapeException("Text cannot be blank. Input: '$text'");
         }
 
-        $this->_text = $text;
+        $this->text = $text;
         return $this;
     }
 
@@ -104,7 +104,7 @@ class Item
      */
     public function getText()
     {
-        return $this->_text;
+        return $this->text;
     }
 
     /**
@@ -122,7 +122,7 @@ class Item
         $this->setRawHref($href);
 
         $href = self::translateOrderedName($href);
-        $this->_href = $href;
+        $this->href = $href;
         return $this;
     }
 
@@ -135,12 +135,12 @@ class Item
     public function getHref($includeBase = false)
     {
         if ($includeBase) {
-            if ($this->_href == '/') {
+            if ($this->href == '/') {
                 // This prevents from doubling up the '/'
                 return $this->getBaseUrl('/');
             }
 
-            $pathParts = explode('/', rtrim($this->_href, '/'));
+            $pathParts = explode('/', rtrim($this->href, '/'));
             $path = '';
             foreach ($pathParts as $part) {
                 $path .= urlencode($part) . '/';
@@ -149,7 +149,7 @@ class Item
             return $this->getBaseUrl('/' . $path);
         }
 
-        return $this->_href;
+        return $this->href;
     }
 
     /**
@@ -160,7 +160,7 @@ class Item
      */
     public function setRawHref($href)
     {
-        $this->_rawHref = $href;
+        $this->rawHref = $href;
         return $this;
     }
 
@@ -171,7 +171,7 @@ class Item
      */
     public function getRawHref()
     {
-        return $this->_rawHref;
+        return $this->rawHref;
     }
 
     /**
@@ -182,7 +182,7 @@ class Item
      */
     public function setActive($value = true)
     {
-        $this->_isActive = (bool) $value;
+        $this->isActive = (bool) $value;
         return $this;
     }
 
@@ -193,7 +193,7 @@ class Item
      */
     public function getActive()
     {
-        return $this->_isActive;
+        return $this->isActive;
     }
 
     /**
@@ -206,7 +206,7 @@ class Item
     {
         // base url should not end in a slash, so we'll strip it off it it has
         // one on the end
-        $this->_baseUrl = rtrim($url, '/');
+        $this->baseUrl = rtrim($url, '/');
 
         return $this;
     }
@@ -220,10 +220,10 @@ class Item
     public function getBaseUrl($file = '')
     {
         if ($file == '') {
-            return $this->_baseUrl;
+            return $this->baseUrl;
         }
 
-        return $this->_baseUrl . $file;
+        return $this->baseUrl . $file;
     }
 
     /**

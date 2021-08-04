@@ -25,35 +25,35 @@ class Theme
      *
      * @var string
      */
-    protected $_name = 'grapeseed';
+    protected $name = 'grapeseed';
 
     /**
      * Path to theme files
      *
      * @var string
      */
-    protected $_path = '';
+    protected $path = '';
 
     /**
      * Asset manager
      *
      * @var \Greengrape\View\AssetManager
      */
-    protected $_assetManager;
+    protected $assetManager;
 
     /**
      * Default site title
      *
      * @var string
      */
-    protected $_title = '';
+    protected $title = '';
 
     /**
      * A list of required theme files
      *
      * @var array<int, string>
      */
-    protected $_requiredThemeFiles = [
+    protected $requiredThemeFiles = [
         'layout.html',
         'templates/main.html',
         'templates/default.html',
@@ -66,7 +66,7 @@ class Theme
      *
      * @var array<int, string>
      */
-    protected $_missingThemeFiles = [];
+    protected $missingThemeFiles = [];
 
     /**
      * Constructor
@@ -87,7 +87,10 @@ class Theme
         $themePath = $themesDir . DIRECTORY_SEPARATOR . $this->getName();
 
         if (!file_exists($themePath)) {
-            throw new NotFoundException("Theme '" . $this->getName() . "' not found. (Looking in path '" . $themePath . "')");
+            throw new NotFoundException(
+                "Theme '" . $this->getName() . "' not found. (Looking in path '"
+                . $themePath . "')"
+            );
         }
 
         $this->setPath($themePath);
@@ -102,15 +105,15 @@ class Theme
      */
     public function validateRequiredFiles()
     {
-        foreach ($this->_requiredThemeFiles as $file) {
+        foreach ($this->requiredThemeFiles as $file) {
             $fullFilePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
 
             if (!file_exists($fullFilePath)) {
-                $this->_missingThemeFiles[] = $file;
+                $this->missingThemeFiles[] = $file;
             }
         }
 
-        return !((bool) count($this->_missingThemeFiles));
+        return !((bool) count($this->missingThemeFiles));
     }
 
     /**
@@ -120,7 +123,7 @@ class Theme
      */
     public function getMissingThemeFiles()
     {
-        return $this->_missingThemeFiles;
+        return $this->missingThemeFiles;
     }
 
     /**
@@ -131,7 +134,7 @@ class Theme
      */
     public function setName($name)
     {
-        $this->_name = $name;
+        $this->name = $name;
         return $this;
     }
 
@@ -142,7 +145,7 @@ class Theme
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -153,7 +156,7 @@ class Theme
      */
     public function setAssetManager($manager)
     {
-        $this->_assetManager = $manager;
+        $this->assetManager = $manager;
         return $this;
     }
 
@@ -164,7 +167,7 @@ class Theme
      */
     public function getAssetManager()
     {
-        return $this->_assetManager;
+        return $this->assetManager;
     }
 
     /**
@@ -175,7 +178,7 @@ class Theme
      */
     public function setPath($path)
     {
-        $this->_path = $path;
+        $this->path = $path;
         return $this;
     }
 
@@ -191,10 +194,10 @@ class Theme
     public function getPath($file = null)
     {
         if (null === $file) {
-            return $this->_path;
+            return $this->path;
         }
 
-        return $this->_path . DIRECTORY_SEPARATOR . $file;
+        return $this->path . DIRECTORY_SEPARATOR . $file;
     }
 
     /**
@@ -205,7 +208,7 @@ class Theme
      */
     public function setDefaultTitle($title)
     {
-        $this->_title = $title;
+        $this->title = $title;
         return $this;
     }
 
@@ -216,10 +219,10 @@ class Theme
      */
     public function getDefaultTitle()
     {
-        if ($this->_title == '') {
+        if ($this->title == '') {
             return '[Greengrape]';
         }
 
-        return $this->_title;
+        return $this->title;
     }
 }

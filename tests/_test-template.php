@@ -4,6 +4,7 @@
  *
  * @package __packageName__
  */
+// phpcs:ignorefile
 
 namespace __testNamespace__;
 

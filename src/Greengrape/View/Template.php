@@ -27,14 +27,14 @@ class Template
      *
      * @var string
      */
-    protected $_templateFile = 'default.html';
+    protected $templateFile = 'default.html';
 
     /**
      * Theme object
      *
      * @var \Greengrape\View\Theme
      */
-    protected $_theme;
+    protected $theme;
 
     /**
      * Constructor
@@ -61,7 +61,7 @@ class Template
             throw new NotFoundException("Template file not found: '$filename'");
         }
 
-        $this->_templateFile = $filename;
+        $this->templateFile = $filename;
         return $this;
     }
 
@@ -72,7 +72,7 @@ class Template
      */
     public function getFile()
     {
-        return $this->_templateFile;
+        return $this->templateFile;
     }
 
     /**
@@ -83,7 +83,7 @@ class Template
      */
     public function setTheme($theme)
     {
-        $this->_theme = $theme;
+        $this->theme = $theme;
         return $this;
     }
 
@@ -94,7 +94,7 @@ class Template
      */
     public function getTheme()
     {
-        return $this->_theme;
+        return $this->theme;
     }
 
     /**

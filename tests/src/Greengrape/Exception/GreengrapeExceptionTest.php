@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\Exception;
 
+use Greengrape\Tests\BaseTestCase;
 use Greengrape\Exception\GreengrapeException;
 
 /**
@@ -16,7 +17,7 @@ use Greengrape\Exception\GreengrapeException;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class GreengrapeExceptionTest extends \BaseTestCase
+class GreengrapeExceptionTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -25,7 +26,7 @@ class GreengrapeExceptionTest extends \BaseTestCase
      */
     public function setUp(): void
     {
-        $this->_object = new GreengrapeException();
+        $this->object = new GreengrapeException();
     }
 
     /**
@@ -35,8 +36,8 @@ class GreengrapeExceptionTest extends \BaseTestCase
      */
     public function testConstruct()
     {
-        $this->_object = new GreengrapeException();
+        $this->object = new GreengrapeException();
 
-        $this->assertTrue($this->_object instanceof GreengrapeException);
+        $this->assertTrue($this->object instanceof GreengrapeException);
     }
 }

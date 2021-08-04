@@ -18,7 +18,7 @@ use Greengrape\Exception\GreengrapeException;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class SitemapTest extends \BaseTestCase
+class SitemapTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -38,7 +38,7 @@ class SitemapTest extends \BaseTestCase
         file_put_contents($contentDir . DIRECTORY_SEPARATOR . 'f1' . DIRECTORY_SEPARATOR . 'extra.md', '#extra');
         file_put_contents($contentDir . DIRECTORY_SEPARATOR . 'f2' . DIRECTORY_SEPARATOR . 'index.md', '#hello2');
 
-        $this->_object = new Sitemap($contentDir);
+        $this->object = new Sitemap($contentDir);
     }
 
     /**
@@ -94,13 +94,13 @@ class SitemapTest extends \BaseTestCase
 
     public function testSetContentDir(): void
     {
-        $this->_object->setContentDir('mycontent');
-        $this->assertEquals('mycontent', $this->_object->getContentDir());
+        $this->object->setContentDir('mycontent');
+        $this->assertEquals('mycontent', $this->object->getContentDir());
     }
 
     public function testGetLocationForUrl(): void
     {
-        $location = $this->_object->getLocationForUrl('/');
+        $location = $this->object->getLocationForUrl('/');
 
         $this->assertTrue($location instanceof Location);
         $this->assertEquals('index.md', $location->getFile());
@@ -109,7 +109,7 @@ class SitemapTest extends \BaseTestCase
 
     public function testGetLocationForUrlNoExist(): void
     {
-        $location = $this->_object->getLocationForUrl('floorbar');
+        $location = $this->object->getLocationForUrl('floorbar');
 
         $this->assertTrue($location instanceof Location);
         $this->assertEquals('floorbar', $location->getFile());
@@ -118,7 +118,7 @@ class SitemapTest extends \BaseTestCase
 
     public function testGetLocationCanonical(): void
     {
-        $location = $this->_object->getLocationForUrl('f1');
+        $location = $this->object->getLocationForUrl('f1');
 
         $this->assertEquals('', $location->getFile());
         $this->assertEquals('f1/', $location->getCanonical());
@@ -126,7 +126,7 @@ class SitemapTest extends \BaseTestCase
 
     public function testGetLocationDir(): void
     {
-        $location = $this->_object->getLocationForUrl('f1/');
+        $location = $this->object->getLocationForUrl('f1/');
 
         $this->assertEquals('f1/index.md', $location->getFile());
         $this->assertEquals('', $location->getCanonical());

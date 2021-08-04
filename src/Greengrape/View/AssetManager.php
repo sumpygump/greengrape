@@ -20,21 +20,21 @@ class AssetManager
      *
      * @var string
      */
-    protected $_baseUrl = '';
+    protected $baseUrl = '';
 
     /**
      * The web base url for this theme
      *
      * @var string
      */
-    protected $_themeBaseUrl = '';
+    protected $themeBaseUrl = '';
 
     /**
      * List of supported asset dirs in the themes
      *
      * @var array<int, string>
      */
-    protected static $_supportedAssetDirs = ['js', 'css', 'img'];
+    protected static $supportedAssetDirs = ['js', 'css', 'img'];
 
     /**
      * Constructor
@@ -59,7 +59,7 @@ class AssetManager
      */
     public function setBaseUrl($url)
     {
-        $this->_baseUrl = $url;
+        $this->baseUrl = $url;
         return $this;
     }
 
@@ -71,7 +71,7 @@ class AssetManager
      */
     public function getBaseUrl($file = '')
     {
-        $baseUrl = rtrim($this->_baseUrl, '/') . '/';
+        $baseUrl = rtrim($this->baseUrl, '/') . '/';
 
         if ($file == '') {
             return $baseUrl;
@@ -88,7 +88,7 @@ class AssetManager
      */
     public function setThemeBaseUrl($themeName)
     {
-        $this->_themeBaseUrl = "$themeName/";
+        $this->themeBaseUrl = "$themeName/";
         return $this;
     }
 
@@ -99,7 +99,7 @@ class AssetManager
      */
     public function getThemeBaseUrl()
     {
-        return $this->_themeBaseUrl;
+        return $this->themeBaseUrl;
     }
 
     /**
@@ -163,7 +163,7 @@ class AssetManager
         $pathParts = explode('/', $filepath);
         $assetDir = strtolower($pathParts[0]);
 
-        if (!in_array($assetDir, self::$_supportedAssetDirs)) {
+        if (!in_array($assetDir, self::$supportedAssetDirs)) {
             return '';
         }
 

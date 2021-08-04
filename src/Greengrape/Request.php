@@ -20,14 +20,14 @@ class Request
      *
      * @var array<string, string>
      */
-    protected $_data = [];
+    protected $data = [];
 
     /**
      * Base URL
      *
      * @var string
      */
-    protected $_baseUrl = '';
+    protected $baseUrl = '';
 
     /**
      * Constructor
@@ -45,8 +45,8 @@ class Request
             $requestInput = [$requestInput];
         }
 
-        $this->_data = $requestInput;
-        $this->_baseUrl = $this->detectWwwRoot();
+        $this->data = $requestInput;
+        $this->baseUrl = $this->detectWwwRoot();
     }
 
     /**
@@ -69,8 +69,8 @@ class Request
      */
     public function get($name, $default = null)
     {
-        if (isset($this->_data[$name])) {
-            return $this->_data[$name];
+        if (isset($this->data[$name])) {
+            return $this->data[$name];
         }
 
         return $default;
@@ -119,7 +119,7 @@ class Request
      */
     public function getBaseUrl($file = '')
     {
-        $baseUrl = $this->_baseUrl;
+        $baseUrl = $this->baseUrl;
 
         if ($file == '') {
             return $baseUrl;

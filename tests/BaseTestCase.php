@@ -5,6 +5,8 @@
  * @package Greengrape
  */
 
+namespace Greengrape\Tests;
+
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,7 +16,6 @@ use PHPUnit\Framework\TestCase;
  * @package Greengrape
  * @subpackage Tests
  * @author Jansen Price <jansen.price@gmail.com>
- * @version $Id$
  */
 class BaseTestCase extends TestCase
 {
@@ -23,5 +24,5 @@ class BaseTestCase extends TestCase
      *
      * @var object
      */
-    protected $_object;
+    protected $object;
 }

@@ -7,6 +7,7 @@
 
 namespace Greengrape\Tests\View;
 
+use Greengrape\Tests\BaseTestCase;
 use Greengrape\Exception\NotFoundException;
 use Greengrape\View\Template;
 use Greengrape\View\Theme;
@@ -19,7 +20,7 @@ use Greengrape\View\AssetManager;
  * @author Jansen Price <jansen.price@gmail.com>
  * @version $Id$
  */
-class TemplateTest extends \BaseTestCase
+class TemplateTest extends BaseTestCase
 {
     /**
      * Setup before tests
@@ -30,15 +31,21 @@ class TemplateTest extends \BaseTestCase
     {
         mkdir('foobar');
         mkdir('foobar' . DIRECTORY_SEPARATOR . 'templates');
-        file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'layout.html', '{{ layout.content|raw }}');
-        file_put_contents('foobar' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default.html', '{{ content | raw }}');
+        file_put_contents(
+            'foobar' . DIRECTORY_SEPARATOR . 'layout.html',
+            '{{ layout.content|raw }}'
+        );
+        file_put_contents(
+            'foobar' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default.html',
+            '{{ content | raw }}'
+        );
 
         file_put_contents('template1.html', 'T{{ content }}');
 
         $testThemesDir = APP_PATH . DIRECTORY_SEPARATOR . 'tests';
         $theme = new Theme('foobar', '/baseurl', $testThemesDir);
 
-        $this->_object = new Template('template1.html', $theme);
+        $this->object = new Template('template1.html', $theme);
     }
 
     /**
@@ -81,19 +88,19 @@ class TemplateTest extends \BaseTestCase
     public function testSetFileNoExist(): void
     {
         $this->expectException(NotFoundException::class);
-        $this->_object->setFile('fakefile.html');
+        $this->object->setFile('fakefile.html');
     }
 
     public function testGetFile(): void
     {
-        $this->_object->setFile('template1.html');
+        $this->object->setFile('template1.html');
 
-        $this->assertEquals('template1.html', $this->_object->getFile());
+        $this->assertEquals('template1.html', $this->object->getFile());
     }
 
     public function testGetTheme(): void
     {
-        $theme = $this->_object->getTheme();
+        $theme = $this->object->getTheme();
 
         $this->assertTrue($theme instanceof Theme);
         $this->assertEquals('foobar', $theme->getName());
@@ -101,7 +108,7 @@ class TemplateTest extends \BaseTestCase
 
     public function testGetAssetManager(): void
     {
-        $assetManager = $this->_object->getAssetManager();
+        $assetManager = $this->object->getAssetManager();
 
         $this->assertTrue($assetManager instanceof AssetManager);
         $this->assertEquals('/baseurl/', $assetManager->getBaseUrl());
@@ -111,7 +118,7 @@ class TemplateTest extends \BaseTestCase
     {
         $content = 'My goodness';
 
-        $result = $this->_object->render($content);
+        $result = $this->object->render($content);
         $this->assertEquals('TMy goodness', $result);
     }
 }
