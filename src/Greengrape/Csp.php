@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Csp class file
  *
@@ -19,7 +20,7 @@ use Greengrape\Exception\GreengrapeException;
  */
 class Csp
 {
-    const DIRECTIVES = [
+    public const DIRECTIVES = [
         "child-src",
         "connect-src",
         "default-src",
@@ -45,6 +46,7 @@ class Csp
         "navigate-to",
         "report-uri",
         "report-to",
+        "require-trusted-types-for",
     ];
 
     /**
@@ -89,7 +91,8 @@ class Csp
      */
     public function __construct($csp_config = [])
     {
-        if (!$csp_config instanceof \ArrayAccess
+        if (
+            !$csp_config instanceof \ArrayAccess
             && !is_array($csp_config)
         ) {
             $csp_config = [];
