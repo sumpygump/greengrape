@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Chronolog Collection
  *
@@ -7,7 +8,7 @@
 
 namespace Greengrape\Chronolog;
 
-use \Iterator;
+use Iterator;
 use Greengrape\View;
 use Greengrape\View\Content;
 
@@ -168,7 +169,7 @@ class Collection implements Iterator
      *
      * @return Content
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->items[$this->cursor];
     }
@@ -180,7 +181,7 @@ class Collection implements Iterator
      *
      * @return int
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->cursor;
     }
@@ -192,7 +193,7 @@ class Collection implements Iterator
      *
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         ++$this->cursor;
     }
@@ -202,7 +203,7 @@ class Collection implements Iterator
      *
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->cursor = 0;
     }
@@ -214,7 +215,7 @@ class Collection implements Iterator
      *
      * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->items[$this->cursor]);
     }

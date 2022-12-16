@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Request class file
  *
@@ -186,6 +187,10 @@ class Request
 
         $basename = basename($baseUrl);
 
+        if ($truncatedRequestUri === null) {
+            return '';
+        }
+
         // No match whatsoever
         if (empty($basename) || false === strpos($truncatedRequestUri, $basename)) {
             return '';
@@ -194,7 +199,8 @@ class Request
         // If using mod_rewrite or ISAPI_Rewrite strip the script filename
         // out of the base path. $pos !== 0 makes sure it is not matching a
         // value from PATH_INFO or QUERY_STRING.
-        if (strlen($requestUri) >= strlen($baseUrl)
+        if (
+            strlen($requestUri) >= strlen($baseUrl)
             && (false !== ($pos = strpos($requestUri, $baseUrl)) && $pos !== 0)
         ) {
             $baseUrl = substr($requestUri, 0, $pos + strlen($baseUrl));

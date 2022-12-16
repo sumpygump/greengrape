@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Navigation Collection
  *
@@ -180,7 +181,7 @@ class Collection implements Iterator, Countable
      *
      * @return Item
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->items[$this->cursor];
     }
@@ -192,7 +193,7 @@ class Collection implements Iterator, Countable
      *
      * @return int
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->cursor;
     }
@@ -204,7 +205,7 @@ class Collection implements Iterator, Countable
      *
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         ++$this->cursor;
     }
@@ -214,7 +215,7 @@ class Collection implements Iterator, Countable
      *
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->cursor = 0;
     }
@@ -226,7 +227,7 @@ class Collection implements Iterator, Countable
      *
      * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->items[$this->cursor]);
     }
@@ -238,7 +239,7 @@ class Collection implements Iterator, Countable
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }

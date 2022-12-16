@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Config class file
  *
@@ -7,7 +8,7 @@
 
 namespace Greengrape;
 
-use \ArrayAccess;
+use ArrayAccess;
 use Greengrape\Exception\GreengrapeException;
 
 /**
@@ -122,7 +123,7 @@ class Config implements ArrayAccess
      * @param mixed $value Value
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->set($offset, $value);
     }
@@ -135,7 +136,7 @@ class Config implements ArrayAccess
      * @param string $offset Array key
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         if (!is_scalar($offset)) {
             return false;
@@ -152,7 +153,7 @@ class Config implements ArrayAccess
      * @param string $offset Array key
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }
@@ -163,7 +164,7 @@ class Config implements ArrayAccess
      * @param string $offset Array key
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->get($offset);
     }
