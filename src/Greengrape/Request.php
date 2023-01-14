@@ -109,7 +109,11 @@ class Request
      */
     public function getRequestUri()
     {
-        return $this->get('REQUEST_URI');
+        $uri = $this->get('REQUEST_URI');
+        if (null === $uri) {
+            $uri = '';
+        }
+        return $uri;
     }
 
     /**
