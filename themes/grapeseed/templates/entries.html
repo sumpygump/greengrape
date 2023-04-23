@@ -1,6 +1,6 @@
 <div class="wrapper">
     <div class="grid">
-        <div class="grid-col grid-col_8of12">
+        <div class="grid-col">
             <div class="content" role="main">
                 <h1>{{ title }}</h1>
                 {{ content|raw }}
@@ -16,7 +16,7 @@
                 {% endif %}
             </div>
         </div>
-        <div class="grid-col grid-col_4of12">
+        <div class="grid-col grid-col-aside">
             <div class="content">
                 {% if entries|length > 0 %}
                     <h3>Entries</h3>

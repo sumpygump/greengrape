@@ -248,6 +248,9 @@ class Handler
 
         if (is_array($args)) {
             foreach ($args as $arg) {
+                if (null === $arg) {
+                    $arg = '';
+                }
                 if (is_object($arg)) {
                     $out .= get_class($arg) . $glue;
                 } else {

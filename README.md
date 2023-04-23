@@ -15,9 +15,32 @@ are as follows:
    changes. Ideally, you would have it in version control, commit the changes
    and then run an update on the server.
 
-Greengrape is written for PHP 5.3.
+Greengrape is written for PHP 7+.
 
-## Download
+## Quickstart
+
+To download and install greengrape use composer:
+
+    $ mkdir mysite
+    $ cd mysite
+    $ composer require sumpygump/greengrape
+    $ vendor/bin/greengrape-install
+
+Another method to make a project with composer `create-project` as follows:
+
+    $ composer create-project sumpygump/greengrape mysite
+    $ cd mysite
+    $ bin/greengrape-install
+
+## Manual Download & Installation
+
+### Prerequisite: composer
+
+Greengrape uses a few third-party libraries. You must use [composer][] to fetch the
+needed libraries.
+
+If you haven't installed composer yet, you can download the composer.phar
+executable. See [download instructions at getcomposer.org](https://getcomposer.org/download/).
 
 You can download Greengrape from Github at https://github.com/sumpygump/greengrape/
 
@@ -37,20 +60,10 @@ You can also clone the repository like so:
 
     $ git clone git://github.com/sumpygump/greengrape.git
 
-## Installation
-
 Once you have the files on your computer, you need to complete a few steps to
 get the site running.
 
-### Composer
-
-Greengrape uses a few third-party libraries. You must use [composer][] to fetch the
-needed libraries.
-
-If you haven't installed composer yet, you can download the composer.phar
-executable or use the installer:
-
-    $ curl -s https://getcomposer.org/installer | php
+### Manual installation
 
 Now you can complete the setup by running the following
 
@@ -145,7 +158,7 @@ just editing folders and files on your computer with the text editor of your
 choice. That is the beauty of Greengrape.
 
 For a complete reference of the syntax of Markdown please see [the
-Markdown documentation](http://daringfireball.net/projects/markdown/syntax/).
+Markdown documentation](https://www.markdownguide.org/cheat-sheet/).
 
 ### Assets
 
@@ -161,9 +174,9 @@ or
     ...
     [id]: assets/img/coolimage.png "Optional title attribute"
 
-You can also reference images from another domain too, just include `http://`.
+You can also reference images from another domain too, just include the `https://`.
 For more information about Markdown syntax for images, see the documentation
-for [images in Markdown](http://daringfireball.net/projects/markdown/syntax/#img).
+for [images in Markdown](https://www.markdownguide.org/basic-syntax/#images-1).
 
 Greengrape will automatically put the correct BaseUrl on the path to the image,
 so if the install location of the site changes, your references will stay in

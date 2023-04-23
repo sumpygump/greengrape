@@ -29,6 +29,15 @@ h1 {
     margin-top: 0;
 }
 
+h2 {
+    margin-top: 50px;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
 /* ---------------------------------------------------------------------
  Layout
 ------------------------------------------------------------------------ */
@@ -38,6 +47,7 @@ h1 {
 }
 
 .page {
+    color: #333333;
     background-color: #929292;
     -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
@@ -85,6 +95,8 @@ aside {
     font-size: 36px;
     padding: 40px;
     font-weight: bold;
+    color: #222222;
+    background-color: #efefef;
 }
 
 .site-name a {
@@ -100,7 +112,9 @@ nav li {
 
 .nav {
     margin: 0;
+    padding-inline-start: 0;
     display: flex;
+    flex-direction: column;
 }
 
 .nav a {
@@ -150,4 +164,158 @@ footer {
     font-size: 11px;
     padding: 10px 40px;
     text-align: center;
+}
+
+/* ---------------------------------------------------------------------
+ Content tables
+------------------------------------------------------------------------ */
+
+.content table {
+    max-width: 100%;
+    background-color: #ffffff;
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+
+.content table th,
+.content table td {
+    padding: 8px;
+    line-height: 20px;
+    vertical-align: top;
+    border-top: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+}
+
+.content table th {
+    font-weight: bold;
+    border-bottom: 2px solid #dddddd;
+    background-color: #f2f2f2;
+}
+
+.content table thead th {
+    vertical-align: bottom;
+}
+
+.content tr:nth-child(even) td {
+    background-color: #fafafa;
+}
+
+/* ---------------------------------------------------------------------
+ Content computer output
+------------------------------------------------------------------------ */
+.content code,
+.content samp,
+.content tt,
+.content kbd {
+    font-family: monospace;
+}
+
+.content var {
+    font-style: italic;
+}
+
+.content code,
+.content pre {
+    font-family: monospace;
+}
+
+.content pre {
+    background-color: #eeeeee;
+    display: block;
+    padding: 10px;
+    overflow-x: auto;
+    line-height: 1.2;
+    font-size: 0.8rem;
+}
+
+.content code {
+    color: #222222;
+    background-color: #eeeeee;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 0.8rem;
+}
+
+.content pre code {
+    border: none;
+    padding: 0;
+    line-height: 1.2;
+    font-size: 0.8rem;
+}
+
+/* ---------------------------------------------------------------------
+ Content blockquotes
+------------------------------------------------------------------------ */
+
+.content blockquote {
+    background-color: #efefef;
+    border-left: 6px solid #91a989;
+    margin-inline-start: 0;
+    padding: 1px 16px;
+}
+
+/* ---------------------------------------------------------------------
+ Content media
+------------------------------------------------------------------------ */
+.content img,
+.content video,
+.content audio {
+    max-width: 100% !important;
+}
+
+.content a img {
+    border: 2px solid #222222;
+    border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------------
+ Grid
+------------------------------------------------------------------------ */
+.grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.grid-col-aside {
+    width: 100%;
+    background-color: #efefef;
+    padding: 20px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------
+ Entries
+------------------------------------------------------------------------ */
+
+.entries-list {
+    margin-left: 20px;
+    padding-inline-start: 0;
+}
+
+/* ---------------------------------------------------------------------
+ Screen size large overrides
+------------------------------------------------------------------------ */
+@media (min-width:940px) {
+  .container {
+      padding-left: 0;
+      padding-right: 0;
+      width: 1040px;
+  }
+  .nav {
+      flex-direction: row;
+      padding-inline-start: 20px;
+  }
+  .grid {
+      flex-direction: row;
+  }
+  .grid-col-aside {
+      width: 240px;
+      padding: 20px;
+      margin-left: 20px;
+  }
 }

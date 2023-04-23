@@ -2,11 +2,12 @@
     <div class="grid">
         <div class="grid-col">
             <div class="content" role="main">
-                <h1>{{ title }}</h1>
+                <h1>Entry: {{ title }}</h1>
                 <p class="entry-date">{{ date }}</p>
                 {{ content|raw }}
             </div>
         </div>
+        {% if aside|length > 0 or entries|length > 0 %}
         <div class="grid-col grid-col-aside">
             <div class="content">
                 {% if entries|length > 0 %}
@@ -24,5 +25,6 @@
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
     </div>
 </div>

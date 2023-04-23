@@ -11,7 +11,7 @@ setup_terminal() {
     TPUT_RESET=""
     TPUT_RED=""
     TPUT_GREEN=""
-    TPUP_BLUE=""
+    TPUT_BLUE=""
 
     # Is stderr on the terminal? If not, then fail
     test -t 2 || return 1
@@ -29,13 +29,39 @@ setup_terminal() {
     return 0
 }
 success() {
-    printf >&2 "${TPUT_GREEN}${*}${TPUT_RESET}\n"
+    printf >&2 "${TPUT_GREEN}%s${TPUT_RESET}\n" "${*}"
 }
 info() {
-    printf >&2 "${TPUT_BLUE}${*}${TPUT_RESET}\n"
+    printf >&2 "${TPUT_BLUE}%s${TPUT_RESET}\n" "${*}"
 }
 error() {
-    printf >&2 "${TPUT_RED}${*}${TPUT_RESET}\n"
+    printf >&2 "${TPUT_RED}%s${TPUT_RESET}\n" "${*}"
+}
+
+install_file() {
+    # Usage: install_file <dest> <source>
+    echo -n "Checking existance of file $1..."
+    if [ ! -f "$1" ]; then
+        echo
+        info "Creating file $1 from source"
+        cp -v "$2" "$1"
+        echo
+    else
+        success "OK"
+    fi
+}
+
+install_dir() {
+    # Usage: install_dir <dest> <source>
+    echo -n "Checking existance of dir $1..."
+    if [ ! -d "$1" ]; then
+        echo
+        info "Creating dir $1 from source"
+        cp -vR "$2" "$1"
+        echo
+    else
+        success "OK"
+    fi
 }
 
 # ----------------
@@ -44,52 +70,83 @@ error() {
 
 setup_terminal || echo >/dev/null
 
-if [ -d "vendor/sumpygump/greengrape" ]; then
+success "Greengrape installation"
+success "-----------------------"
+echo
+
+# Define location of vendor source directory
+V_SOURCE="vendor/sumpygump/greengrape"
+
+if [ -d "$V_SOURCE" ]; then
     # This means greengrape was composed as a project dependency
     # Copy over the appropriate files so the current project can bootstrap itself
-    info "Creating project from greengrape standard (vendor composed)"
+    info "Detected installation from composer (vendor directory)"
     echo
 
     # Copy bootstrap files and config
-    info "Copying greengrape bootstrap files"
-    cp -v vendor/sumpygump/greengrape/index.php ./index.php
-    cp -v vendor/sumpygump/greengrape/init.php ./init.php
-    cp -v vendor/sumpygump/greengrape/config.ini-dist ./config.ini
-    cp -v vendor/sumpygump/greengrape/.htaccess-dist ./.htaccess
-    cp -v vendor/sumpygump/greengrape/favicon.ico ./favicon.ico
-    echo
+    install_file index.php "$V_SOURCE/index.php"
+    install_file init.php "$V_SOURCE/init.php"
+    install_file favicon.ico "$V_SOURCE/favicon.ico"
+    install_file config.ini "$V_SOURCE/config.ini-dist"
+    install_file .htaccess "$V_SOURCE/.htaccess-dist"
 
-    # Copy a default theme
-    info "Creating theme directory from greengrape vendor"
-    mkdir -pv themes/grapeseed
-    cp -R vendor/sumpygump/greengrape/themes/grapeseed themes/
-    echo "themes/grapeseed"
-    mkdir -pv themes/default
-    cp -R vendor/sumpygump/greengrape/themes/default themes/
-    echo "themes/default"
-    echo
+    # Copy default themes
+    echo -n "Checking existance of dir themes..."
+    if [ ! -d themes ]; then
+        echo
+        info "Creating themes directory from source"
+
+        mkdir -p themes/grapeseed
+        cp -R "$V_SOURCE/themes/grapeseed" themes/
+        echo "Installed theme: themes/grapeseed"
+
+        mkdir -p themes/default
+        cp -R "$V_SOURCE/themes/default" themes/
+        echo "Installed theme: themes/default"
+        echo
+    else
+        success "OK"
+    fi
 
     # Create content directory
-    info "Creating content directory from greengrape vendor"
-    cp -vR vendor/sumpygump/greengrape/content content
+    install_dir content "$V_SOURCE/content"
+else
+    # Ensure config.ini file
+    install_file config.ini config.ini-dist
+
+    # Create apache .htaccess file
+    install_file .htaccess .htaccess-dist
+fi
+
+# Create assets directory
+echo -n "Checking existance of assets directory..."
+if [ ! -d "assets" ]; then
     echo
+    info "Creating assets directory"
+    mkdir -vp assets
+    touch assets/.gitkeep
+    echo
+else
+    success "OK"
 fi
 
 # Create cache directory and set permissions
-info "Creating cache directory"
-mkdir -vp cache/content
-chmod -vR a+w cache
-echo
-
-if [ -f .htaccess-dist ]; then
-    info "Creating .htaccess file from dist"
-    cp -v .htaccess-dist .htaccess
+echo -n "Checking existance of cache directory..."
+if [ ! -d "cache" ]; then
     echo
+    info "Creating cache directory"
+    mkdir -vp cache/content
+    echo '*.cache' >> cache/content/.gitignore
+    echo
+else
+    success "OK"
 fi
 
+echo -n "Updating permissions of cache directory..."
+chmod -R a+w cache && success "OK"
+
 echo
-success "Greengrape installed"
-success "--------------------"
-echo "Be sure to check the config.ini file and update settings as needed"
-echo "Create your own theme directory and edit config.ini theme setting"
-echo "Edit the files in content directory to update site content"
+success "Greengrape installed!"
+echo "* Be sure to review the config.ini file and update settings as needed"
+echo "* Create your own theme directory and edit config.ini theme setting"
+echo "* Edit the files in content directory to update site content"

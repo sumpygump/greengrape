@@ -1,7 +1,7 @@
 <nav class="main-navigation">
     <ul class="nav nav-pills">
         {% for item in navigation %}
-            {% if item.isActive %}
+            {% if item.active %}
         <li class="active"><a href="{{ item.href(true) }}">{{ item.text }}</a></li>
             {% else %}
         <li><a href="{{ item.href(true) }}">{{ item.text }}</a></li>
